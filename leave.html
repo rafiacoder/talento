@@ -82,7 +82,7 @@
     /* ─────────────────────────────────────────
        MAIN SCROLL
     ───────────────────────────────────────── */
-    #main-scroll { overflow-y: auto; overflow-x: hidden; flex: 1; }
+    #main-scroll { overflow-y: auto; overflow-x: hidden; flex: 1; background: #F6F5F7; }
     #main-scroll::-webkit-scrollbar { width: 6px; }
     #main-scroll::-webkit-scrollbar-thumb { background: #d2cfd6; border-radius: 4px; }
 
@@ -143,7 +143,7 @@
     }
     .date-nav-pill .dot {
       width: 4px; height: 4px; border-radius: 50%;
-      background: #c4b5e8; flex-shrink: 0;
+      background: #787085; flex-shrink: 0;
     }
 
     /* ─────────────────────────────────────────
@@ -239,37 +239,42 @@
       display: inline-flex; align-items: center;
       padding: 3px 10px; border-radius: 999px;
       font-size: 11px; font-weight: 400;
-      background: #fff; color: #4b405c;
-      border: 1px solid #e8e7eb;
+      background: #f3f4f6; color: #4b405c;
     }
 
     /* ─────────────────────────────────────────
        PAGINATION
     ───────────────────────────────────────── */
     .pg-wrap {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: flex-start;
       flex-wrap: wrap; gap: 8px;
     }
     .pg-nav-btn {
       display: inline-flex; align-items: center; gap: 4px;
       height: 30px; padding: 0 10px;
       border: 1px solid #e8e7eb; border-radius: 6px;
-      font-size: 12px; color: #4b405c; background: #fff;
+      font-size: 12px; color: #4b405c; background: #F6F5F7;
       cursor: pointer; font-family: 'Alexandria', Helvetica, sans-serif;
       transition: background 150ms;
     }
     .pg-nav-btn:hover { background: #f5f3fb; }
+    .pg-pages-wrap {
+      display: flex; align-items: center; gap: 2px; flex-wrap: wrap;
+      background: #F6F5F7; border: 1px solid #e8e7eb; border-radius: 6px;
+      padding: 3px 6px;
+    }
     .pg-page-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 30px; height: 30px;
-      border: 1px solid #e8e7eb; border-radius: 6px;
-      font-size: 12px; color: #4b405c; background: #fff;
+      min-width: 24px; height: 24px; padding: 0 6px;
+      border: none; border-radius: 6px;
+      font-size: 12px; color: #4b405c; background: transparent;
       cursor: pointer; font-family: 'Alexandria', Helvetica, sans-serif;
       transition: background 150ms;
     }
     .pg-page-btn:hover:not(.pg-active) { background: #f5f3fb; }
     .pg-page-btn.pg-active {
-      background: #1e1033; color: #fff; border-color: #1e1033;
+      background: #fff; color: #1e1033; border: 1px solid #e8e7eb;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
     .pg-dots { font-size: 12px; color: #787085; padding: 0 2px; }
 
@@ -698,7 +703,7 @@
                   <td style="color:#4b405c;">12 Dec 2025</td>
                   <td style="color:#4b405c;">15 Dec 2025</td>
                   <td><span class="duration-pill">3 days</span></td>
-                  <td style="color:#4b405c;">0 days</td>
+                  <td style="color:#A59FAD;">0 days</td>
                   <td class="col-actions">
                     <button style="color:#787085;padding:6px;" aria-label="More">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
@@ -761,7 +766,7 @@
           </div>
 
           <!-- ── PAGINATION (matching Figma: < Back  01 02 03 04 05 06 ...  30  Next >) ── -->
-          <div class="pg-wrap" style="margin-top:16px;">
+          <div class="pg-wrap" style="margin-top:16px; padding:10px 16px; border-radius:10px;">
 
             <!-- Back button -->
             <button class="pg-nav-btn">
@@ -770,7 +775,7 @@
             </button>
 
             <!-- Page numbers -->
-            <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:center;">
+            <div class="pg-pages-wrap">
               <button class="pg-page-btn pg-active">01</button>
               <button class="pg-page-btn" onclick="pgSelect(this)">02</button>
               <button class="pg-page-btn" onclick="pgSelect(this)">03</button>
