@@ -1254,9 +1254,9 @@ const LeaveComponents = (function() {
                 role: 'Marketing lead',
                 avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
                 leaves: [
-                  { type: 'annual', start: 20, end: 50 },
-                  { type: 'unpaid', start: 55, end: 80 },
-                  { type: 'sick', start: 85, end: 120 }
+                  { type: 'annual', start: 0, end: 40 },
+                  { type: 'unpaid', start: 45, end: 60 },
+                  { type: 'other', start: 80, end: 100 }
                 ]
               },
               {
@@ -1264,9 +1264,9 @@ const LeaveComponents = (function() {
                 role: 'People & culture lead',
                 avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
                 leaves: [
-                  { type: 'annual', start: 15, end: 35 },
-                  { type: 'unpaid', start: 45, end: 70 },
-                  { type: 'sick', start: 90, end: 130 }
+                  { type: 'annual', start: 0, end: 40 },
+                  { type: 'unpaid', start: 45, end: 65 },
+                  { type: 'other', start: 85, end: 115 }
                 ]
               },
               {
@@ -1274,8 +1274,9 @@ const LeaveComponents = (function() {
                 role: 'Marketing lead',
                 avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
                 leaves: [
-                  { type: 'annual', start: 10, end: 30 },
-                  { type: 'other', start: 140, end: 180 }
+                  { type: 'annual', start: 0, end: 25 },
+                  { type: 'unpaid', start: 30, end: 40 },
+                  { type: 'other', start: 45, end: 55 }
                 ]
               },
               {
@@ -1283,7 +1284,10 @@ const LeaveComponents = (function() {
                 role: 'People & culture lead',
                 avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
                 leaves: [
-                  { type: 'sick', start: 60, end: 90 }
+                  { type: 'annual', start: 0, end: 55 },
+                  { type: 'unpaid', start: 60, end: 75 },
+                  { type: 'sick', start: 80, end: 90 },
+                  { type: 'other', start: 95, end: 115 }
                 ]
               },
               {
@@ -1291,8 +1295,8 @@ const LeaveComponents = (function() {
                 role: 'Marketing lead',
                 avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
                 leaves: [
-                  { type: 'unpaid', start: 30, end: 45 },
-                  { type: 'annual', start: 100, end: 140 }
+                  { type: 'annual', start: 0, end: 35 },
+                  { type: 'other', start: 55, end: 85 }
                 ]
               },
               {
@@ -1300,9 +1304,9 @@ const LeaveComponents = (function() {
                 role: 'People & culture lead',
                 avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
                 leaves: [
-                  { type: 'annual', start: 40, end: 70 },
-                  { type: 'unpaid', start: 80, end: 110 },
-                  { type: 'other', start: 150, end: 185 }
+                  { type: 'annual', start: 0, end: 40 },
+                  { type: 'sick', start: 60, end: 80 },
+                  { type: 'other', start: 85, end: 100 }
                 ]
               },
               {
@@ -1310,8 +1314,10 @@ const LeaveComponents = (function() {
                 role: 'Marketing lead',
                 avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
                 leaves: [
-                  { type: 'sick', start: 50, end: 80 },
-                  { type: 'annual', start: 120, end: 160 }
+                  { type: 'annual', start: 0, end: 30 },
+                  { type: 'unpaid', start: 40, end: 55 },
+                  { type: 'sick', start: 65, end: 80 },
+                  { type: 'other', start: 85, end: 110 }
                 ]
               },
               {
@@ -1319,8 +1325,9 @@ const LeaveComponents = (function() {
                 role: 'Marketing lead',
                 avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
                 leaves: [
-                  { type: 'unpaid', start: 70, end: 100 },
-                  { type: 'other', start: 160, end: 190 }
+                  { type: 'annual', start: 55, end: 115 },
+                  { type: 'unpaid', start: 125, end: 145 },
+                  { type: 'other', start: 155, end: 190 }
                 ]
               },
               {
@@ -1328,8 +1335,9 @@ const LeaveComponents = (function() {
                 role: 'Marketing lead',
                 avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
                 leaves: [
-                  { type: 'annual', start: 25, end: 55 },
-                  { type: 'unpaid', start: 90, end: 130 }
+                  { type: 'annual', start: 0, end: 55 },
+                  { type: 'unpaid', start: 85, end: 110 },
+                  { type: 'sick', start: 115, end: 135 }
                 ]
               },
               {
@@ -1337,8 +1345,29 @@ const LeaveComponents = (function() {
                 role: 'Marketing lead',
                 avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
                 leaves: [
-                  { type: 'sick', start: 40, end: 65 },
-                  { type: 'other', start: 130, end: 165 }
+                  { type: 'annual', start: 0, end: 55 },
+                  { type: 'unpaid', start: 85, end: 110 },
+                  { type: 'other', start: 115, end: 145 }
+                ]
+              },
+              {
+                name: 'Fahad AlShahrani',
+                role: 'Marketing lead',
+                avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+                leaves: [
+                  { type: 'annual', start: 0, end: 30 },
+                  { type: 'unpaid', start: 65, end: 85 },
+                  { type: 'other', start: 90, end: 110 }
+                ]
+              },
+              {
+                name: 'Fahad AlShahrani',
+                role: 'Marketing lead',
+                avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+                leaves: [
+                  { type: 'annual', start: 0, end: 95 },
+                  { type: 'unpaid', start: 105, end: 130 },
+                  { type: 'other', start: 145, end: 185 }
                 ]
               }
             ]
