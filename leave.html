@@ -285,205 +285,7 @@
 
           <!-- SUMMARY TAB CONTENT (default, initially visible) -->
           <div id="summary-content">
-            <!-- ── TOOLBAR: date nav (left) + filters/actions (right) ── -->
-            <div class="toolbar-row" style="margin-bottom:16px;">
-              <div class="date-nav-pill">
-                <button aria-label="Previous">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                </button>
-                <span style="font-size:13px;color:#4b405c;letter-spacing:-0.07px;">Today</span>
-                <span class="dot"></span>
-                <span style="font-size:13px;color:#4b405c;letter-spacing:-0.07px;">Tuesday, 16 Dec</span>
-              <button aria-label="Next">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-            </div>
-
-            <!-- Right toolbar actions -->
-            <div class="toolbar-right">
-              <!-- Filters -->
-              <button class="filter-btn">
-                <!-- Filter / sliders icon -->
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
-                Filters
-                <span style="color:#787085;">2</span>
-              </button>
-
-              <!-- View toggle -->
-              <div class="view-wrap">
-                <button class="view-btn" onclick="switchView(this)" title="Grid view">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-                </button>
-                <button class="view-btn active" onclick="switchView(this)" title="List view">
-                  <svg width="13" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                </button>
-                <button class="view-btn" onclick="switchView(this)" title="Calendar view">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                </button>
-              </div>
-
-              <!-- Export all -->
-              <button class="toolbar-btn">
-                Export all
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              </button>
-
-              <!-- Edit columns -->
-              <button class="toolbar-btn">
-                Edit columns
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- ── DATA TABLE ── -->
-          <div class="table-scroll-wrap" style="border: 1px solid #f0eef6; border-radius: 12px; overflow-x: auto; overflow-y: hidden;">
-            <table class="leave-table">
-              <thead>
-                <tr>
-                  <th>
-                    <div style="display:flex;align-items:center;gap:8px;">
-                      <input type="checkbox" style="width:14px;height:14px;border:1px solid #e8e7eb;border-radius:3px;cursor:pointer;accent-color:#7c3aed;flex-shrink:0;" />
-                      Employee name
-                      <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                    </div>
-                  </th>
-                  <th>
-                    Leave type
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Status
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Start date
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    End date
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Durations
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Remaining leave bala...
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th class="col-actions"></th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <!-- Row 1 -->
-                <tr>
-                  <td>
-                    <div style="display:flex;align-items:center;gap:10px;">
-                      <input type="checkbox" style="width:14px;height:14px;border:1px solid #e8e7eb;border-radius:3px;cursor:pointer;accent-color:#7c3aed;flex-shrink:0;" />
-                      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Fahad AlShahrani" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;" />
-                      <div>
-                        <p style="font-size:13px;font-weight:500;color:#1e1033;line-height:1.3;">Fahad AlShahrani</p>
-                        <p style="font-size:11px;color:#787085;line-height:1.3;">Marketing lead</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="color:#1e1033;">Annual leave</td>
-                  <td><span class="badge-approved">Approved</span></td>
-                  <td style="color:#4b405c;">12 Dec 2025</td>
-                  <td style="color:#4b405c;">15 Dec 2025</td>
-                  <td><span class="duration-pill">3 days</span></td>
-                  <td style="color:#A59FAD;">0 days</td>
-                  <td class="col-actions">
-                    <button style="color:#787085;padding:6px;" aria-label="More">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
-                    </button>
-                  </td>
-                </tr>
-
-                <!-- Row 2 -->
-                <tr>
-                  <td>
-                    <div style="display:flex;align-items:center;gap:10px;">
-                      <input type="checkbox" style="width:14px;height:14px;border:1px solid #e8e7eb;border-radius:3px;cursor:pointer;accent-color:#7c3aed;flex-shrink:0;" />
-                      <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Khalid AlAnazi" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;" />
-                      <div>
-                        <p style="font-size:13px;font-weight:500;color:#1e1033;line-height:1.3;">Khalid AlAnazi</p>
-                        <p style="font-size:11px;color:#787085;line-height:1.3;">People & culture lead</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="color:#1e1033;">Unpaid leave</td>
-                  <td><span class="badge-review">On review</span></td>
-                  <td style="color:#4b405c;">7 Dec 2025</td>
-                  <td style="color:#4b405c;">13 Dec 2025</td>
-                  <td><span class="duration-pill">6 days</span></td>
-                  <td style="color:#4b405c;">12 days</td>
-                  <td class="col-actions">
-                    <button style="color:#787085;padding:6px;" aria-label="More">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
-                    </button>
-                  </td>
-                </tr>
-
-                <!-- Row 3 -->
-                <tr>
-                  <td>
-                    <div style="display:flex;align-items:center;gap:10px;">
-                      <input type="checkbox" style="width:14px;height:14px;border:1px solid #e8e7eb;border-radius:3px;cursor:pointer;accent-color:#7c3aed;flex-shrink:0;" />
-                      <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Khalid AlAnazi" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;" />
-                      <div>
-                        <p style="font-size:13px;font-weight:500;color:#1e1033;line-height:1.3;">Khalid AlAnazi</p>
-                        <p style="font-size:11px;color:#787085;line-height:1.3;">People & culture lead</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td style="color:#1e1033;">Sick leave</td>
-                  <td><span class="badge-review">On review</span></td>
-                  <td style="color:#4b405c;">7 Dec 2025</td>
-                  <td style="color:#4b405c;">13 Dec 2025</td>
-                  <td><span class="duration-pill">6 days</span></td>
-                  <td style="color:#4b405c;">12 days</td>
-                  <td class="col-actions">
-                    <button style="color:#787085;padding:6px;" aria-label="More">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
-                    </button>
-                  </td>
-                </tr>
-
-              </tbody>
-            </table>
-          </div>
-
-          <!-- ── PAGINATION (matching Figma: < Back  01 02 03 04 05 06 ...  30  Next >) ── -->
-          <div class="pg-wrap" style="margin-top:16px; padding:10px 0; border-radius:10px;">
-
-            <!-- Back button -->
-            <button class="pg-nav-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-              Back
-            </button>
-
-            <!-- Page numbers -->
-            <div class="pg-pages-wrap">
-              <button class="pg-page-btn pg-active">01</button>
-              <button class="pg-page-btn" onclick="pgSelect(this)">02</button>
-              <button class="pg-page-btn" onclick="pgSelect(this)">03</button>
-              <button class="pg-page-btn" onclick="pgSelect(this)">04</button>
-              <button class="pg-page-btn" onclick="pgSelect(this)">05</button>
-              <button class="pg-page-btn" onclick="pgSelect(this)">06</button>
-              <span class="pg-dots">...</span>
-              <button class="pg-page-btn" onclick="pgSelect(this)">30</button>
-            </div>
-
-            <!-- Next button -->
-            <button class="pg-nav-btn">
-              Next
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-
-          </div>
+            <!-- Content will be dynamically rendered -->
           </div>
           <!-- /SUMMARY CONTENT -->
 
@@ -519,6 +321,8 @@ let activeTabId = 'summary';
 // Initialize tabs on page load
 document.addEventListener('DOMContentLoaded', function() {
   renderMainTabs();
+  // Initialize Summary tab content
+  renderDynamicTabContent('summary');
 });
 
 // Render main navigation tabs
@@ -565,6 +369,8 @@ function handleMainTabClick(el, tabId) {
     // Show summary, hide dynamic content
     summaryContent.style.display = 'block';
     tabContent.style.display = 'none';
+    // Render summary content dynamically
+    renderDynamicTabContent(tabId);
   } else {
     // Hide summary, render dynamic content
     summaryContent.style.display = 'none';
@@ -576,6 +382,8 @@ function handleMainTabClick(el, tabId) {
 // Render dynamic tab content based on tab ID
 function renderDynamicTabContent(tabId) {
   const container = document.getElementById('tab-content');
+  const summaryContainer = document.getElementById('summary-content');
+  
   if (!container) return;
 
   const config = LeaveComponents.TabConfigs[tabId];
@@ -588,6 +396,15 @@ function renderDynamicTabContent(tabId) {
   }
 
   let html = '';
+
+  // Sub-tabs (if configured - for Summary tab)
+  if (config.subTabs && config.subTabs.length > 0) {
+    html += LeaveComponents.SubTabs({
+      tabs: config.subTabs,
+      activeTab: config.activeSubTab || config.subTabs[0].id,
+      onTabChange: 'handleSubTabSwitch'
+    });
+  }
 
   // Section header (if configured)
   if (config.sectionHeader) {
@@ -604,10 +421,24 @@ function renderDynamicTabContent(tabId) {
     html += LeaveComponents.renderReconciliationTable(config);
   }
 
-  // Pagination
-  html += LeaveComponents.Pagination({ currentPage: 1, totalPages: 30 });
+  // Pagination (conditional)
+  if (config.showPagination !== false) {
+    html += LeaveComponents.Pagination({ currentPage: 1, totalPages: 30 });
+  }
 
-  container.innerHTML = html;
+  // Render in appropriate container
+  if (tabId === 'summary' && summaryContainer) {
+    summaryContainer.innerHTML = html;
+  } else {
+    container.innerHTML = html;
+  }
+}
+
+// Handle sub-tab switching (for Summary tab)
+function handleSubTabSwitch(subtabId) {
+  console.log('Sub-tab switched to:', subtabId);
+  // Here you would load different data based on the sub-tab
+  // For now, just update the active state (handled by component)
 }
 
 /* View toggle */

@@ -120,9 +120,12 @@ const LeaveComponents = (function() {
     const {
       showSearch = false,
       searchPlaceholder = 'Search',
-      showDateNav = true,
+      showDateNav = false,
       dateText = 'Today',
       dateSubText = '',
+      showDateRange = false,
+      dateRangeStart = '',
+      dateRangeEnd = '',
       showFilters = true,
       filterCount = 0,
       showViewToggle = true,
@@ -142,12 +145,21 @@ const LeaveComponents = (function() {
       </div>
     ` : '';
 
-    // Date navigator
+    // Date navigator (single date)
     const dateNavHTML = showDateNav ? `
       <div class="date-nav-pill">
         <button aria-label="Previous">${Icons.chevronLeft}</button>
         <span style="font-size:13px;color:#4b405c;letter-spacing:-0.07px;">${dateText}</span>
         ${dateSubText ? `<span class="dot"></span><span style="font-size:13px;color:#4b405c;letter-spacing:-0.07px;">${dateSubText}</span>` : ''}
+        <button aria-label="Next">${Icons.chevronRight}</button>
+      </div>
+    ` : '';
+
+    // Date range picker
+    const dateRangeHTML = showDateRange ? `
+      <div class="date-nav-pill">
+        <button aria-label="Previous">${Icons.chevronLeft}</button>
+        <span style="font-size:13px;color:#4b405c;letter-spacing:-0.07px;">${dateRangeStart} - ${dateRangeEnd}</span>
         <button aria-label="Next">${Icons.chevronRight}</button>
       </div>
     ` : '';
@@ -205,6 +217,7 @@ const LeaveComponents = (function() {
         <div style="display:flex;align-items:center;gap:12px;">
           ${searchHTML}
           ${dateNavHTML}
+          ${dateRangeHTML}
         </div>
         <div class="toolbar-right">
           ${filtersHTML}
@@ -662,19 +675,88 @@ const LeaveComponents = (function() {
   const TabConfigs = {
     'summary': {
       sectionHeader: null, // Summary has its own unique layout
+      subTabs: [
+        { id: 'analysis-view', label: 'Analysis View' },
+        { id: 'monthly-summary', label: 'Monthly Summary' },
+        { id: 'visual-analytics', label: 'Visual Analytics' }
+      ],
+      activeSubTab: 'analysis-view',
       toolbar: {
         showSearch: false,
-        showDateNav: true,
-        dateText: 'Today',
-        dateSubText: 'Tuesday, 16 Dec',
+        showDateNav: false,
+        showDateRange: true,
+        dateRangeStart: '25 June 2025',
+        dateRangeEnd: '10 July 2025',
         showFilters: true,
         filterCount: 2,
         showViewToggle: true,
         activeView: 'list',
         showExport: true,
-        showEditColumns: true,
+        exportText: 'Export all',
+        showEditColumns: false,
         showCreateNew: false
-      }
+      },
+      showPagination: false,
+      columns: [
+        { key: 'reportName', label: 'Report name', sortable: true, width: '200px' },
+        { key: 'type', label: 'Type', type: 'reconciliation-type', sortable: true, width: '120px' },
+        { key: 'createdDate', label: 'Created date', sortable: true, width: '140px' },
+        { key: 'lastEdited', label: 'Last edited', sortable: true, width: '140px' },
+        { key: 'createdBy', label: 'Created by', type: 'avatar', sortable: true, width: '180px' },
+        { key: 'totalDays', label: 'Total number of days', sortable: true, width: '160px' }
+      ],
+      sampleData: [
+        {
+          reportName: 'Report Name',
+          type: 'Type',
+          typeVariant: 'reconciliation-type',
+          createdDate: '12 Dec 2025',
+          lastEdited: '3 hrs ago',
+          createdBy: 'Mishari AlSubaie',
+          avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+          totalDays: '-3,047.41 days'
+        },
+        {
+          reportName: 'Report Name',
+          type: 'Type',
+          typeVariant: 'reconciliation-type',
+          createdDate: '10 Dec 2025',
+          lastEdited: '12 Dec 2025',
+          createdBy: 'Mishari AlSubaie',
+          avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+          totalDays: '1,047.41 days'
+        },
+        {
+          reportName: 'Report Name',
+          type: 'Type',
+          typeVariant: 'reconciliation-type',
+          createdDate: '10 Dec 2025',
+          lastEdited: '12 Dec 2025',
+          createdBy: 'Mishari AlSubaie',
+          avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+          totalDays: '-14 days'
+        },
+        {
+          reportName: 'Report Name',
+          type: 'Type',
+          typeVariant: 'reconciliation-type',
+          createdDate: '10 Dec 2025',
+          lastEdited: '12 Dec 2025',
+          createdBy: 'Mishari AlSubaie',
+          avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+          totalDays: '12 Dec 2025'
+        },
+        {
+          reportName: 'Report Name',
+          type: 'Type',
+          typeVariant: 'reconciliation-type',
+          createdDate: '10 Dec 2025',
+          lastEdited: '12 Dec 2025',
+          createdBy: 'Mishari AlSubaie',
+          avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+          totalDays: '12 Dec 2025'
+        }
+      ]
     },
     'leave-reconciliations': {
       sectionHeader: {
@@ -687,6 +769,7 @@ const LeaveComponents = (function() {
         createNewText: 'Create new'
       },
       toolbar: null,
+      showPagination: true,
       columns: [
         { key: 'code', label: 'Code', sortable: true, width: '100px' },
         { key: 'employee', label: 'Employee', type: 'avatar', sortable: true },
