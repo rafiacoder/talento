@@ -126,6 +126,7 @@ const LeaveComponents = (function() {
       showDateRange = false,
       dateRangeStart = '',
       dateRangeEnd = '',
+      dateRangeSeparator = '-',
       showFilters = true,
       filterCount = 0,
       showViewToggle = true,
@@ -160,7 +161,7 @@ const LeaveComponents = (function() {
     const dateRangeHTML = showDateRange ? `
       <div class="date-nav-pill">
         <button aria-label="Previous">${Icons.chevronLeft}</button>
-        <span style="font-size:13px;color:#4b405c;letter-spacing:-0.07px;">${dateRangeStart} - ${dateRangeEnd}</span>
+        <span style="font-size:13px;color:#4b405c;letter-spacing:-0.07px;">${dateRangeStart} ${dateRangeSeparator || '-'} ${dateRangeEnd}</span>
         <button aria-label="Next">${Icons.chevronRight}</button>
       </div>
     ` : '';
@@ -304,8 +305,8 @@ const LeaveComponents = (function() {
           const plainVariant = 'plain-' + (row.statusVariant || row[col.variantKey] || 'pending');
           cellContent = Badge({ text: value, variant: plainVariant });
         } else if (col.type === 'status-text') {
-          // Status with badge-type styling like department
-          cellContent = `<span class="badge-type">${value}</span>`;
+          // Status with proper badge styling based on variant
+          cellContent = Badge({ text: value, variant: row.statusVariant || 'default' });
         } else if (col.type === 'reconciliation-type') {
           cellContent = Badge({ text: value, variant: 'reconciliation-type' });
         } else if (col.type === 'duration') {
@@ -919,6 +920,150 @@ const LeaveComponents = (function() {
         { id: 'visual-analytics', label: 'Visual Analytics' }
       ],
       activeSubTab: 'analysis-view',
+      // Sub-tab specific configurations
+      subTabConfigs: {
+        'analysis-view': {
+          toolbar: {
+            showSearch: false,
+            showDateNav: false,
+            showDateRange: true,
+            dateRangeStart: '25 June 2025',
+            dateRangeEnd: '10 July 2025',
+            showFilters: true,
+            filterCount: 2,
+            showViewToggle: true,
+            activeView: 'list',
+            viewToggleType: 'simple',
+            showExport: true,
+            exportText: 'Export all',
+            showEditColumns: false,
+            showCreateNew: false
+          },
+          showPagination: false,
+          showCheckbox: true,
+          columns: [
+            { key: 'reportName', label: 'Report name', sortable: true, width: '200px' },
+            { key: 'type', label: 'Type', type: 'reconciliation-type', sortable: true, width: '120px' },
+            { key: 'createdDate', label: 'Created date', sortable: true, width: '140px' },
+            { key: 'lastEdited', label: 'Last edited', sortable: true, width: '140px' },
+            { key: 'createdBy', label: 'Created by', type: 'avatar', sortable: true, width: '180px' },
+            { key: 'totalDays', label: 'Total number of days', sortable: true, width: '160px' }
+          ],
+          sampleData: [
+            {
+              reportName: 'Report Name',
+              type: 'Type',
+              typeVariant: 'reconciliation-type',
+              createdDate: '12 Dec 2025',
+              lastEdited: '3 hrs ago',
+              createdBy: 'Mishari AlSubaie',
+              avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+              totalDays: '-3,047.41 days'
+            },
+            {
+              reportName: 'Report Name',
+              type: 'Type',
+              typeVariant: 'reconciliation-type',
+              createdDate: '10 Dec 2025',
+              lastEdited: '12 Dec 2025',
+              createdBy: 'Mishari AlSubaie',
+              avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+              totalDays: '1,047.41 days'
+            },
+            {
+              reportName: 'Report Name',
+              type: 'Type',
+              typeVariant: 'reconciliation-type',
+              createdDate: '10 Dec 2025',
+              lastEdited: '12 Dec 2025',
+              createdBy: 'Mishari AlSubaie',
+              avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+              totalDays: '-14 days'
+            }
+          ]
+        },
+        'monthly-summary': {
+          toolbar: {
+            showSearch: false,
+            showDateNav: false,
+            showDateRange: true,
+            dateRangeStart: 'January 2025',
+            dateRangeEnd: 'December 2025',
+            dateRangeSeparator: '•',
+            showFilters: true,
+            filterCount: 2,
+            showViewToggle: false,
+            showExport: true,
+            exportText: 'Export all',
+            showEditColumns: false,
+            showCreateNew: false
+          },
+          showPagination: false,
+          showCheckbox: true,
+          columns: [
+            { key: 'employee', label: 'Employee name', sortable: true, width: '200px' },
+            { key: 'leaveType', label: 'Leave type', type: 'tag', sortable: true, width: '120px' },
+            { key: 'month', label: 'Month', sortable: true, width: '120px' },
+            { key: 'year', label: 'Year', sortable: true, width: '100px' },
+            { key: 'status', label: 'Status', type: 'badge', sortable: true, width: '120px' },
+            { key: 'totalDays', label: 'Total number of days', sortable: true, width: '160px' }
+          ],
+          sampleData: [
+            {
+              employee: 'Fahad AlShahrani',
+              leaveType: 'Type',
+              month: 'December',
+              year: '2025',
+              status: 'Approved',
+              statusVariant: 'approved',
+              totalDays: '-3,047.41 days'
+            },
+            {
+              employee: 'Khalid AlAnazi',
+              leaveType: 'Type',
+              month: 'November',
+              year: '2025',
+              status: 'Approved',
+              statusVariant: 'approved',
+              totalDays: '1,047.41 days'
+            },
+            {
+              employee: 'Fahad AlShahrani',
+              leaveType: 'Type',
+              month: 'October',
+              year: '2025',
+              status: 'Approved',
+              statusVariant: 'approved',
+              totalDays: '-14 days'
+            }
+          ]
+        },
+        'visual-analytics': {
+          toolbar: {
+            showSearch: false,
+            showDateNav: false,
+            showDateRange: true,
+            dateRangeStart: '25 June 2025',
+            dateRangeEnd: '10 July 2025',
+            showFilters: true,
+            filterCount: 2,
+            showViewToggle: false,
+            showExport: true,
+            exportText: 'Export all',
+            showEditColumns: false,
+            showCreateNew: false
+          },
+          showPagination: false,
+          showCheckbox: false,
+          columns: [],
+          sampleData: [],
+          emptyState: {
+            title: 'Visual Analytics',
+            description: 'Charts and analytics will be displayed here.'
+          }
+        }
+      },
+      // Default toolbar (fallback)
       toolbar: {
         showSearch: false,
         showDateNav: false,
@@ -929,7 +1074,7 @@ const LeaveComponents = (function() {
         filterCount: 2,
         showViewToggle: true,
         activeView: 'list',
-        viewToggleType: 'simple', // grid and list only (2 buttons)
+        viewToggleType: 'simple',
         showExport: true,
         exportText: 'Export all',
         showEditColumns: false,
@@ -1097,9 +1242,11 @@ const LeaveComponents = (function() {
           cellContent = Badge({ text: row.type, variant: 'reconciliation-type' });
         } else if (col.type === 'badge') {
           cellContent = Badge({ text: value, variant: row.statusVariant || row[col.variantKey] || 'default' });
+        } else if (col.type === 'tag') {
+          cellContent = `<span class="tag-badge">${value}</span>`;
         } else if (col.type === 'status-text') {
-          // Status with badge-type styling like department
-          cellContent = `<span class="badge-type">${value}</span>`;
+          // Status with proper badge styling based on variant
+          cellContent = Badge({ text: value, variant: row.statusVariant || 'default' });
         } else if (col.type === 'duration') {
           cellContent = `<span class="duration-pill">${value}</span>`;
         } else if (col.type === 'currency') {

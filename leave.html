@@ -379,8 +379,11 @@ function handleMainTabClick(el, tabId) {
   }
 }
 
+// Track active sub-tab for reports
+let activeReportsSubTab = 'analysis-view';
+
 // Render dynamic tab content based on tab ID
-function renderDynamicTabContent(tabId) {
+function renderDynamicTabContent(tabId, subTabId = null) {
   const container = document.getElementById('tab-content');
   const summaryContainer = document.getElementById('summary-content');
   
@@ -395,34 +398,53 @@ function renderDynamicTabContent(tabId) {
     return;
   }
 
+  // Determine which sub-tab config to use
+  let activeSubTabId = subTabId || config.activeSubTab || (config.subTabs && config.subTabs[0]?.id);
+  let effectiveConfig = config;
+  
+  // If this tab has sub-tab specific configs, merge them
+  if (config.subTabConfigs && activeSubTabId && config.subTabConfigs[activeSubTabId]) {
+    const subConfig = config.subTabConfigs[activeSubTabId];
+    effectiveConfig = {
+      ...config,
+      ...subConfig,
+      subTabs: config.subTabs, // Keep sub-tabs from parent
+      activeSubTab: activeSubTabId
+    };
+  }
+
   let html = '';
 
-  // Sub-tabs (if configured - for Summary tab)
+  // Sub-tabs (if configured)
   if (config.subTabs && config.subTabs.length > 0) {
     html += LeaveComponents.SubTabs({
       tabs: config.subTabs,
-      activeTab: config.activeSubTab || config.subTabs[0].id,
+      activeTab: activeSubTabId,
       onTabChange: 'handleSubTabSwitch'
     });
   }
 
   // Section header (if configured)
-  if (config.sectionHeader) {
-    html += LeaveComponents.SectionHeader(config.sectionHeader);
+  if (effectiveConfig.sectionHeader) {
+    html += LeaveComponents.SectionHeader(effectiveConfig.sectionHeader);
   }
 
   // Toolbar (if configured)
-  if (config.toolbar) {
-    html += LeaveComponents.Toolbar(config.toolbar);
+  if (effectiveConfig.toolbar) {
+    html += LeaveComponents.Toolbar(effectiveConfig.toolbar);
   }
 
+  // Empty state (if configured)
+  if (effectiveConfig.emptyState) {
+    html += LeaveComponents.EmptyState(effectiveConfig.emptyState);
+  }
   // Data table (if columns and data configured)
-  if (config.columns && config.columns.length > 0 && config.sampleData) {
-    html += LeaveComponents.renderReconciliationTable(config);
+  else if (effectiveConfig.columns && effectiveConfig.columns.length > 0 && effectiveConfig.sampleData) {
+    html += LeaveComponents.renderReconciliationTable(effectiveConfig);
   }
 
   // Pagination (conditional)
-  if (config.showPagination !== false) {
+  if (effectiveConfig.showPagination !== false && effectiveConfig.sampleData && effectiveConfig.sampleData.length > 0) {
     html += LeaveComponents.Pagination({ currentPage: 1, totalPages: 30 });
   }
 
@@ -434,11 +456,15 @@ function renderDynamicTabContent(tabId) {
   }
 }
 
-// Handle sub-tab switching (for Summary tab)
+// Handle sub-tab switching (for Reports tab and others)
 function handleSubTabSwitch(subtabId) {
   console.log('Sub-tab switched to:', subtabId);
-  // Here you would load different data based on the sub-tab
-  // For now, just update the active state (handled by component)
+  
+  // Update active sub-tab tracker
+  activeReportsSubTab = subtabId;
+  
+  // Re-render the current main tab with the new sub-tab
+  renderDynamicTabContent(activeTabId, subtabId);
 }
 
 /* View toggle */
