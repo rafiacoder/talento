@@ -103,3 +103,239 @@ input { outline: none; border: none; background: transparent; width: 100%; }
   #user-chevron { display: none !important; }
   .hide-on-mobile { display: none !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REUSABLE COMPONENT STYLES
+   Styles for components defined in components.js
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────
+   SUB-TABS (Secondary navigation)
+───────────────────────────────────────── */
+.sub-tab {
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px;
+  height: 32px; 
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 13px; 
+  color: #787085;
+  cursor: pointer; 
+  white-space: nowrap;
+  transition: all 150ms;
+  font-family: 'Alexandria', Helvetica, sans-serif;
+  border: none; 
+  background: transparent;
+}
+.sub-tab:hover:not(.active) { 
+  background: rgba(236,233,239,.55); 
+  color: #4b405c;
+}
+.sub-tab.active {
+  background: transparent;
+  color: #1e1033;
+  font-weight: 500;
+  border-bottom: 2px solid #1e1033;
+  border-radius: 0;
+  padding-bottom: 2px;
+}
+
+/* ─────────────────────────────────────────
+   TABLE CHECKBOX
+───────────────────────────────────────── */
+.table-checkbox {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #e8e7eb;
+  border-radius: 3px;
+  cursor: pointer;
+  accent-color: #7c3aed;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   BADGES
+───────────────────────────────────────── */
+.badge-approved {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #15803d;
+  background: #dcfce7;
+}
+.badge-review {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #b45309;
+  background: #fef3c7;
+}
+.badge-pending {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #f3f4f6;
+}
+.badge-rejected {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #dc2626;
+  background: #fee2e2;
+}
+.badge-default {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #4b405c;
+  background: #f6f5f7;
+}
+
+/* Tag badge (Type) */
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6366f1;
+  background: #eef2ff;
+}
+
+/* Duration pill */
+.duration-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #4b405c;
+  background: #f6f5f7;
+}
+
+/* ─────────────────────────────────────────
+   CREATE NEW BUTTON (Primary action)
+───────────────────────────────────────── */
+.create-new-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(135deg, #1e1033 0%, #3d2a5c 100%);
+  cursor: pointer;
+  transition: all 150ms;
+  border: none;
+  white-space: nowrap;
+}
+.create-new-btn:hover {
+  background: linear-gradient(135deg, #2a1745 0%, #4d3a6c 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 16, 51, 0.25);
+}
+
+/* ─────────────────────────────────────────
+   FILTER BUTTON
+───────────────────────────────────────── */
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #4b405c;
+  background: #f6f5f7;
+  border: 1px solid #e8e7eb;
+  cursor: pointer;
+  transition: all 150ms;
+}
+.filter-btn:hover {
+  background: #ece9ef;
+}
+
+/* ─────────────────────────────────────────
+   VIEW WRAP & BUTTONS
+───────────────────────────────────────── */
+.view-wrap {
+  display: flex;
+  align-items: center;
+  background: #f6f5f7;
+  border: 1px solid #e8e7eb;
+  border-radius: 8px;
+  padding: 2px;
+}
+.view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  color: #787085;
+  cursor: pointer;
+  transition: all 150ms;
+  border: none;
+  background: transparent;
+}
+.view-btn:hover:not(.active) {
+  background: rgba(236,233,239,.55);
+}
+.view-btn.active {
+  background: #fff;
+  color: #1e1033;
+  box-shadow: 0 1px 2px rgba(30,16,51,0.1);
+}
+
+/* ─────────────────────────────────────────
+   TOOLBAR BUTTON
+───────────────────────────────────────── */
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #4b405c;
+  background: transparent;
+  border: 1px solid #e8e7eb;
+  cursor: pointer;
+  transition: all 150ms;
+  white-space: nowrap;
+}
+.toolbar-btn:hover {
+  background: #f6f5f7;
+}
