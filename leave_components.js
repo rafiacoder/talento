@@ -403,14 +403,11 @@ const LeaveComponents = (function() {
         <span style="font-size:${size * 0.4}px;color:#787085;font-weight:500;">${name.charAt(0).toUpperCase()}</span>
       </div>`;
 
-    const subtitleHTML = subtitle ? `<p style="font-size:11px;color:#787085;line-height:1.3;">${subtitle}</p>` : '';
-
     return `
       <div style="display:flex;align-items:center;gap:10px;">
         ${imgHTML}
         <div>
           <p style="font-size:13px;font-weight:500;color:#1e1033;line-height:1.3;">${name}</p>
-          ${subtitleHTML}
         </div>
       </div>
     `;
@@ -847,15 +844,14 @@ const LeaveComponents = (function() {
       },
       toolbar: null,
       showPagination: true,
-      showCheckbox: false,
+      showCheckbox: true,
       columns: [
-        { key: 'code', label: 'Code', sortable: true, width: '100px' },
-        { key: 'employee', label: 'Employee', type: 'avatar', sortable: true, width: '180px' },
-        { key: 'jobTitle', label: 'Job title', sortable: true, width: '160px' },
-        { key: 'department', label: 'Department', sortable: true, width: '160px' },
+        { key: 'employee', label: 'Employee', type: 'avatar-no-subtitle', sortable: true, width: '200px' },
+        { key: 'jobTitle', label: 'Job title', sortable: true, width: '180px' },
+        { key: 'department', label: 'Department', type: 'department-badge', sortable: true, width: '180px' },
         { key: 'startingWorkAt', label: 'Starting work at', sortable: true, width: '140px' },
         { key: 'effectiveNoticeType', label: 'Effective notice type', sortable: true, width: '180px' },
-        { key: 'createdBy', label: 'Created by', type: 'avatar', sortable: true, width: '160px' },
+        { key: 'createdBy', label: 'Created by', type: 'avatar-no-subtitle', sortable: true, width: '200px' },
         { key: 'status', label: 'Status', type: 'badge', sortable: true, width: '120px' }
       ],
       sampleData: [
@@ -868,6 +864,8 @@ const LeaveComponents = (function() {
           startingWorkAt: '12 Dec 2025',
           effectiveNoticeType: 'Return From Leave',
           createdBy: 'Mishari AlSubaie',
+          createdByRole: 'Sale Support',
+          createdByAvatar: 'https://randomuser.me/api/portraits/men/32.jpg',
           status: 'Approved',
           statusVariant: 'approved'
         },
@@ -880,6 +878,8 @@ const LeaveComponents = (function() {
           startingWorkAt: '10 Dec 2025',
           effectiveNoticeType: 'New Employee',
           createdBy: 'Mishari AlSubaie',
+          createdByRole: 'Western Area Sales Manager',
+          createdByAvatar: 'https://randomuser.me/api/portraits/men/32.jpg',
           status: 'On review',
           statusVariant: 'review'
         },
@@ -892,6 +892,8 @@ const LeaveComponents = (function() {
           startingWorkAt: '10 Dec 2025',
           effectiveNoticeType: 'Return From Leave',
           createdBy: 'Mishari AlSubaie',
+          createdByRole: 'Sale Support',
+          createdByAvatar: 'https://randomuser.me/api/portraits/men/32.jpg',
           status: 'Need to pay',
           statusVariant: 'pending'
         }
@@ -1047,11 +1049,12 @@ const LeaveComponents = (function() {
 
         // First column with checkbox
         if (idx === 0 && showCheckbox) {
-          if (col.type === 'avatar') {
+          if (col.type === 'avatar' || col.type === 'avatar-no-subtitle') {
+            const subtitle = col.type === 'avatar-no-subtitle' ? '' : (row.jobTitle || row.subtitle || '');
             cellContent = `
               <div style="display:flex;align-items:center;gap:10px;">
                 <input type="checkbox" class="table-checkbox" />
-                ${Avatar({ src: row.avatar, name: value, subtitle: row.jobTitle || row.subtitle || '' })}
+                ${Avatar({ src: row.avatar, name: value, subtitle: subtitle })}
               </div>
             `;
           } else {
@@ -1062,8 +1065,22 @@ const LeaveComponents = (function() {
               </div>
             `;
           }
+        } else if (col.type === 'avatar-no-subtitle') {
+          // Avatar without subtitle - use correct avatar source based on column
+          const avatarSrc = col.key === 'createdBy' ? (row.createdByAvatar || row.avatar) : row.avatar;
+          cellContent = Avatar({ src: avatarSrc, name: value, subtitle: '' });
         } else if (col.type === 'avatar') {
           cellContent = Avatar({ src: row.avatar, name: value, subtitle: row.jobTitle || row.subtitle || '' });
+        } else if (col.type === 'avatar-with-role') {
+          // For "Created by" column with role subtitle
+          cellContent = Avatar({ 
+            src: row.createdByAvatar || row.avatar, 
+            name: value, 
+            subtitle: row.createdByRole || '' 
+          });
+        } else if (col.type === 'department-badge') {
+          // Department as a badge/pill
+          cellContent = `<span class="badge-type">${value}</span>`;
         } else if (col.type === 'reconciliation-type') {
           cellContent = Badge({ text: row.type, variant: 'reconciliation-type' });
         } else if (col.type === 'badge') {
