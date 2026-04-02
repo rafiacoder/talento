@@ -135,14 +135,14 @@
     .badge-done {
       display: inline-flex; align-items: center;
       padding: 3px 10px; border-radius: 999px;
-      font-size: 11px; font-weight: 500;
-      background: #D7FFE7; color: #16a34a;
+      font-size: 11px; font-weight: 400;
+      background: #E8E5F1; color: #4b405c;
     }
     .badge-need-to-pay {
       display: inline-flex; align-items: center;
       padding: 3px 10px; border-radius: 999px;
       font-size: 11px; font-weight: 400;
-      background: #FEF3C7; color: #D97706;
+      background: #E8E5F1; color: #4b405c;
     }
 
     /* request type badge */
@@ -150,13 +150,13 @@
       display: inline-flex; align-items: center;
       padding: 3px 10px; border-radius: 999px;
       font-size: 11px; font-weight: 400;
-      background: #e0e7ff; color: #4f46e5;
+      background: #E8E5F1; color: #4b405c;
     }
     .badge-business-mission {
       display: inline-flex; align-items: center;
       padding: 3px 10px; border-radius: 999px;
       font-size: 11px; font-weight: 400;
-      background: #dbeafe; color: #2563eb;
+      background: #E8E5F1; color: #4b405c;
     }
 
     /* employee avatar */
@@ -262,12 +262,29 @@
         <!-- MAIN CONTENT CARD -->
         <div style="background:#fff;border-radius:20px;padding:20px 20px 24px;display:flex;flex-direction:column;gap:0;min-width:0;overflow:hidden;">
 
-          <!-- PAGE HEADER -->
+          <!-- PAGE HEADER ROW 1: Title + Summary/Reports/Configuration -->
           <div class="page-header-row" style="margin-bottom:12px;">
             <h1 style="color:#1e1033;font-size:22px;font-weight:400;letter-spacing:-0.22px;line-height:1.4;flex-shrink:0;">Air tickets</h1>
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+              <!-- Summary Button -->
+              <button class="toolbar-btn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
+                Summary
+              </button>
+              <!-- Reports Button -->
+              <button class="toolbar-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Reports
+              </button>
+              <!-- Configuration Button -->
+              <button class="toolbar-btn">
+                Configuration
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </button>
+            </div>
           </div>
 
-          <!-- TOOLBAR -->
+          <!-- TOOLBAR ROW 2: Date Navigation + Action Buttons -->
           <div class="toolbar-row" style="margin-bottom:16px;min-width:0;">
             <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0;">
               <!-- Date Navigator -->
@@ -284,21 +301,6 @@
               </div>
             </div>
             <div class="toolbar-right">
-              <!-- Summary Button -->
-              <button class="toolbar-btn">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
-                Summary
-              </button>
-              <!-- Reports Button -->
-              <button class="toolbar-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                Reports
-              </button>
-              <!-- Configuration Button -->
-              <button class="toolbar-btn">
-                Configuration
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-              </button>
               <!-- Filters -->
               <button class="filter-btn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
