@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento – Return from Leave</title>
+</head>
+<body>
+  <!-- This file contains only the tab-specific content for Return from Leave -->
+  <div id="leave-return-tab">
+    <!-- Content will be dynamically rendered by JavaScript -->
+  </div>
+
+  <script>
+    // Return from Leave Tab Rendering Logic
+    (function() {
+      'use strict';
+
+      // Initialize Return from Leave tab content when loaded
+      function initReturnTab() {
+        const container = document.getElementById('leave-return-tab');
+        if (!container) return;
+
+        // Get configuration from parent page's LeaveComponents
+        if (typeof LeaveComponents !== 'undefined' && LeaveComponents.TabConfigs && LeaveComponents.TabConfigs['return-from-leave']) {
+          const config = LeaveComponents.TabConfigs['return-from-leave'];
+          
+          let html = '';
+
+          // Section header (if configured)
+          if (config.sectionHeader) {
+            html += LeaveComponents.SectionHeader(config.sectionHeader);
+          }
+
+          // Toolbar (if configured)
+          if (config.toolbar) {
+            html += LeaveComponents.Toolbar(config.toolbar);
+          }
+
+          // Visual Analytics (if configured)
+          if (config.visualAnalytics) {
+            html += LeaveComponents.VisualAnalytics(config.visualAnalytics);
+          }
+          // Empty state (if configured)
+          else if (config.emptyState) {
+            html += LeaveComponents.EmptyState(config.emptyState);
+          }
+          // Data table (if columns and data configured)
+          else if (config.columns && config.columns.length > 0 && config.sampleData) {
+            html += LeaveComponents.renderReconciliationTable(config);
+          }
+
+          // Pagination (conditional)
+          if (config.showPagination !== false && config.sampleData && config.sampleData.length > 0) {
+            html += LeaveComponents.Pagination({ currentPage: 1, totalPages: 30 });
+          }
+
+          container.innerHTML = html;
+        }
+      }
+
+      // Auto-initialize when this file is loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReturnTab);
+      } else {
+        initReturnTab();
+      }
+
+      // Export init function for manual triggering
+      window.initReturnTab = initReturnTab;
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento – Leave Summary</title>
+</head>
+<body>
+  <!-- This file contains only the tab-specific content for Summary -->
+  <div id="leave-summary-tab">
+    <!-- Content will be dynamically rendered by JavaScript -->
+  </div>
+
+  <script>
+    // Summary Tab Rendering Logic
+    (function() {
+      'use strict';
+
+      // Initialize Summary tab content when loaded
+      function initSummaryTab() {
+        const container = document.getElementById('leave-summary-tab');
+        if (!container) return;
+
+        // Get configuration from parent page's LeaveComponents
+        if (typeof LeaveComponents !== 'undefined' && LeaveComponents.TabConfigs && LeaveComponents.TabConfigs.summary) {
+          const config = LeaveComponents.TabConfigs.summary;
+          
+          let html = '';
+
+          // Section header (if configured)
+          if (config.sectionHeader) {
+            html += LeaveComponents.SectionHeader(config.sectionHeader);
+          }
+
+          // Toolbar (if configured)
+          if (config.toolbar) {
+            html += LeaveComponents.Toolbar(config.toolbar);
+          }
+
+          // Visual Analytics (if configured)
+          if (config.visualAnalytics) {
+            html += LeaveComponents.VisualAnalytics(config.visualAnalytics);
+          }
+          // Empty state (if configured)
+          else if (config.emptyState) {
+            html += LeaveComponents.EmptyState(config.emptyState);
+          }
+          // Data table (if columns and data configured)
+          else if (config.columns && config.columns.length > 0 && config.sampleData) {
+            html += LeaveComponents.renderReconciliationTable(config);
+          }
+
+          // Pagination (conditional)
+          if (config.showPagination !== false && config.sampleData && config.sampleData.length > 0) {
+            html += LeaveComponents.Pagination({ currentPage: 1, totalPages: 30 });
+          }
+
+          container.innerHTML = html;
+        }
+      }
+
+      // Auto-initialize when this file is loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSummaryTab);
+      } else {
+        initSummaryTab();
+      }
+
+      // Export init function for manual triggering
+      window.initSummaryTab = initSummaryTab;
+    })();
+  </script>
+</body>
+</html>

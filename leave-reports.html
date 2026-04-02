@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento – Leave Reports</title>
+</head>
+<body>
+  <!-- This file contains only the tab-specific content for Reports -->
+  <div id="leave-reports-tab">
+    <!-- Content will be dynamically rendered by JavaScript -->
+  </div>
+
+  <script>
+    // Reports Tab Rendering Logic (with sub-tabs support)
+    (function() {
+      'use strict';
+
+      // Track active sub-tab for reports
+      let activeReportsSubTab = 'analysis-view';
+
+      // Initialize Reports tab content when loaded
+      function initReportsTab(subTabId = null) {
+        const container = document.getElementById('leave-reports-tab');
+        if (!container) return;
+
+        // Get configuration from parent page's LeaveComponents
+        if (typeof LeaveComponents !== 'undefined' && LeaveComponents.TabConfigs && LeaveComponents.TabConfigs.reports) {
+          const config = LeaveComponents.TabConfigs.reports;
+          
+          // Determine which sub-tab config to use
+          let activeSubTabId = subTabId || config.activeSubTab || (config.subTabs && config.subTabs[0]?.id);
+          let effectiveConfig = config;
+          
+          // If this tab has sub-tab specific configs, merge them
+          if (config.subTabConfigs && activeSubTabId && config.subTabConfigs[activeSubTabId]) {
+            const subConfig = config.subTabConfigs[activeSubTabId];
+            effectiveConfig = {
+              ...config,
+              ...subConfig,
+              subTabs: config.subTabs, // Keep sub-tabs from parent
+              activeSubTab: activeSubTabId
+            };
+          }
+
+          let html = '';
+
+          // Sub-tabs (if configured)
+          if (config.subTabs && config.subTabs.length > 0) {
+            html += LeaveComponents.SubTabs({
+              tabs: config.subTabs,
+              activeTab: activeSubTabId,
+              onTabChange: 'handleReportsSubTabSwitch'
+            });
+          }
+
+          // Section header (if configured)
+          if (effectiveConfig.sectionHeader) {
+            html += LeaveComponents.SectionHeader(effectiveConfig.sectionHeader);
+          }
+
+          // Toolbar (if configured)
+          if (effectiveConfig.toolbar) {
+            html += LeaveComponents.Toolbar(effectiveConfig.toolbar);
+          }
+
+          // Visual Analytics (if configured)
+          if (effectiveConfig.visualAnalytics) {
+            html += LeaveComponents.VisualAnalytics(effectiveConfig.visualAnalytics);
+          }
+          // Empty state (if configured)
+          else if (effectiveConfig.emptyState) {
+            html += LeaveComponents.EmptyState(effectiveConfig.emptyState);
+          }
+          // Data table (if columns and data configured)
+          else if (effectiveConfig.columns && effectiveConfig.columns.length > 0 && effectiveConfig.sampleData) {
+            html += LeaveComponents.renderReconciliationTable(effectiveConfig);
+          }
+
+          // Pagination (conditional)
+          if (effectiveConfig.showPagination !== false && effectiveConfig.sampleData && effectiveConfig.sampleData.length > 0) {
+            html += LeaveComponents.Pagination({ currentPage: 1, totalPages: 30 });
+          }
+
+          container.innerHTML = html;
+        }
+      }
+
+      // Handle sub-tab switching within Reports
+      function handleReportsSubTabSwitch(subtabId) {
+        console.log('Reports sub-tab switched to:', subtabId);
+        activeReportsSubTab = subtabId;
+        initReportsTab(subtabId);
+      }
+
+      // Auto-initialize when this file is loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReportsTab);
+      } else {
+        initReportsTab();
+      }
+
+      // Export functions for manual triggering
+      window.initReportsTab = initReportsTab;
+      window.handleReportsSubTabSwitch = handleReportsSubTabSwitch;
+    })();
+  </script>
+</body>
+</html>

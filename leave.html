@@ -12,6 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <!-- Shared layout styles -->
   <link rel="stylesheet" href="shared-styles.css" />
+  <!-- Design Tokens -->
+  <script src="design-tokens.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
   <style>
@@ -24,17 +26,17 @@
       display: inline-flex; align-items: center; gap: 5px;
       height: 28px; padding: 0 10px;
       border-radius: 6px;
-      font-size: 12px; color: #4b405c;
+      font-size: var(--badge-font-size); color: #4b405c;
       cursor: pointer; white-space: nowrap;
-      transition: background 150ms;
-      font-family: 'Alexandria', Helvetica, sans-serif;
+      transition: background var(--transition-normal);
+      font-family: var(--font-primary);
       border: none; background: transparent;
     }
     .leave-tab:hover:not(.active) { background: rgba(236,233,239,.55); }
     .leave-tab.active {
       background: #fff;
-      color: #1e1033;
-      border: 1px solid #e8e7eb;
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border);
       box-shadow: 0 0.5px 1px rgba(30,16,51,0.15);
       font-weight: 500;
     }
@@ -45,8 +47,8 @@
     .date-nav-pill {
       display: inline-flex; align-items: center; gap: 10px;
       height: 34px; padding: 0 12px;
-      border: 1px solid #e8e7eb; border-radius: 999px;
-      background: #F6F5F7;
+      border: 1px solid var(--color-border); border-radius: 999px;
+      background: var(--color-table-header);
       font-size: 13px; color: #4b405c;
     }
     .date-nav-pill button {
@@ -66,23 +68,23 @@
     .toolbar-btn {
       display: inline-flex; align-items: center; gap: 5px;
       height: 32px; padding: 0 10px;
-      border: 1px solid #e8e7eb; border-radius: 8px;
-      font-size: 13px; color: #1e1033; background: #fff;
+      border: 1px solid var(--color-border); border-radius: 8px;
+      font-size: 13px; color: var(--color-text-primary); background: #fff;
       cursor: pointer; white-space: nowrap;
       box-shadow: 0 0.5px 1px rgba(30,16,51,.12);
-      font-family: 'Alexandria', Helvetica, sans-serif;
-      transition: background 150ms;
+      font-family: var(--font-primary);
+      transition: background var(--transition-normal);
     }
     .toolbar-btn:hover { background: #f5f3fb; }
 
     .filter-btn {
       display: inline-flex; align-items: center; gap: 6px;
       height: 32px; padding: 0 12px;
-      border: 1px solid #e8e7eb; border-radius: 999px;
-      font-size: 13px; color: #1e1033; background: #fff;
+      border: 1px solid var(--color-border); border-radius: 999px;
+      font-size: 13px; color: var(--color-text-primary); background: #fff;
       cursor: pointer; white-space: nowrap;
-      font-family: 'Alexandria', Helvetica, sans-serif;
-      transition: background 150ms;
+      font-family: var(--font-primary);
+      transition: background var(--transition-normal);
     }
     .filter-btn:hover { background: #f5f3fb; }
 
@@ -91,18 +93,18 @@
     ───────────────────────────────────────── */
     .view-wrap {
       display: flex; align-items: center;
-      background: #f6f5f7; border: 1px solid #e8e7eb;
+      background: var(--color-table-header); border: 1px solid var(--color-border);
       border-radius: 999px; padding: 2px; height: 32px;
     }
     .view-btn {
       display: flex; align-items: center; justify-content: center;
       width: 26px; height: 26px; border-radius: 50%;
-      cursor: pointer; transition: background 150ms;
-      border: none; background: transparent; color: #787085;
+      cursor: pointer; transition: background var(--transition-normal);
+      border: none; background: transparent; color: var(--color-text-muted);
     }
     .view-btn.active {
-      background: #fff; border: 1px solid #e8e7eb;
-      box-shadow: 0 0.5px 1px rgba(30,16,51,.15); color: #1e1033;
+      background: #fff; border: 1px solid var(--color-border);
+      box-shadow: 0 0.5px 1px rgba(30,16,51,.15); color: var(--color-text-primary);
     }
     .view-btn:not(.active):hover { background: rgba(236,233,239,.55); }
 
@@ -111,10 +113,10 @@
     ───────────────────────────────────────── */
     .leave-table { width: 100%; border-collapse: collapse; min-width: 780px; }
 
-    .leave-table thead tr { border-bottom: 1px solid #f0eef6; background: #F6F5F7; }
+    .leave-table thead tr { border-bottom: 1px solid #f0eef6; background: var(--color-table-header); }
     .leave-table th {
       padding: 8px 10px; text-align: left;
-      font-size: 12px; font-weight: 400; color: #787085;
+      font-size: var(--badge-font-size); font-weight: 400; color: var(--color-text-muted);
       letter-spacing: -0.12px; white-space: nowrap;
     }
     .leave-table th:first-child { padding-left: 14px; width: 220px; }
@@ -125,7 +127,7 @@
     .leave-table tbody tr:hover { background: #faf9fc; }
 
     .leave-table td {
-      padding: 8px 10px; font-size: 13px; color: #1e1033; white-space: nowrap;
+      padding: 8px 10px; font-size: 13px; color: var(--color-text-primary); white-space: nowrap;
       vertical-align: middle;
     }
     .leave-table td:first-child { padding-left: 14px; }
@@ -137,13 +139,13 @@
     /* status badges */
     .badge-approved {
       display: inline-flex; align-items: center;
-      padding: 3px 10px; border-radius: 999px;
+      padding: 3px 10px; border-radius: var(--badge-radius);
       font-size: 11px; font-weight: 500;
       background: #D7FFE7; color: #16a34a;
     }
     .badge-review {
       display: inline-flex; align-items: center;
-      padding: 3px 10px; border-radius: 999px;
+      padding: 3px 10px; border-radius: var(--badge-radius);
       font-size: 11px; font-weight: 400;
       background: #f3f4f6; color: #6b7280;
     }
@@ -151,7 +153,7 @@
     /* duration pill */
     .duration-pill {
       display: inline-flex; align-items: center;
-      padding: 3px 10px; border-radius: 999px;
+      padding: 3px 10px; border-radius: var(--badge-radius);
       font-size: 11px; font-weight: 400;
       background: #f3f4f6; color: #4b405c;
     }
@@ -168,31 +170,31 @@
     .pg-nav-btn {
       display: inline-flex; align-items: center; gap: 4px;
       height: 30px; padding: 0 10px;
-      border: 1px solid #e8e7eb; border-radius: 6px;
-      font-size: 12px; color: #4b405c; background: #F6F5F7;
-      cursor: pointer; font-family: 'Alexandria', Helvetica, sans-serif;
-      transition: background 150ms;
+      border: 1px solid var(--color-border); border-radius: 6px;
+      font-size: var(--badge-font-size); color: #4b405c; background: var(--color-table-header);
+      cursor: pointer; font-family: var(--font-primary);
+      transition: background var(--transition-normal);
     }
     .pg-nav-btn:hover { background: #f5f3fb; }
     .pg-pages-wrap {
       display: flex; align-items: center; gap: 2px; flex-wrap: wrap; justify-content: flex-start;
-      background: #F6F5F7; border: 1px solid #e8e7eb; border-radius: 6px;
+      background: var(--color-table-header); border: 1px solid var(--color-border); border-radius: 6px;
       padding: 3px 6px;
     }
     .pg-page-btn {
       display: inline-flex; align-items: center; justify-content: center;
       min-width: 24px; height: 24px; padding: 0 6px;
       border: none; border-radius: 6px;
-      font-size: 12px; color: #4b405c; background: transparent;
-      cursor: pointer; font-family: 'Alexandria', Helvetica, sans-serif;
-      transition: background 150ms;
+      font-size: var(--badge-font-size); color: #4b405c; background: transparent;
+      cursor: pointer; font-family: var(--font-primary);
+      transition: background var(--transition-normal);
     }
     .pg-page-btn:hover:not(.pg-active) { background: #f5f3fb; }
     .pg-page-btn.pg-active {
-      background: #fff; color: #1e1033; border: 1px solid #e8e7eb;
+      background: #fff; color: var(--color-text-primary); border: 1px solid var(--color-border);
       box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
-    .pg-dots { font-size: 12px; color: #787085; padding: 0 2px; }
+    .pg-dots { font-size: var(--badge-font-size); color: var(--color-text-muted); padding: 0 2px; }
 
     /* ─────────────────────────────────────────
        MOBILE / RESPONSIVE HELPERS
@@ -315,6 +317,8 @@
 <script src="layout.js"></script>
 <!-- Leave Components Library -->
 <script src="leave_components.js"></script>
+<!-- Tab Loader Utility -->
+<script src="tab-loader.js"></script>
 
 <!-- Page-specific scripts -->
 <script>
@@ -331,8 +335,16 @@ let activeTabId = 'summary';
 // Initialize tabs on page load
 document.addEventListener('DOMContentLoaded', function() {
   renderMainTabs();
-  // Initialize Summary tab content
-  renderDynamicTabContent('summary');
+  // Initialize Summary tab content using TabLoader
+  const summaryContent = document.getElementById('summary-content');
+  summaryContent.style.display = 'block';
+  
+  TabLoader.loadTab('summary', 'summary-content', function() {
+    console.log('Initial summary tab loaded');
+    if (typeof window.initSummaryTab === 'function') {
+      window.initSummaryTab();
+    }
+  });
 });
 
 // Render main navigation tabs
@@ -364,7 +376,7 @@ function renderMainTabs() {
   tabsContainer.innerHTML = tabsHTML;
 }
 
-// Handle main tab click
+// Handle main tab click - now uses TabLoader to dynamically load content
 function handleMainTabClick(el, tabId) {
   // Update active state on tabs
   document.querySelectorAll('#main-tabs .leave-tab').forEach(t => t.classList.remove('active'));
@@ -379,13 +391,32 @@ function handleMainTabClick(el, tabId) {
     // Show summary, hide dynamic content
     summaryContent.style.display = 'block';
     tabContent.style.display = 'none';
-    // Render summary content dynamically
-    renderDynamicTabContent(tabId);
+    // Load summary tab content dynamically
+    TabLoader.loadTab('summary', 'summary-content', function() {
+      console.log('Summary tab loaded');
+      // Re-trigger initialization if needed
+      if (typeof window.initSummaryTab === 'function') {
+        window.initSummaryTab();
+      }
+    });
   } else {
-    // Hide summary, render dynamic content
+    // Hide summary, load dynamic content
     summaryContent.style.display = 'none';
     tabContent.style.display = 'block';
-    renderDynamicTabContent(tabId);
+    // Load the tab file dynamically
+    TabLoader.loadTab(tabId, 'tab-content', function() {
+      console.log(`Tab "${tabId}" loaded`);
+      // Re-trigger initialization based on tab
+      const initFunctions = {
+        'leave-reconciliations': 'initReconciliationTab',
+        'return-from-leave': 'initReturnTab',
+        'reports': 'initReportsTab'
+      };
+      const initFn = initFunctions[tabId];
+      if (initFn && typeof window[initFn] === 'function') {
+        window[initFn]();
+      }
+    });
   }
 }
 
