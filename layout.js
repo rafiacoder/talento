@@ -12,6 +12,7 @@
   const pageConfig = {
     'index.html': { navItem: 'dashboard', submenu: null },
     'leave.html': { navItem: 'attendance-leave', submenu: 'leave' },
+    'business-missions-trip.html': { navItem: 'business-missions', submenu: 'missions-trip' },
     'air-tickets.html': { navItem: 'business-missions', submenu: 'air-tickets' }
   };
 
@@ -24,6 +25,7 @@
     const isDashboardActive = config.navItem === 'dashboard';
     const isLeaveActive = config.submenu === 'leave';
     const isAttendanceExpanded = config.navItem === 'attendance-leave';
+    const isMissionsTripActive = config.submenu === 'missions-trip';
     const isAirTicketsActive = config.submenu === 'air-tickets';
     const isBusinessMissionsExpanded = config.navItem === 'business-missions';
 
@@ -124,11 +126,13 @@
         <!-- Business missions sub-items -->
         <div id="business-missions-submenu" style="display:${isBusinessMissionsExpanded ? 'flex' : 'none'};flex-direction:column;">
           <!-- Missions / Business Trip -->
-          <button class="nav-sub-item"
-            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
-            <i class="fa-solid fa-suitcase" style="width:16px;font-size:13px;color:#787085;flex-shrink:0;"></i>
-            <span class="s-label" style="color:#787085;font-size:13px;letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Missions / Business Trip</span>
-          </button>
+          <a href="business-missions-trip.html" style="text-decoration:none;">
+            <button class="nav-sub-item${isMissionsTripActive ? ' active' : ''}"${isMissionsTripActive ? ' aria-current="page"' : ''}
+              style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+              <i class="fa-solid fa-suitcase" style="width:16px;font-size:13px;color:${isMissionsTripActive ? '#1e1033' : '#787085'};flex-shrink:0;"></i>
+              <span class="s-label" style="color:${isMissionsTripActive ? '#1e1033' : '#787085'};font-size:13px;${isMissionsTripActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Missions / Business Trip</span>
+            </button>
+          </a>
           <!-- Exit and Re-entry -->
           <button class="nav-sub-item"
             style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">

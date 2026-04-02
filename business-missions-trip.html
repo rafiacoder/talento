@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento – Missions / Business Trip</title>
+  <meta name="description" content="Talento HR Platform – Business Missions Management" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Shared layout styles -->
+  <link rel="stylesheet" href="shared-styles.css" />
+  <!-- Design Tokens -->
+  <script src="design-tokens.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════════════
+       BUSINESS MISSIONS PAGE-SPECIFIC STYLES
+       ═══════════════════════════════════════════════════════════════════════════ */
+
+    /* Main tabs */
+    .missions-tab {
+      display: inline-flex; align-items: center; gap: 5px;
+      height: 28px; padding: 0 10px;
+      border-radius: 6px;
+      font-size: var(--badge-font-size); color: #4b405c;
+      cursor: pointer; white-space: nowrap;
+      transition: background var(--transition-normal);
+      font-family: var(--font-primary);
+      border: none; background: transparent;
+    }
+    .missions-tab:hover:not(.active) { background: rgba(236,233,239,.55); }
+    .missions-tab.active {
+      background: #fff;
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border);
+      box-shadow: 0 0.5px 1px rgba(30,16,51,0.15);
+      font-weight: 500;
+    }
+
+    /* Date nav pill */
+    .date-nav-pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      height: 34px; padding: 0 12px;
+      border: 1px solid var(--color-border); border-radius: 999px;
+      background: var(--color-table-header);
+      font-size: 13px; color: #4b405c;
+    }
+    .date-nav-pill button {
+      display: flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px;
+      color: #4b405c; background: transparent; border: none;
+      cursor: pointer; padding: 0; flex-shrink: 0;
+    }
+    .date-nav-pill .dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: #787085; flex-shrink: 0;
+    }
+
+    /* Toolbar buttons */
+    .toolbar-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      height: 32px; padding: 0 10px;
+      border: 1px solid var(--color-border); border-radius: 8px;
+      font-size: 13px; color: var(--color-text-primary); background: #fff;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 0.5px 1px rgba(30,16,51,.12);
+      font-family: var(--font-primary);
+      transition: background var(--transition-normal);
+    }
+    .toolbar-btn:hover { background: #f5f3fb; }
+
+    .filter-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 32px; padding: 0 12px;
+      border: 1px solid var(--color-border); border-radius: 999px;
+      font-size: 13px; color: var(--color-text-primary); background: #fff;
+      cursor: pointer; white-space: nowrap;
+      font-family: var(--font-primary);
+      transition: background var(--transition-normal);
+    }
+    .filter-btn:hover { background: #f5f3fb; }
+
+    /* View toggle */
+    .view-wrap {
+      display: flex; align-items: center;
+      background: var(--color-table-header); border: 1px solid var(--color-border);
+      border-radius: 999px; padding: 2px; height: 32px;
+    }
+    .view-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 50%;
+      cursor: pointer; transition: background var(--transition-normal);
+      border: none; background: transparent; color: var(--color-text-muted);
+    }
+    .view-btn.active {
+      background: #fff; border: 1px solid var(--color-border);
+      box-shadow: 0 0.5px 1px rgba(30,16,51,.15); color: var(--color-text-primary);
+    }
+    .view-btn:not(.active):hover { background: rgba(236,233,239,.55); }
+
+    /* Table */
+    .missions-table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+    .missions-table thead tr { border-bottom: 1px solid #f0eef6; background: var(--color-table-header); }
+    .missions-table th {
+      padding: 8px 10px; text-align: left;
+      font-size: var(--badge-font-size); font-weight: 400; color: var(--color-text-muted);
+      letter-spacing: -0.12px; white-space: nowrap;
+    }
+    .missions-table th:first-child { padding-left: 14px; }
+    .missions-table th.col-actions { width: 50px; }
+
+    .missions-table tbody tr { border-bottom: 1px solid #f0eef6; transition: background 120ms; }
+    .missions-table tbody tr:last-child { border-bottom: none; }
+    .missions-table tbody tr:hover { background: #faf9fc; }
+
+    .missions-table td {
+      padding: 8px 10px; font-size: 13px; color: var(--color-text-primary); white-space: nowrap;
+      vertical-align: middle;
+    }
+    .missions-table td:first-child { padding-left: 14px; }
+    .missions-table td.col-actions { padding: 0 8px; text-align: center; }
+
+    /* Employee cell with avatar */
+    .employee-cell {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .employee-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #e8e7eb; flex-shrink: 0;
+    }
+
+    /* Mission type badges */
+    .badge-personal {
+      display: inline-flex; align-items: center;
+      padding: 3px 10px; border-radius: var(--badge-radius);
+      font-size: 11px; font-weight: 400;
+      background: #f3f4f6; color: #6b7280;
+    }
+    .badge-business-trip {
+      display: inline-flex; align-items: center;
+      padding: 3px 10px; border-radius: var(--badge-radius);
+      font-size: 11px; font-weight: 400;
+      background: #eef2ff; color: #4B405C;
+    }
+
+    /* Payment status badges */
+    .badge-done {
+      display: inline-flex; align-items: center;
+      padding: 3px 10px; border-radius: var(--badge-radius);
+      font-size: var(--badge-font-size); font-weight: 400;
+      background: #D7FFE7; color: #16a34a;
+    }
+    .badge-need-to-pay {
+      display: inline-flex; align-items: center;
+      padding: 3px 10px; border-radius: var(--badge-radius);
+      font-size: var(--badge-font-size); font-weight: 400;
+      background: #fef3c7; color: #b45309;
+    }
+
+    /* Pagination */
+    .pg-wrap {
+      display: flex; align-items: center; justify-content: flex-start;
+      flex-wrap: wrap; gap: 8px; min-width: 0;
+    }
+    .pg-wrap > * { flex-shrink: 0; }
+    .pg-nav-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      height: 30px; padding: 0 10px;
+      border: 1px solid var(--color-border); border-radius: 6px;
+      font-size: var(--badge-font-size); color: #4b405c; background: var(--color-table-header);
+      cursor: pointer; font-family: var(--font-primary);
+      transition: background var(--transition-normal);
+    }
+    .pg-nav-btn:hover { background: #f5f3fb; }
+    .pg-pages-wrap {
+      display: flex; align-items: center; gap: 2px; flex-wrap: wrap; justify-content: flex-start;
+      background: var(--color-table-header); border: 1px solid var(--color-border); border-radius: 6px;
+      padding: 3px 6px;
+    }
+    .pg-page-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 24px; height: 24px; padding: 0 6px;
+      border: none; border-radius: 6px;
+      font-size: var(--badge-font-size); color: #4b405c; background: transparent;
+      cursor: pointer; font-family: var(--font-primary);
+      transition: background var(--transition-normal);
+    }
+    .pg-page-btn:hover:not(.pg-active) { background: #f5f3fb; }
+    .pg-page-btn.pg-active {
+      background: #fff; color: var(--color-text-primary); border: 1px solid var(--color-border);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .pg-dots { font-size: var(--badge-font-size); color: var(--color-text-muted); padding: 0 2px; }
+
+    /* Responsive */
+    .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .table-scroll-wrap::-webkit-scrollbar { height: 4px; }
+    .table-scroll-wrap::-webkit-scrollbar-thumb { background: #d2cfd6; border-radius: 4px; }
+
+    .page-header-row {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    }
+    .tabs-config-wrap {
+      display: flex; align-items: flex-start; flex-wrap: wrap; gap: 6px; justify-content: flex-start;
+      min-width: 0;
+    }
+    .tabs-config-wrap > * { flex-shrink: 0; }
+
+    .toolbar-row {
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 8px;
+      min-width: 0; margin-bottom: 16px;
+    }
+    .toolbar-left { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; justify-content: flex-start; min-width: 0; }
+    .toolbar-left > * { flex-shrink: 0; }
+    .toolbar-right { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; justify-content: flex-start; min-width: 0; }
+    .toolbar-right > * { flex-shrink: 0; }
+
+    @media (max-width: 480px) {
+      .pg-wrap { justify-content: flex-start; gap: 4px; }
+      .pg-nav-btn { padding: 0 8px; font-size: 11px; height: 28px; }
+      .pg-page-btn { min-width: 22px; height: 22px; font-size: 11px; padding: 0 4px; }
+    }
+
+    @media (max-width: 900px) {
+      .missions-tab { font-size: 11px; padding: 0 7px; }
+    }
+
+    @media (max-width: 480px) {
+      .missions-tab { font-size: 10px; padding: 0 6px; height: 26px; gap: 4px; }
+      .missions-tab svg { width: 11px; height: 11px; }
+      .toolbar-btn { font-size: 11px; padding: 0 8px; height: 28px; }
+    }
+  </style>
+</head>
+
+<body>
+<div id="app">
+
+  <!-- OVERLAY (mobile) -->
+  <div id="overlay" aria-hidden="true"></div>
+
+  <!-- SIDEBAR (injected by layout.js) -->
+  <aside id="sidebar" aria-label="Main navigation"></aside>
+
+  <!-- MAIN COLUMN -->
+  <div id="main-col">
+
+    <!-- NAVBAR (injected by layout.js) -->
+    <header id="navbar" style="display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 16px;background:#fff;border-bottom:1px solid #e8e7eb;flex-shrink:0;min-width:0;"></header>
+
+    <!-- SCROLL AREA -->
+    <div id="main-scroll">
+      <div style="padding:16px;background:#f6f5f7;min-height:calc(100vh - 56px);">
+
+        <!-- MAIN CONTENT CARD -->
+        <div style="background:#fff;border-radius:20px;padding:20px 20px 24px;display:flex;flex-direction:column;gap:0;min-width:0;overflow:hidden;">
+
+          <!-- PAGE HEADER (title + tabs + config) -->
+          <div class="page-header-row" style="margin-bottom:12px;">
+            <h1 style="color:#1e1033;font-size:22px;font-weight:400;letter-spacing:-0.22px;line-height:1.4;flex-shrink:0;">Missions / Business Trip</h1>
+            <div class="tabs-config-wrap">
+              <div id="main-tabs" style="display:flex;align-items:center;background:#f6f5f7;border:1.5px solid rgba(30,16,51,0.1);border-radius:8px;padding:2px;gap:0;flex-wrap:wrap;justify-content:flex-start;max-width:100%;"></div>
+              <button class="toolbar-btn" style="gap:6px;border-radius:8px;">
+                Configuration
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- TOOLBAR -->
+          <div class="toolbar-row">
+            <!-- Left: Date Navigator -->
+            <div class="toolbar-left">
+              <div class="date-nav-pill">
+                <button aria-label="Previous">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <span style="font-size:13px;color:#4b405c;letter-spacing:-0.07px;">Today</span>
+                <span class="dot"></span>
+                <span style="font-size:13px;color:#4b405c;letter-spacing:-0.07px;">Tuesday, 16 Dec</span>
+                <button aria-label="Next">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Filters, View toggle, Export, Edit columns -->
+            <div class="toolbar-right">
+              <button class="filter-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                Filters
+                <span style="color:#787085;">2</span>
+              </button>
+
+              <div class="view-wrap">
+                <button class="view-btn" onclick="switchView(this)" title="Grid view">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                </button>
+                <button class="view-btn active" onclick="switchView(this)" title="List view">
+                  <svg width="13" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                </button>
+              </div>
+
+              <button class="toolbar-btn">
+                Export all
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </button>
+
+              <button class="toolbar-btn">
+                Edit columns
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- DATA TABLE -->
+          <div class="table-scroll-wrap">
+            <table class="missions-table">
+              <thead>
+                <tr>
+                  <th>Code
+                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                  </th>
+                  <th>Employee
+                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                  </th>
+                  <th>Mission type
+                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                  </th>
+                  <th>Start Date
+                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                  </th>
+                  <th>End date
+                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                  </th>
+                  <th>Total duration (minutes)
+                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                  </th>
+                  <th>Salary deduction amo.
+                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                  </th>
+                  <th>Payment status
+                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="missions-data">
+                <!-- Data will be rendered here -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PAGINATION -->
+          <div class="pg-wrap" style="margin-top:16px;">
+            <button class="pg-nav-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+            <div class="pg-pages-wrap">
+              <button class="pg-page-btn pg-active" onclick="pgSelect(this)">01</button>
+              <button class="pg-page-btn" onclick="pgSelect(this)">02</button>
+              <button class="pg-page-btn" onclick="pgSelect(this)">03</button>
+              <button class="pg-page-btn" onclick="pgSelect(this)">04</button>
+              <button class="pg-page-btn" onclick="pgSelect(this)">05</button>
+              <button class="pg-page-btn" onclick="pgSelect(this)">06</button>
+              <span class="pg-dots">...</span>
+              <button class="pg-page-btn" onclick="pgSelect(this)">30</button>
+            </div>
+            <button class="pg-nav-btn">
+              Next
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+
+        </div>
+        <!-- /MAIN CARD -->
+
+      </div>
+    </div>
+    <!-- /SCROLL -->
+
+  </div>
+  <!-- /MAIN COL -->
+
+</div>
+
+<!-- Shared Layout Script -->
+<script src="layout.js"></script>
+<!-- Leave Components Library (reusing for business missions) -->
+<script src="leave_components.js"></script>
+
+<!-- Page-specific scripts -->
+<script>
+// Tab definitions for Business Missions module
+const missionsTabs = [
+  { id: 'summary', label: 'Summary', icon: 'sparkle' },
+  { id: 'reports', label: 'Reports', icon: 'document' }
+];
+
+let activeTabId = 'summary';
+
+// Sample data for missions
+const missionsData = [
+  { code: 'ATROK96', employee: 'Mishari AlSubaie', missionType: 'Personal', startDate: '11 Dec 2025', endDate: '19 Dec 2025', duration: '00.00', salaryDeduction: '00.00', paymentStatus: 'Done' },
+  { code: '12 Dec 2025', employee: 'Mishari AlSubaie', missionType: 'Business trip', startDate: '11 Dec 2025', endDate: '19 Dec 2025', duration: '00.00', salaryDeduction: '00.00', paymentStatus: 'Need to pay' },
+  { code: '12 Dec 2025', employee: 'Mishari AlSubaie', missionType: 'Business trip', startDate: '11 Dec 2025', endDate: '19 Dec 2025', duration: '00.00', salaryDeduction: '00.00', paymentStatus: 'Need to pay' },
+  { code: '12 Dec 2025', employee: 'Mishari AlSubaie', missionType: 'Business trip', startDate: '11 Dec 2025', endDate: '19 Dec 2025', duration: '00.00', salaryDeduction: '00.00', paymentStatus: 'Need to pay' },
+  { code: 'ATROK96', employee: 'Mishari AlSubaie', missionType: 'Personal', startDate: '11 Dec 2025', endDate: '19 Dec 2025', duration: '00.00', salaryDeduction: '00.00', paymentStatus: 'Done' },
+  { code: '12 Dec 2025', employee: 'Mishari AlSubaie', missionType: 'Business trip', startDate: '11 Dec 2025', endDate: '19 Dec 2025', duration: '00.00', salaryDeduction: '00.00', paymentStatus: 'Need to pay' },
+  { code: 'ATROK96', employee: 'Mishari AlSubaie', missionType: 'Personal', startDate: '11 Dec 2025', endDate: '19 Dec 2025', duration: '00.00', salaryDeduction: '00.00', paymentStatus: 'Done' }
+];
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+  renderMainTabs();
+  renderMissionsData();
+});
+
+// Render main navigation tabs
+function renderMainTabs() {
+  const tabsContainer = document.getElementById('main-tabs');
+  if (!tabsContainer) return;
+
+  const Icons = LeaveComponents.Icons;
+  const tabIcons = {
+    'summary': Icons.sparkle,
+    'reports': Icons.document
+  };
+
+  const tabsHTML = missionsTabs.map(tab => {
+    const isActive = tab.id === activeTabId;
+    const icon = tabIcons[tab.id] || '';
+    return `
+      <button class="missions-tab${isActive ? ' active' : ''}" 
+              data-tab-id="${tab.id}"
+              onclick="handleMainTabClick(this, '${tab.id}')">
+        ${icon}
+        ${tab.label}
+      </button>
+    `;
+  }).join('');
+
+  tabsContainer.innerHTML = tabsHTML;
+}
+
+// Handle main tab click
+function handleMainTabClick(el, tabId) {
+  document.querySelectorAll('#main-tabs .missions-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  activeTabId = tabId;
+}
+
+// Render missions table data
+function renderMissionsData() {
+  const tbody = document.getElementById('missions-data');
+  if (!tbody) return;
+
+  const rowsHTML = missionsData.map(mission => {
+    const missionTypeBadge = mission.missionType === 'Personal' 
+      ? `<span class="badge-personal">Personal</span>`
+      : `<span class="badge-business-trip">Business trip</span>`;
+
+    const paymentStatusBadge = mission.paymentStatus === 'Done'
+      ? `<span class="badge-done">Done</span>`
+      : `<span class="badge-need-to-pay">Need to pay</span>`;
+
+    return `
+      <tr>
+        <td>${mission.code}</td>
+        <td>
+          <div class="employee-cell">
+            <div class="employee-avatar"></div>
+            <span>${mission.employee}</span>
+          </div>
+        </td>
+        <td>${missionTypeBadge}</td>
+        <td>${mission.startDate}</td>
+        <td>${mission.endDate}</td>
+        <td>${mission.duration}</td>
+        <td>${mission.salaryDeduction}</td>
+        <td>${paymentStatusBadge}</td>
+      </tr>
+    `;
+  }).join('');
+
+  tbody.innerHTML = rowsHTML;
+}
+
+/* View toggle */
+function switchView(el) {
+  document.querySelectorAll('.view-btn').forEach(function (b) { b.classList.remove('active'); });
+  el.classList.add('active');
+}
+
+/* Pagination */
+function pgSelect(el) {
+  document.querySelectorAll('.pg-page-btn').forEach(function (b) { b.classList.remove('pg-active'); });
+  el.classList.add('pg-active');
+}
+</script>
+</body>
+</html>
