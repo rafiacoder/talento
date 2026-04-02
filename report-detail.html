@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento – Report Detail</title>
+  <meta name="description" content="Talento HR Platform – Report Detail View" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Shared layout styles -->
+  <link rel="stylesheet" href="shared-styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════════════
+       REPORT DETAIL PAGE-SPECIFIC STYLES
+       ═══════════════════════════════════════════════════════════════════════════ */
+
+    /* ─────────────────────────────────────────
+       BREADCRUMB
+    ───────────────────────────────────────── */
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* ─────────────────────────────────────────
+       TOOLBAR BUTTONS
+    ───────────────────────────────────────── */
+    .toolbar-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      height: 32px; padding: 0 10px;
+      border: 1px solid #e8e7eb; border-radius: 8px;
+      font-size: 13px; color: #1e1033; background: #fff;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 0.5px 1px rgba(30,16,51,.12);
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      transition: background 150ms;
+    }
+    .toolbar-btn:hover { background: #f5f3fb; }
+
+    /* ─────────────────────────────────────────
+       NAVIGATION BUTTONS (Back/Next)
+    ───────────────────────────────────────── */
+    .pg-nav-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      height: 30px; padding: 0 10px;
+      border: 1px solid #e8e7eb; border-radius: 6px;
+      font-size: 12px; color: #4b405c; background: #F6F5F7;
+      cursor: pointer; font-family: 'Alexandria', Helvetica, sans-serif;
+      transition: background 150ms;
+    }
+    .pg-nav-btn:hover { background: #f5f3fb; }
+
+    /* ─────────────────────────────────────────
+       TABLE
+    ───────────────────────────────────────── */
+    .leave-table { width: 100%; border-collapse: collapse; min-width: 780px; }
+
+    .leave-table thead tr { border-bottom: 1px solid #f0eef6; background: #F6F5F7; }
+    .leave-table th {
+      padding: 8px 10px; text-align: left;
+      font-size: 12px; font-weight: 400; color: #787085;
+      letter-spacing: -0.12px; white-space: nowrap;
+    }
+    .leave-table th:first-child { padding-left: 14px; width: 220px; }
+    .leave-table th.col-actions { width: 50px; }
+
+    .leave-table tbody tr { border-bottom: 1px solid #f0eef6; transition: background 120ms; }
+    .leave-table tbody tr:last-child { border-bottom: none; }
+    .leave-table tbody tr:hover { background: #faf9fc; }
+
+    .leave-table td {
+      padding: 8px 10px; font-size: 13px; color: #1e1033; white-space: nowrap;
+      vertical-align: middle;
+    }
+    .leave-table td:first-child { padding-left: 14px; }
+    .leave-table td.col-actions { padding: 0 8px; text-align: center; }
+
+    /* sort icon inline */
+    .sort-icon { display: inline-block; vertical-align: middle; margin-left: 3px; }
+
+    /* status badges */
+    .badge-approved {
+      display: inline-flex; align-items: center;
+      padding: 3px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 500;
+      background: #D7FFE7; color: #16a34a;
+    }
+
+    /* ─────────────────────────────────────────
+       TABLE WRAPPER
+    ───────────────────────────────────────── */
+    .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .table-scroll-wrap::-webkit-scrollbar { height: 4px; }
+    .table-scroll-wrap::-webkit-scrollbar-thumb { background: #d2cfd6; border-radius: 4px; }
+
+    /* ─────────────────────────────────────────
+       REPORT HEADER SECTION
+    ───────────────────────────────────────── */
+    .report-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .report-nav-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .report-actions-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE STYLES
+    ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .report-header-wrap { flex-direction: column; align-items: flex-start; }
+      .report-nav-wrap { order: -1; margin-bottom: 8px; }
+    }
+
+    @media (max-width: 680px) {
+      .report-actions-wrap { width: 100%; justify-content: flex-start; }
+      .toolbar-btn { font-size: 12px; padding: 0 8px; height: 30px; }
+    }
+
+    @media (max-width: 480px) {
+      .pg-nav-btn { padding: 0 8px; font-size: 11px; height: 28px; }
+      .toolbar-btn { font-size: 11px; padding: 0 6px; height: 28px; }
+      .report-nav-wrap { gap: 8px; }
+      .report-nav-wrap span { font-size: 11px; }
+    }
+  </style>
+</head>
+
+<body>
+<div id="app">
+
+  <!-- OVERLAY (mobile) -->
+  <div id="overlay" aria-hidden="true"></div>
+
+  <!-- SIDEBAR (injected by layout.js) -->
+  <aside id="sidebar" aria-label="Main navigation"></aside>
+
+  <!-- MAIN COLUMN -->
+  <div id="main-col">
+
+    <!-- NAVBAR (injected by layout.js) -->
+    <header id="navbar" style="display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 16px;background:#fff;border-bottom:1px solid #e8e7eb;flex-shrink:0;min-width:0;"></header>
+
+    <!-- SCROLL AREA -->
+    <div id="main-scroll">
+      <div style="padding:16px;background:#f6f5f7;min-height:calc(100vh - 56px);">
+
+        <!-- MAIN CONTENT CARD -->
+        <div style="background:#fff;border-radius:20px;padding:20px 20px 24px;display:flex;flex-direction:column;gap:0;min-width:0;overflow:hidden;">
+
+          <!-- BREADCRUMB + NAVIGATION -->
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px;">
+            <div id="breadcrumb-container"></div>
+            <div class="report-nav-wrap">
+              <button class="pg-nav-btn" onclick="navigateReport('prev')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                Back
+              </button>
+              <span style="font-size:13px;color:#787085;">2 of 12</span>
+              <button class="pg-nav-btn" onclick="navigateReport('next')">
+                Next
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- REPORT HEADER -->
+          <div id="report-header-container"></div>
+
+          <!-- ACTION BUTTONS ROW -->
+          <div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+            <div class="report-actions-wrap">
+              <button class="toolbar-btn">
+                Export
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </button>
+              <button class="toolbar-btn">
+                Edit columns
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </button>
+              <button class="toolbar-btn" style="padding:0 8px;" aria-label="More options">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- DATA TABLE -->
+          <div id="table-container" style="min-width:0;"></div>
+
+        </div>
+        <!-- /MAIN CARD -->
+
+      </div>
+    </div>
+    <!-- /SCROLL -->
+
+  </div>
+  <!-- /MAIN COL -->
+
+</div>
+
+<!-- Shared Layout Script -->
+<script src="layout.js"></script>
+<!-- Leave Components Library -->
+<script src="leave_components.js"></script>
+
+<!-- Page-specific scripts -->
+<script>
+// Report detail data configuration
+const reportData = {
+  breadcrumb: [
+    { label: 'Reports list', href: 'leave.html' },
+    { label: 'Report name' }
+  ],
+  header: {
+    title: 'Report name',
+    dateRange: '12 November 2025 • 12 December 2025',
+    totalDays: '-3,047.41 days',
+    note: 'This is last report in this month',
+    createdBy: {
+      name: 'Mishari AlSubaie',
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
+    }
+  },
+  navigation: {
+    currentIndex: 2,
+    totalItems: 12
+  },
+  table: {
+    columns: [
+      { key: 'employeeName', label: 'Employee name', sortable: true, width: '180px' },
+      { key: 'numberOfDays', label: 'Number of days', sortable: true, width: '130px' },
+      { key: 'status', label: 'Status', type: 'badge', sortable: true, width: '100px' },
+      { key: 'startDate', label: 'Start date', sortable: true, width: '120px' },
+      { key: 'endDate', label: 'End date', sortable: true, width: '120px' },
+      { key: 'description', label: 'Description', sortable: false, width: '180px' }
+    ],
+    data: [
+      {
+        employeeName: 'Fahad AlShahrani',
+        numberOfDays: '7.00 days',
+        status: 'Approved',
+        statusVariant: 'approved',
+        startDate: '12 Dec 2025',
+        endDate: '12 Dec 2025',
+        description: 'No description',
+        descriptionMuted: true
+      },
+      {
+        employeeName: 'Khalid AlAnazi',
+        numberOfDays: '5.25 days',
+        status: 'Approved',
+        statusVariant: 'approved',
+        startDate: '12 Dec 2025',
+        endDate: '12 Dec 2025',
+        description: 'Automatic Leave Allocation'
+      },
+      {
+        employeeName: 'Fahad AlShahrani',
+        numberOfDays: '7.00 days',
+        status: 'Approved',
+        statusVariant: 'approved',
+        startDate: '12 Dec 2025',
+        endDate: '12 Dec 2025',
+        description: 'Automatic Leave Allocation'
+      },
+      {
+        employeeName: 'Fahad AlShahrani',
+        numberOfDays: '7.00 days',
+        status: 'Approved',
+        statusVariant: 'approved',
+        startDate: '12 Dec 2025',
+        endDate: '12 Dec 2025',
+        description: 'Description'
+      },
+      {
+        employeeName: 'Khalid AlAnazi',
+        numberOfDays: '7.00 days',
+        status: 'Approved',
+        statusVariant: 'approved',
+        startDate: '12 Dec 2025',
+        endDate: '12 Dec 2025',
+        description: 'Description'
+      },
+      {
+        employeeName: 'Fahad AlShahrani',
+        numberOfDays: '7.00 days',
+        status: 'Approved',
+        statusVariant: 'approved',
+        startDate: '12 Dec 2025',
+        endDate: '12 Dec 2025',
+        description: 'No description',
+        descriptionMuted: true
+      },
+      {
+        employeeName: 'Fahad AlShahrani',
+        numberOfDays: '7.00 days',
+        status: 'Approved',
+        statusVariant: 'approved',
+        startDate: '12 Dec 2025',
+        endDate: '12 Dec 2025',
+        description: 'Automatic Leave Allocation'
+      },
+      {
+        employeeName: 'Khalid AlAnazi',
+        numberOfDays: '7.00 days',
+        status: 'Approved',
+        statusVariant: 'approved',
+        startDate: '12 Dec 2025',
+        endDate: '12 Dec 2025',
+        description: 'Automatic Leave Allocation'
+      },
+      {
+        employeeName: 'Khalid AlAnazi',
+        numberOfDays: '7.00 days',
+        status: 'Approved',
+        statusVariant: 'approved',
+        startDate: '12 Dec 2025',
+        endDate: '12 Dec 2025',
+        description: 'Automatic Leave Allocation'
+      }
+    ]
+  }
+};
+
+// Initialize page on DOM load
+document.addEventListener('DOMContentLoaded', function() {
+  renderBreadcrumb();
+  renderReportHeader();
+  renderDataTable();
+});
+
+// Render breadcrumb navigation
+function renderBreadcrumb() {
+  const container = document.getElementById('breadcrumb-container');
+  if (!container) return;
+  
+  container.innerHTML = LeaveComponents.Breadcrumb({ items: reportData.breadcrumb });
+}
+
+// Render report header with title and metadata
+function renderReportHeader() {
+  const container = document.getElementById('report-header-container');
+  if (!container) return;
+
+  const { title, dateRange, totalDays, note, createdBy } = reportData.header;
+
+  const createdByHTML = createdBy ? `
+    <span style="display:inline-flex;align-items:center;gap:6px;">
+      Created by
+      ${LeaveComponents.Avatar({ src: createdBy.avatar, name: createdBy.name, size: 24 })}
+    </span>
+  ` : '';
+
+  container.innerHTML = `
+    <div style="margin-bottom:8px;">
+      <h1 style="font-size:20px;font-weight:500;color:#1e1033;margin-bottom:8px;">${title}</h1>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:#787085;margin-bottom:4px;">
+        <span>${dateRange}</span>
+        <span>•</span>
+        <span>Total number of days <strong style="color:#1e1033;">${totalDays}</strong></span>
+      </div>
+      ${note ? `
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:#787085;">
+          <span>Note: <strong style="color:#4b405c;">${note}</strong></span>
+          <span>•</span>
+          ${createdByHTML}
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+// Render the data table
+function renderDataTable() {
+  const container = document.getElementById('table-container');
+  if (!container) return;
+
+  const { columns, data } = reportData.table;
+  const Icons = LeaveComponents.Icons;
+
+  // Build header row
+  const headerCells = columns.map((col, idx) => {
+    const checkboxHTML = idx === 0 ? 
+      `<input type="checkbox" class="table-checkbox" onclick="toggleAllCheckboxes(this)" style="margin-right:8px;" />` : '';
+    
+    return `
+      <th${col.width ? ` style="width:${col.width}"` : ''}>
+        <div style="display:flex;align-items:center;gap:4px;">
+          ${checkboxHTML}
+          ${col.label}
+          ${col.sortable !== false ? Icons.sort : ''}
+        </div>
+      </th>
+    `;
+  }).join('');
+
+  // Build body rows
+  const bodyRows = data.map(row => {
+    const cells = columns.map((col, idx) => {
+      let cellContent = '';
+      const value = row[col.key];
+
+      // First column with checkbox
+      if (idx === 0) {
+        cellContent = `
+          <div style="display:flex;align-items:center;gap:8px;">
+            <input type="checkbox" class="table-checkbox" />
+            <span style="color:#1e1033;">${value}</span>
+          </div>
+        `;
+      } else if (col.type === 'badge') {
+        cellContent = LeaveComponents.Badge({ text: value, variant: row.statusVariant || 'default' });
+      } else if (col.key === 'description') {
+        const isMuted = row.descriptionMuted;
+        cellContent = `<span style="color:${isMuted ? '#a09aab' : '#1e1033'};">${value}</span>`;
+      } else {
+        cellContent = value || '';
+      }
+
+      return `<td>${cellContent}</td>`;
+    }).join('');
+
+    return `<tr>${cells}<td class="col-actions">
+      <button style="color:#787085;padding:6px;background:none;border:none;cursor:pointer;" aria-label="More actions">
+        ${Icons.moreVertical}
+      </button>
+    </td></tr>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="table-scroll-wrap" style="border: 1px solid #f0eef6; border-radius: 12px; overflow-x: auto; overflow-y: hidden;">
+      <table class="leave-table">
+        <thead>
+          <tr>${headerCells}<th class="col-actions"></th></tr>
+        </thead>
+        <tbody>
+          ${bodyRows}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// Navigation handlers
+function navigateReport(direction) {
+  console.log('Navigate report:', direction);
+  // Implement navigation logic here
+}
+
+// Toggle all checkboxes
+function toggleAllCheckboxes(el) {
+  const table = el.closest('table');
+  if (!table) return;
+  
+  const checkboxes = table.querySelectorAll('tbody .table-checkbox');
+  checkboxes.forEach(cb => { cb.checked = el.checked; });
+}
+</script>
+</body>
+</html>
