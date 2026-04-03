@@ -284,6 +284,79 @@ input { outline: none; border: none; background: transparent; width: 100%; }
   background: var(--color-badge-bg);
 }
 
+/* Payment & Mission status badges */
+.badge-done {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: var(--badge-radius);
+  font-size: var(--badge-font-size);
+  font-weight: 400;
+  background: #D7FFE7;
+  color: #16a34a;
+}
+
+.badge-need-to-pay {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: var(--badge-radius);
+  font-size: var(--badge-font-size);
+  font-weight: 400;
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.badge-personal {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: var(--badge-radius);
+  font-size: var(--badge-font-size);
+  font-weight: 400;
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.badge-business-trip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: var(--badge-radius);
+  font-size: var(--badge-font-size);
+  font-weight: 400;
+  background: #E8E5F1;
+  color: #4B405C;
+}
+
+.badge-leave {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: var(--badge-radius);
+  font-size: var(--badge-font-size);
+  font-weight: 400;
+  background: #E8E5F1;
+  color: #4b405c;
+}
+
+.badge-business-mission {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: var(--badge-radius);
+  font-size: var(--badge-font-size);
+  font-weight: 400;
+  background: #E8E5F1;
+  color: #4b405c;
+}
+
 /* ─────────────────────────────────────────
    SECTION HEADER
 ───────────────────────────────────────── */
@@ -467,4 +540,103 @@ input { outline: none; border: none; background: transparent; width: 100%; }
 }
 .toolbar-btn:hover {
   background: #f6f5f7;
+}
+
+/* ─────────────────────────────────────────
+   STANDARDIZED TABLE WRAPPER (Reusable)
+   Use this for ALL data tables to ensure consistency
+───────────────────────────────────────── */
+.table-container {
+  border: 1px solid #e8e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.table-scroll-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll-wrap::-webkit-scrollbar {
+  height: 4px;
+}
+
+.table-scroll-wrap::-webkit-scrollbar-thumb {
+  background: #d2cfd6;
+  border-radius: 4px;
+}
+
+/* Standardized data table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.data-table thead tr {
+  border-bottom: 1px solid #f0eef6;
+  background: var(--color-table-header);
+}
+
+.data-table th {
+  padding: 8px 10px;
+  text-align: left;
+  font-size: var(--badge-font-size);
+  font-weight: 400;
+  color: var(--color-text-muted);
+  letter-spacing: -0.12px;
+  white-space: nowrap;
+}
+
+.data-table th:first-child {
+  padding-left: 14px;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid #f0eef6;
+  transition: background 120ms;
+}
+
+.data-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: #faf9fc;
+}
+
+.data-table td {
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.data-table td:first-child {
+  padding-left: 14px;
+}
+
+/* Sort icon */
+.sort-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 3px;
+}
+
+/* Employee cell with avatar */
+.employee-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.employee-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e8e7eb;
+  flex-shrink: 0;
+  object-fit: cover;
 }

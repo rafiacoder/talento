@@ -104,69 +104,8 @@
     .create-new-btn:hover { background: #2d1a4a; }
 
     /* ─────────────────────────────────────────
-       TABLE
+       TABLE & BADGE STYLES - All in shared-styles.css
     ───────────────────────────────────────── */
-    .air-tickets-table { width: 100%; border-collapse: collapse; min-width: 1200px; }
-
-    .air-tickets-table thead tr { border-bottom: 1px solid #f0eef6; background: #F6F5F7; }
-    .air-tickets-table th {
-      padding: 8px 10px; text-align: left;
-      font-size: 12px; font-weight: 400; color: #787085;
-      letter-spacing: -0.12px; white-space: nowrap;
-    }
-    .air-tickets-table th:first-child { padding-left: 14px; }
-    .air-tickets-table th.col-actions { width: 50px; }
-
-    .air-tickets-table tbody tr { border-bottom: 1px solid #f0eef6; transition: background 120ms; }
-    .air-tickets-table tbody tr:last-child { border-bottom: none; }
-    .air-tickets-table tbody tr:hover { background: #faf9fc; }
-
-    .air-tickets-table td {
-      padding: 8px 10px; font-size: 13px; color: #1e1033; white-space: nowrap;
-      vertical-align: middle;
-    }
-    .air-tickets-table td:first-child { padding-left: 14px; }
-    .air-tickets-table td.col-actions { padding: 0 8px; text-align: center; }
-
-    /* sort icon inline */
-    .sort-icon { display: inline-block; vertical-align: middle; margin-left: 3px; }
-
-    /* status badges */
-    .badge-done {
-      display: inline-flex; align-items: center;
-      padding: 3px 10px; border-radius: 999px;
-      font-size: 11px; font-weight: 400;
-      background: #E8E5F1; color: #4b405c;
-    }
-    .badge-need-to-pay {
-      display: inline-flex; align-items: center;
-      padding: 3px 10px; border-radius: 999px;
-      font-size: 11px; font-weight: 400;
-      background: #E8E5F1; color: #4b405c;
-    }
-
-    /* request type badge */
-    .badge-leave {
-      display: inline-flex; align-items: center;
-      padding: 3px 10px; border-radius: 999px;
-      font-size: 11px; font-weight: 400;
-      background: #E8E5F1; color: #4b405c;
-    }
-    .badge-business-mission {
-      display: inline-flex; align-items: center;
-      padding: 3px 10px; border-radius: 999px;
-      font-size: 11px; font-weight: 400;
-      background: #E8E5F1; color: #4b405c;
-    }
-
-    /* employee avatar */
-    .employee-cell {
-      display: flex; align-items: center; gap: 8px;
-    }
-    .avatar {
-      width: 24px; height: 24px; border-radius: 50%;
-      object-fit: cover; flex-shrink: 0;
-    }
 
     /* ─────────────────────────────────────────
        PAGINATION
@@ -209,11 +148,6 @@
     /* ─────────────────────────────────────────
        MOBILE / RESPONSIVE HELPERS
     ───────────────────────────────────────── */
-
-    /* table wrapper: horizontal scroll on small screens */
-    .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .table-scroll-wrap::-webkit-scrollbar { height: 4px; }
-    .table-scroll-wrap::-webkit-scrollbar-thumb { background: #d2cfd6; border-radius: 4px; }
 
     /* header: allow wrapping */
     .page-header-row {
@@ -334,50 +268,55 @@
             </div>
           </div>
 
-          <!-- TABLE (scroll wrapper) -->
-          <div class="table-scroll-wrap">
-            <table class="air-tickets-table">
-              <thead>
-                <tr>
-                  <th>
-                    Created date
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Code
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Employee
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Request type
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Air ticket type
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Travel date
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Air ticket total price
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th>
-                    Payment status
-                    <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
-                  </th>
-                  <th class="col-actions"></th>
-                </tr>
-              </thead>
-              <tbody id="tickets-table-body">
-                <!-- Data rows will be rendered here -->
-              </tbody>
-            </table>
+          <!-- TABLE (with rounded corners) -->
+          <div class="table-container">
+            <div class="table-scroll-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 40px; padding-left: 14px;">
+                      <input type="checkbox" style="cursor: pointer;" />
+                    </th>
+                    <th>
+                      Created date
+                      <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                    </th>
+                    <th>
+                      Code
+                      <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                    </th>
+                    <th>
+                      Employee
+                      <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                    </th>
+                    <th>
+                      Request type
+                      <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                    </th>
+                    <th>
+                      Air ticket type
+                      <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                    </th>
+                    <th>
+                      Travel date
+                      <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                    </th>
+                    <th>
+                      Air ticket total price
+                      <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                    </th>
+                    <th>
+                      Payment status
+                      <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>
+                    </th>
+                    <th class="col-actions"></th>
+                  </tr>
+                </thead>
+                <tbody id="tickets-table-body">
+                  <!-- Data rows will be rendered here -->
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <!-- PAGINATION -->
@@ -556,11 +495,14 @@ function renderTableRows() {
 
     return `
       <tr>
+        <td style="padding-left: 14px;">
+          <input type="checkbox" style="cursor: pointer;" />
+        </td>
         <td>${ticket.createdDate}</td>
         <td>${ticket.code}</td>
         <td>
           <div class="employee-cell">
-            <img src="${ticket.employeeAvatar}" alt="${ticket.employee}" class="avatar" />
+            <img src="${ticket.employeeAvatar}" alt="${ticket.employee}" class="employee-avatar" />
             <span>${ticket.employee}</span>
           </div>
         </td>
