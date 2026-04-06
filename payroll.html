@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento – Payroll</title>
+  <meta name="description" content="Talento HR Platform – Payroll Management" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Shared layout styles -->
+  <link rel="stylesheet" href="shared-styles.css" />
+  <!-- Design Tokens -->
+  <script src="design-tokens.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════════════
+       PAYROLL PAGE-SPECIFIC STYLES
+       ═══════════════════════════════════════════════════════════════════════════ */
+
+    /* ─────────────────────────────────────────
+       PAGE HEADER
+    ───────────────────────────────────────── */
+    .payroll-page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .payroll-page-title {
+      font-size: 24px;
+      font-weight: 400;
+      color: #1e1033;
+      letter-spacing: -0.24px;
+      line-height: 1.3;
+    }
+
+    .payroll-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ─────────────────────────────────────────
+       TOOLBAR BUTTONS
+    ───────────────────────────────────────── */
+    .payroll-toolbar-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e8e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #1e1033;
+      background: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      transition: background 150ms;
+    }
+
+    .payroll-toolbar-btn:hover {
+      background: #f5f3fb;
+    }
+
+    /* ─────────────────────────────────────────
+       SEARCH & FILTER BAR
+    ───────────────────────────────────────── */
+    .payroll-search-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .payroll-search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #e8e7eb;
+      border-radius: 100px;
+      padding: 0 16px;
+      height: 40px;
+      min-width: 200px;
+      max-width: 320px;
+      flex: 1;
+    }
+
+    .payroll-search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 14px;
+      color: #4b405c;
+      width: 100%;
+    }
+
+    .payroll-search-box input::placeholder {
+      color: #a09aab;
+    }
+
+    .payroll-search-box svg {
+      color: #787085;
+      flex-shrink: 0;
+    }
+
+    .payroll-filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e8e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #4b405c;
+      background: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      transition: background 150ms;
+    }
+
+    .payroll-filter-btn:hover {
+      background: #f5f3fb;
+    }
+
+    /* ─────────────────────────────────────────
+       PAYROLL CARD
+    ───────────────────────────────────────── */
+    .payroll-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .payroll-card {
+      background: #fff;
+      border: 1px solid #e8e7eb;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .payroll-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 20px 24px 12px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .payroll-card-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .payroll-card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .payroll-card-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1e1033;
+      letter-spacing: -0.2px;
+    }
+
+    .payroll-status-badge {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      padding: 0 10px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .payroll-card-date-range {
+      font-size: 14px;
+      color: #787085;
+    }
+
+    .payroll-card-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .payroll-download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e8e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #1e1033;
+      background: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      transition: background 150ms;
+    }
+
+    .payroll-download-btn:hover {
+      background: #f5f3fb;
+    }
+
+    .payroll-view-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      background: #1E1033;
+      cursor: pointer;
+      transition: all 150ms;
+      border: none;
+      white-space: nowrap;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+    }
+
+    .payroll-view-btn svg {
+      stroke: #2CF7B3;
+    }
+
+    .payroll-view-btn:hover {
+      background: #2a1745;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(30, 16, 51, 0.25);
+    }
+
+    /* ─────────────────────────────────────────
+       PAYROLL CARD BODY
+    ───────────────────────────────────────── */
+    .payroll-card-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 2fr;
+      gap: 24px;
+      padding: 16px 24px 20px;
+      border-top: 1px solid #f0eef6;
+    }
+
+    .payroll-info-column {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .payroll-info-label {
+      font-size: 14px;
+      color: #787085;
+    }
+
+    .payroll-info-value-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .payroll-cutoff-date {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e1033;
+    }
+
+    .payroll-employees-count {
+      font-size: 14px;
+      color: #1e1033;
+    }
+
+    .payroll-employees-count .employees-current {
+      font-weight: 500;
+    }
+
+    .payroll-employees-count .employees-total {
+      color: #787085;
+    }
+
+    .payroll-gross-amount {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e1033;
+    }
+
+    /* ─────────────────────────────────────────
+       PAYMENT PROGRESS
+    ───────────────────────────────────────── */
+    .payroll-info-progress {
+      flex: 1;
+    }
+
+    .payment-progress-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .payment-stats {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .payment-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .payment-stat-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e1033;
+    }
+
+    .payment-stat-label {
+      font-size: 12px;
+      color: #787085;
+    }
+
+    .payment-progress-bar {
+      display: flex;
+      height: 8px;
+      border-radius: 100px;
+      overflow: hidden;
+      background: #f0eef6;
+      width: 100%;
+    }
+
+    .progress-segment {
+      height: 100%;
+    }
+
+    .progress-paid {
+      background: #16A34A;
+      border-radius: 100px 0 0 100px;
+    }
+
+    .progress-pending {
+      background: #F59E0B;
+    }
+
+    .progress-unpaid {
+      background: #DC2626;
+      border-radius: 0 100px 100px 0;
+    }
+
+    /* Single segment full border radius */
+    .progress-paid:only-child,
+    .progress-pending:only-child,
+    .progress-unpaid:only-child {
+      border-radius: 100px;
+    }
+
+    /* ─────────────────────────────────────────
+       EMPTY STATE
+    ───────────────────────────────────────── */
+    .payroll-empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 24px;
+      text-align: center;
+      background: #fff;
+      border: 1px solid #e8e7eb;
+      border-radius: 16px;
+    }
+
+    .payroll-empty-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #f6f5f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .payroll-empty-icon svg {
+      width: 32px;
+      height: 32px;
+      stroke: #787085;
+    }
+
+    .payroll-empty-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #1e1033;
+      margin-bottom: 8px;
+    }
+
+    .payroll-empty-description {
+      font-size: 14px;
+      color: #787085;
+      max-width: 320px;
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE DESIGN
+    ───────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .payroll-card-body {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .payroll-info-progress {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .payroll-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .payroll-header-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .payroll-search-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .payroll-search-box {
+        max-width: none;
+      }
+
+      .payroll-filter-btn {
+        align-self: flex-end;
+      }
+
+      .payroll-card-body {
+        grid-template-columns: 1fr;
+      }
+
+      .payroll-info-progress {
+        grid-column: span 1;
+      }
+
+      .payroll-card-header {
+        flex-direction: column;
+      }
+
+      .payroll-card-header-right {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .payroll-page-title {
+        font-size: 20px;
+      }
+
+      .payroll-header-actions {
+        flex-wrap: wrap;
+      }
+
+      .payroll-toolbar-btn,
+      .payroll-download-btn,
+      .payroll-view-btn {
+        font-size: 13px;
+        padding: 0 12px;
+      }
+
+      .payroll-card-header,
+      .payroll-card-body {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .payment-stats {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- APP SHELL -->
+<div id="app">
+  <!-- Sidebar (injected by layout.js) -->
+  <aside id="sidebar"></aside>
+
+  <!-- Overlay for mobile menu -->
+  <div id="overlay"></div>
+
+  <!-- Main column (navbar + content) -->
+  <div id="main-col">
+
+    <!-- Top navbar (injected by layout.js) -->
+    <header id="navbar" style="display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 16px;border-bottom:1px solid #e8e7eb;flex-shrink:0;background:#fff;"></header>
+
+    <!-- Scrollable main content -->
+    <main id="main-scroll" style="padding:24px 20px 40px;">
+      
+      <!-- Page Content Container -->
+      <div id="payroll-content">
+        <!-- Content will be rendered by JavaScript -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Layout JS (sidebar & navbar) -->
+<script src="layout.js"></script>
+
+<!-- Payroll Components -->
+<script src="payroll_components.js"></script>
+
+<!-- Page Initialization -->
+<script>
+(function() {
+  'use strict';
+
+  // Sample payroll data
+  const payrollData = [
+    {
+      name: 'Payroll name',
+      status: 'draft',
+      dateRange: { start: '01 June 2025', end: '25 June 2025' },
+      cutoffDate: '27 June 2025',
+      cutoffStatus: 'warning',
+      employeesPaid: { current: 54, total: 60 },
+      employeeAvatars: [
+        'https://randomuser.me/api/portraits/men/32.jpg',
+        'https://randomuser.me/api/portraits/women/44.jpg',
+        'https://randomuser.me/api/portraits/men/45.jpg'
+      ],
+      totalGross: 'SAR 24,226.00',
+      paymentBreakdown: { paid: 20000, pending: 3000, unpaid: 1226 }
+    },
+    {
+      name: 'Payroll name',
+      status: 'done',
+      dateRange: { start: '01 May 2025', end: '25 May 2025' },
+      cutoffDate: '27 May 2025',
+      cutoffStatus: 'success',
+      employeesPaid: { current: 60, total: 60 },
+      employeeAvatars: [
+        'https://randomuser.me/api/portraits/women/32.jpg',
+        'https://randomuser.me/api/portraits/men/22.jpg',
+        'https://randomuser.me/api/portraits/women/28.jpg'
+      ],
+      totalGross: 'SAR 24,226.00',
+      paymentBreakdown: { paid: 20000, pending: 0, unpaid: 0 }
+    },
+    {
+      name: 'Payroll name',
+      status: 'unpaid',
+      dateRange: { start: '01 April 2025', end: '25 April 2025' },
+      cutoffDate: '27 April 2025',
+      cutoffStatus: 'error',
+      employeesPaid: { current: 54, total: 60 },
+      employeeAvatars: [
+        'https://randomuser.me/api/portraits/men/52.jpg',
+        'https://randomuser.me/api/portraits/women/54.jpg',
+        'https://randomuser.me/api/portraits/men/36.jpg'
+      ],
+      totalGross: 'SAR 24,226.00',
+      paymentBreakdown: { paid: 19240, pending: 0, unpaid: 4932 }
+    },
+    {
+      name: 'Payroll name',
+      status: 'done',
+      dateRange: { start: '01 March 2025', end: '25 March 2025' },
+      cutoffDate: '27 March 2025',
+      cutoffStatus: 'success',
+      employeesPaid: { current: 60, total: 60 },
+      employeeAvatars: [
+        'https://randomuser.me/api/portraits/women/62.jpg',
+        'https://randomuser.me/api/portraits/men/42.jpg',
+        'https://randomuser.me/api/portraits/women/48.jpg'
+      ],
+      totalGross: 'SAR 24,226.00',
+      paymentBreakdown: { paid: 20000, pending: 0, unpaid: 0 }
+    }
+  ];
+
+  // Render page content
+  function renderPayrollPage() {
+    const container = document.getElementById('payroll-content');
+    if (!container) return;
+
+    // Build page HTML using components
+    const pageHeader = PayrollComponents.PageHeader({
+      title: 'Payroll',
+      showGenerateReport: true,
+      showExport: true,
+      showCreateNew: true,
+      createNewText: 'Create new payroll'
+    });
+
+    const searchFilterBar = PayrollComponents.SearchFilterBar({
+      searchPlaceholder: 'Search',
+      showFilters: true,
+      filterCount: 2
+    });
+
+    const payrollList = PayrollComponents.PayrollList({
+      payrolls: payrollData
+    });
+
+    container.innerHTML = `
+      ${pageHeader}
+      ${searchFilterBar}
+      ${payrollList}
+    `;
+  }
+
+  // Initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', renderPayrollPage);
+})();
+</script>
+
+</body>
+</html>

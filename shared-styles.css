@@ -73,7 +73,8 @@ html, body { height: 100%; overflow: hidden; background: #fff; }
 #sidebar.collapsed .logo-full,
 #sidebar.collapsed .settings-label,
 #sidebar.collapsed #attendance-submenu,
-#sidebar.collapsed #business-missions-submenu { display: none !important; }
+#sidebar.collapsed #business-missions-submenu,
+#sidebar.collapsed #finance-submenu { display: none !important; }
 #sidebar:not(.collapsed) .logo-icon-only { display: none !important; }
 #sidebar.collapsed .logo-icon-only { display: flex !important; }
 

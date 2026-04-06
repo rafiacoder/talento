@@ -14,7 +14,8 @@
     'leave.html': { navItem: 'attendance-leave', submenu: 'leave' },
     'business-missions-trip.html': { navItem: 'business-missions', submenu: 'missions-trip' },
     'air-tickets.html': { navItem: 'business-missions', submenu: 'air-tickets' },
-    'air-ticket-request.html': { navItem: 'business-missions', submenu: 'air-tickets' }
+    'air-ticket-request.html': { navItem: 'business-missions', submenu: 'air-tickets' },
+    'payroll.html': { navItem: 'finance', submenu: 'payroll' }
   };
 
   const config = pageConfig[currentPage] || pageConfig['index.html'];
@@ -29,6 +30,8 @@
     const isMissionsTripActive = config.submenu === 'missions-trip';
     const isAirTicketsActive = config.submenu === 'air-tickets';
     const isBusinessMissionsExpanded = config.navItem === 'business-missions';
+    const isPayrollActive = config.submenu === 'payroll';
+    const isFinanceExpanded = config.navItem === 'finance';
 
     return `
     <!-- Logo + Collapse -->
@@ -104,15 +107,57 @@
           <svg class="s-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4b405c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
 
-        <!-- Finance -->
-        <button class="nav-item" data-page="Finance" aria-haspopup="true"
+        <!-- Finance (dropdown) -->
+        <button class="nav-item" id="finance-toggle" data-page="Finance" aria-haspopup="true" aria-expanded="${isFinanceExpanded}"
           style="display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;height:40px;border-radius:8px;padding:0 16px;outline:none;">
           <span style="display:flex;align-items:center;gap:10px;">
             <i class="fa-solid fa-wallet" style="width:20px;font-size:16px;color:#1e1033;flex-shrink:0;"></i>
             <span class="s-label" style="color:#1e1033;font-size:14px;letter-spacing:-0.14px;white-space:nowrap;">Finance</span>
           </span>
-          <svg class="s-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4b405c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg class="s-arrow" id="finance-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4b405c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;${isFinanceExpanded ? 'transform:rotate(180deg);' : ''}transition:transform 200ms;"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
+
+        <!-- Finance sub-items -->
+        <div id="finance-submenu" style="display:${isFinanceExpanded ? 'flex' : 'none'};flex-direction:column;">
+          <!-- Payroll -->
+          <a href="payroll.html" style="text-decoration:none;">
+            <button class="nav-sub-item${isPayrollActive ? ' active' : ''}"${isPayrollActive ? ' aria-current="page"' : ''}
+              style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+              <i class="fa-solid fa-money-check-dollar" style="width:16px;font-size:13px;color:${isPayrollActive ? '#1e1033' : '#787085'};flex-shrink:0;"></i>
+              <span class="s-label" style="color:${isPayrollActive ? '#1e1033' : '#787085'};font-size:13px;${isPayrollActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Payroll</span>
+            </button>
+          </a>
+          <!-- Loans -->
+          <button class="nav-sub-item"
+            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+            <i class="fa-solid fa-hand-holding-dollar" style="width:16px;font-size:13px;color:#787085;flex-shrink:0;"></i>
+            <span class="s-label" style="color:#787085;font-size:13px;letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Loans</span>
+          </button>
+          <!-- Salary scale -->
+          <button class="nav-sub-item"
+            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+            <i class="fa-solid fa-chart-line" style="width:16px;font-size:13px;color:#787085;flex-shrink:0;"></i>
+            <span class="s-label" style="color:#787085;font-size:13px;letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Salary scale</span>
+          </button>
+          <!-- Deductions & Violations -->
+          <button class="nav-sub-item"
+            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+            <i class="fa-solid fa-circle-minus" style="width:16px;font-size:13px;color:#787085;flex-shrink:0;"></i>
+            <span class="s-label" style="color:#787085;font-size:13px;letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Deductions & Violations</span>
+          </button>
+          <!-- Rewards -->
+          <button class="nav-sub-item"
+            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+            <i class="fa-solid fa-gift" style="width:16px;font-size:13px;color:#787085;flex-shrink:0;"></i>
+            <span class="s-label" style="color:#787085;font-size:13px;letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Rewards</span>
+          </button>
+          <!-- Expenses (Accounting) -->
+          <button class="nav-sub-item"
+            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+            <i class="fa-solid fa-receipt" style="width:16px;font-size:13px;color:#787085;flex-shrink:0;"></i>
+            <span class="s-label" style="color:#787085;font-size:13px;letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Expenses (Accounting)</span>
+          </button>
+        </div>
 
         <!-- Business missions -->
         <button class="nav-item" id="business-missions-toggle" data-page="Business missions" aria-haspopup="true" aria-expanded="${isBusinessMissionsExpanded}"
@@ -388,6 +433,23 @@
           attArrow.style.transform = attOpen ? 'rotate(180deg)' : 'rotate(0deg)';
         }
         attToggle.setAttribute('aria-expanded', String(attOpen));
+      });
+    }
+
+    // Finance submenu toggle
+    const finToggle = document.getElementById('finance-toggle');
+    const finSubmenu = document.getElementById('finance-submenu');
+    const finArrow = document.getElementById('finance-arrow');
+    let finOpen = config.navItem === 'finance';
+
+    if (finToggle && finSubmenu) {
+      finToggle.addEventListener('click', function() {
+        finOpen = !finOpen;
+        finSubmenu.style.display = finOpen ? 'flex' : 'none';
+        if (finArrow) {
+          finArrow.style.transform = finOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+        finToggle.setAttribute('aria-expanded', String(finOpen));
       });
     }
 
