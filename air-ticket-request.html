@@ -160,16 +160,15 @@
     .stage-wrap {
       border: 1px solid #ece9f1;
       border-radius: 12px;
-      padding: 20px 16px;
-      background: #fbfafe;
+      padding: 20px;
+      background: #F6F5F7;
       overflow-x: auto;
     }
 
     .stage-track {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 0;
       position: relative;
       flex-wrap: nowrap;
       min-width: 760px;
@@ -191,14 +190,13 @@
       position: absolute;
       top: 12px;
       left: 50%;
-      width: 100%;
+      width: calc(100% + 24px);
       height: 2px;
       background: #e6e2ee;
       z-index: 1;
     }
 
-    .stage-item.done:not(:last-child)::after,
-    .stage-item.active:not(:last-child)::after {
+    .stage-item.done:not(:last-child)::after {
       background: #8b64e4;
     }
 
@@ -206,7 +204,7 @@
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      border: 2px solid #ddd4e8;
+      border: 2px solid #e6e2ee;
       color: #8a829a;
       font-size: 13px;
       font-weight: 500;
@@ -231,7 +229,7 @@
 
     .stage-label {
       font-size: 14px;
-      color: #7a728a;
+      color: #8a829a;
       white-space: nowrap;
       text-align: center;
       line-height: 1.2;
