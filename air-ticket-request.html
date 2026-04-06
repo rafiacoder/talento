@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento - Air Ticket Request</title>
+  <meta name="description" content="Talento HR Platform - Air Ticket Request Detail" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared-styles.css" />
+
+  <style>
+    .request-shell {
+      background: #fff;
+      border-radius: 20px;
+      padding: 18px;
+      border: 1px solid #ece9f1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tiny-muted {
+      font-size: 12px;
+      color: #787085;
+      line-height: 1.4;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 22px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #efedf4;
+      color: #5c5270;
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: #6f6780;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .link-btn {
+      border: none;
+      background: transparent;
+      color: #4b405c;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .link-btn:hover {
+      text-decoration: underline;
+    }
+
+    .header-title {
+      font-size: 24px;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      color: #1e1033;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: #787085;
+      font-size: 13px;
+    }
+
+    .avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      object-fit: cover;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+
+    .toolbar-strip {
+      background: #E7D9FF;
+      border: 1px solid #ece9f1;
+      border-radius: 12px;
+      min-height: 46px;
+      padding: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .left-actions,
+    .right-actions {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mini-btn {
+      height: 30px;
+      padding: 0 12px;
+      border-radius: 8px;
+      border: 1px solid #e2deea;
+      background: #fff;
+      color: #1e1033;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 150ms;
+    }
+
+    .mini-btn:hover {
+      background: #f8f7fb;
+    }
+
+    .mini-btn.primary {
+      background: #1e1033;
+      border-color: #1e1033;
+      color: #fff;
+    }
+
+    .mini-btn.primary:hover {
+      background: #2c1a49;
+    }
+
+    .mini-btn.icon-only {
+      width: 30px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stage-wrap {
+      border: 1px solid #ece9f1;
+      border-radius: 12px;
+      padding: 20px 16px;
+      background: #fbfafe;
+      overflow-x: auto;
+    }
+
+    .stage-track {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+      position: relative;
+      flex-wrap: nowrap;
+      min-width: 760px;
+    }
+
+    .stage-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      position: relative;
+      z-index: 2;
+      white-space: nowrap;
+    }
+
+    .stage-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background: #e6e2ee;
+      z-index: 1;
+    }
+
+    .stage-item.done:not(:last-child)::after,
+    .stage-item.active:not(:last-child)::after {
+      background: #8b64e4;
+    }
+
+    .stage-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #ddd4e8;
+      color: #8a829a;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #fff;
+    }
+
+    .stage-item.done .stage-dot {
+      background: #8b64e4;
+      border-color: #8b64e4;
+      color: #fff;
+    }
+
+    .stage-item.active .stage-dot {
+      background: #fff;
+      border-color: #8b64e4;
+      color: #8b64e4;
+    }
+
+    .stage-label {
+      font-size: 14px;
+      color: #7a728a;
+      white-space: nowrap;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .stage-item.done .stage-label,
+    .stage-item.active .stage-label {
+      color: #1e1033;
+      font-weight: 500;
+    }
+
+    .section-card {
+      border: 1px solid #ece9f1;
+      border-radius: 12px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .section-head {
+      height: 42px;
+      padding: 0 14px;
+      border-bottom: 1px solid #f0edf6;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #1e1033;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+      font-weight: 500;
+    }
+
+    .icon-bullet {
+      font-size: 13px;
+      color: #5d5470;
+      width: 14px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .section-body {
+      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field-label {
+      color: #9a92aa;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .field-value {
+      color: #1e1033;
+      font-size: 14px;
+      letter-spacing: -0.2px;
+      font-weight: 500;
+    }
+
+    .tabs-row {
+      border-top: 1px solid #f0edf6;
+      display: flex;
+      gap: 2px;
+      flex-wrap: wrap;
+      padding: 0 8px;
+      background: #fbfafe;
+    }
+
+    .tab-btn {
+      border: none;
+      background: transparent;
+      color: #6e667f;
+      font-size: 14px;
+      height: 38px;
+      padding: 0 10px;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn i {
+      font-size: 12px;
+      color: #7d768e;
+    }
+
+    .tab-btn.active i {
+      color: #1e1033;
+    }
+
+    .tab-btn.active {
+      color: #1e1033;
+      border-bottom-color: #1e1033;
+      font-weight: 500;
+    }
+
+    .tab-panel {
+      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 960px) {
+      .section-head {
+        font-size: 19px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .stage-wrap {
+        padding: 14px 10px;
+      }
+
+      .section-body,
+      .tab-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .request-shell {
+        border-radius: 14px;
+        padding: 12px;
+      }
+
+      .header-title {
+        font-size: 24px;
+      }
+
+      .section-head {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div id="app">
+  <div id="overlay" aria-hidden="true"></div>
+  <aside id="sidebar" aria-label="Main navigation"></aside>
+
+  <div id="main-col">
+    <header id="navbar" style="display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 16px;background:#fff;border-bottom:1px solid #e8e7eb;flex-shrink:0;min-width:0;"></header>
+
+    <div id="main-scroll">
+      <div style="padding:16px;background:#f6f5f7;min-height:calc(100vh - 56px);">
+        <div class="request-shell">
+          <div class="top-row">
+            <div class="tiny-muted">Air tickets list / Air ticket request</div>
+            <div class="nav-inline">
+              <button class="link-btn" onclick="goBackToList()"><i class="fa-solid fa-chevron-left" style="font-size:10px;"></i> Back</button>
+              <span>1 of 2</span>
+              <button class="link-btn" onclick="goNext()">Next <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></button>
+            </div>
+          </div>
+
+          <div class="top-row" style="align-items:center;">
+            <div>
+              <h1 class="header-title">Air Ticket Request</h1>
+              <div class="meta-row">
+                <span>Created by <img class="avatar" src="https://i.pravatar.cc/150?img=12" alt="Mishari" /> Mishari AlSubaie</span>
+                <span>-</span>
+                <span>Created date 12 Feb 2025</span>
+                <span>-</span>
+                <span class="pill">In review</span>
+              </div>
+            </div>
+            <div class="right-actions">
+              <button class="mini-btn">Edit <i class="fa-solid fa-pen" style="font-size:10px;"></i></button>
+              <button class="mini-btn icon-only" aria-label="More"><i class="fa-solid fa-ellipsis" style="font-size:13px;"></i></button>
+            </div>
+          </div>
+
+          <div class="toolbar-strip">
+            <div class="left-actions">
+              <button class="mini-btn">Reject <i class="fa-solid fa-xmark" style="font-size:10px;"></i></button>
+              <button class="mini-btn primary">Approve <i class="fa-solid fa-check" style="font-size:10px;"></i></button>
+            </div>
+            <div class="right-actions">
+              <button class="mini-btn">View activities <i class="fa-solid fa-circle-nodes" style="font-size:10px;"></i></button>
+            </div>
+          </div>
+
+          <div class="stage-wrap">
+            <div class="stage-track">
+              <div class="stage-item done">
+                <span class="stage-dot"><i class="fa-solid fa-check" style="font-size:11px;"></i></span>
+                <span class="stage-label">Draft</span>
+              </div>
+              <div class="stage-item active">
+                <span class="stage-dot">2</span>
+                <span class="stage-label">Under Review</span>
+              </div>
+              <div class="stage-item">
+                <span class="stage-dot">3</span>
+                <span class="stage-label">Manager Review</span>
+              </div>
+              <div class="stage-item">
+                <span class="stage-dot">4</span>
+                <span class="stage-label">Final Review</span>
+              </div>
+            </div>
+          </div>
+
+          <section class="section-card">
+            <div class="section-head"><span class="icon-bullet"><i class="fa-solid fa-bars"></i></span>Request Overview</div>
+            <div class="section-body">
+              <div>
+                <div class="field-label">Code</div>
+                <div class="field-value">APO0002</div>
+              </div>
+              <div>
+                <div class="field-label">Request Date</div>
+                <div class="field-value">11 Oct 2025</div>
+              </div>
+              <div>
+                <div class="field-label">Air ticket request reason</div>
+                <div class="field-value">Leave</div>
+              </div>
+              <div>
+                <div class="field-label">Description</div>
+                <div class="field-value">Air ticket request for leave</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-card">
+            <div class="section-head"><span class="icon-bullet"><i class="fa-solid fa-ticket"></i></span>Trip and Ticket Details</div>
+            <div class="section-body">
+              <div>
+                <div class="field-label">Leave Period (from/to)</div>
+                <div class="field-value">12 Feb - 05 May 2025</div>
+              </div>
+              <div>
+                <div class="field-label">Air ticket tPype</div>
+                <div class="field-value">SINGLE | 2500 | 2 years</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-card">
+            <div class="section-head"><span class="icon-bullet"><i class="fa-solid fa-scale-balanced"></i></span>Balance</div>
+            <div class="section-body">
+              <div>
+                <div class="field-label">Current air Ticket balance</div>
+                <div class="field-value">2 months</div>
+              </div>
+              <div>
+                <div class="field-label">If this Air Ticket approved, system will deduct</div>
+                <div class="field-value">12.00 months</div>
+              </div>
+              <div>
+                <div class="field-label">Remaining Balance</div>
+                <div class="field-value">-10.00 months</div>
+              </div>
+            </div>
+
+            <div class="tabs-row">
+              <button class="tab-btn active" type="button"><i class="fa-regular fa-circle-check"></i>Employee and Eligibility</button>
+              <button class="tab-btn" type="button"><i class="fa-solid fa-scale-balanced"></i>Financial and Policy Impact</button>
+              <button class="tab-btn" type="button"><i class="fa-solid fa-ticket"></i>Air tickets details</button>
+            </div>
+
+            <div class="tab-panel">
+              <div>
+                <div class="field-label">Employee</div>
+                <div class="field-value">Mishari AlSubaie</div>
+              </div>
+              <div>
+                <div class="field-label">Contract</div>
+                <div class="field-value">Name</div>
+              </div>
+              <div>
+                <div class="field-label">Last return from leave</div>
+                <div class="field-value">11 March 2025</div>
+              </div>
+              <div>
+                <div class="field-label">Relatives Tickets</div>
+                <div class="field-value">Not allowed</div>
+              </div>
+              <div>
+                <div class="field-label">Reserve ticket for</div>
+                <div class="field-value">Employee and his relatives</div>
+              </div>
+              <div>
+                <div class="field-label">Number of relatives</div>
+                <div class="field-value">3 relatives</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="layout.js"></script>
+<script>
+function goBackToList() {
+  window.location.href = 'air-tickets.html';
+}
+
+function goNext() {
+  alert('Next request preview is not implemented in this demo.');
+}
+</script>
+</body>
+</html>

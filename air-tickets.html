@@ -494,9 +494,9 @@ function renderTableRows() {
     const paymentStatusBadgeClass = ticket.paymentStatus === 'Done' ? 'badge-done' : 'badge-need-to-pay';
 
     return `
-      <tr>
+      <tr style="cursor:pointer;" onclick="openTicketDetail('${ticket.code}')">
         <td style="padding-left: 14px;">
-          <input type="checkbox" style="cursor: pointer;" />
+          <input type="checkbox" style="cursor: pointer;" onclick="event.stopPropagation();" />
         </td>
         <td>${ticket.createdDate}</td>
         <td>${ticket.code}</td>
@@ -516,7 +516,7 @@ function renderTableRows() {
           <span class="${paymentStatusBadgeClass}">${ticket.paymentStatus}</span>
         </td>
         <td class="col-actions">
-          <button style="background:transparent;border:none;cursor:pointer;color:#787085;display:flex;align-items:center;justify-content:center;width:100%;padding:0;" title="More actions">
+          <button style="background:transparent;border:none;cursor:pointer;color:#787085;display:flex;align-items:center;justify-content:center;width:100%;padding:0;" title="More actions" onclick="event.stopPropagation();">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
           </button>
         </td>
@@ -554,6 +554,10 @@ function prevDate() {
 
 function nextDate() {
   console.log('Next date');
+}
+
+function openTicketDetail(ticketCode) {
+  window.location.href = `air-ticket-request.html?code=${encodeURIComponent(ticketCode || '')}`;
 }
 </script>
 </body>

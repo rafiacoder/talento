@@ -13,7 +13,8 @@
     'index.html': { navItem: 'dashboard', submenu: null },
     'leave.html': { navItem: 'attendance-leave', submenu: 'leave' },
     'business-missions-trip.html': { navItem: 'business-missions', submenu: 'missions-trip' },
-    'air-tickets.html': { navItem: 'business-missions', submenu: 'air-tickets' }
+    'air-tickets.html': { navItem: 'business-missions', submenu: 'air-tickets' },
+    'air-ticket-request.html': { navItem: 'business-missions', submenu: 'air-tickets' }
   };
 
   const config = pageConfig[currentPage] || pageConfig['index.html'];
