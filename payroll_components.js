@@ -26,9 +26,9 @@ const PayrollComponents = (function() {
   // STATUS BADGE CONFIG
   // ═══════════════════════════════════════════════════════════════════════════
   const StatusConfig = {
-    draft: { bg: '#F3F4F6', text: '#6B7280', label: 'Draft' },
-    done: { bg: '#D7FFE7', text: '#15803D', label: 'Done' },
-    unpaid: { bg: '#FEE2E2', text: '#DC2626', label: 'Unpaid' },
+    draft: { bg: '#F6F5F7', text: '#6B7280', label: 'Draft' },
+    done: { bg: '#EDF8F3', text: '#15803D', label: 'Done' },
+    unpaid: { bg: '#F9F1F3', text: '#DC2626', label: 'Unpaid' },
     pending: { bg: '#FEF3C7', text: '#B45309', label: 'Pending' }
   };
 
@@ -137,14 +137,13 @@ const PayrollComponents = (function() {
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PAYMENT PROGRESS BAR
-  // Renders: Multi-segment progress bar (Paid, Pending, Unpaid)
+  // Renders: Multi-segment progress bar (Paid, Pending, Unpaid) as columns
   // ═══════════════════════════════════════════════════════════════════════════
   function PaymentProgressBar(config) {
     const { 
       paid = 0, 
       pending = 0, 
-      unpaid = 0,
-      showLabels = true 
+      unpaid = 0
     } = config;
 
     const total = paid + pending + unpaid;
@@ -152,34 +151,59 @@ const PayrollComponents = (function() {
     const pendingPercent = total > 0 ? (pending / total) * 100 : 0;
     const unpaidPercent = total > 0 ? (unpaid / total) * 100 : 0;
 
-    const labelsHTML = showLabels ? `
-      <div class="payment-stats">
-        <div class="payment-stat">
-          <span class="payment-stat-value">${paid.toLocaleString()}</span>
-          <span class="payment-stat-label">Paid</span>
+    // Build columns array based on what values exist
+    const columns = [];
+    
+    if (paid > 0) {
+      columns.push({
+        value: paid.toLocaleString(),
+        label: 'Paid',
+        percent: paidPercent,
+        colorClass: 'progress-paid'
+      });
+    }
+    
+    if (pending > 0) {
+      columns.push({
+        value: pending.toLocaleString(),
+        label: 'Pending',
+        percent: pendingPercent,
+        colorClass: 'progress-pending'
+      });
+    }
+    
+    if (unpaid > 0) {
+      columns.push({
+        value: unpaid.toLocaleString(),
+        label: 'Unpaid',
+        percent: unpaidPercent,
+        colorClass: 'progress-unpaid'
+      });
+    }
+
+    // Generate column HTML with value, label, and progress segment
+    const columnsHTML = columns.map((col, idx) => {
+      const isFirst = idx === 0;
+      const isLast = idx === columns.length - 1;
+      const borderRadius = columns.length === 1 ? '100px' : 
+        isFirst ? '100px 0 0 100px' : 
+        isLast ? '0 100px 100px 0' : '0';
+      
+      return `
+        <div class="payment-column" style="flex:${col.percent}; min-width: 70px;">
+          <div class="payment-stat">
+            <span class="payment-stat-value">${col.value}</span>
+            <span class="payment-stat-label">${col.label}</span>
+          </div>
+          <div class="progress-segment ${col.colorClass}" style="border-radius:${borderRadius};"></div>
         </div>
-        ${pending > 0 ? `
-          <div class="payment-stat">
-            <span class="payment-stat-value">${pending.toLocaleString()}</span>
-            <span class="payment-stat-label">Pending</span>
-          </div>
-        ` : ''}
-        ${unpaid > 0 ? `
-          <div class="payment-stat">
-            <span class="payment-stat-value">${unpaid.toLocaleString()}</span>
-            <span class="payment-stat-label">Unpaid</span>
-          </div>
-        ` : ''}
-      </div>
-    ` : '';
+      `;
+    }).join('');
 
     return `
       <div class="payment-progress-container">
-        ${labelsHTML}
-        <div class="payment-progress-bar">
-          ${paidPercent > 0 ? `<div class="progress-segment progress-paid" style="width:${paidPercent}%;"></div>` : ''}
-          ${pendingPercent > 0 ? `<div class="progress-segment progress-pending" style="width:${pendingPercent}%;"></div>` : ''}
-          ${unpaidPercent > 0 ? `<div class="progress-segment progress-unpaid" style="width:${unpaidPercent}%;"></div>` : ''}
+        <div class="payment-columns">
+          ${columnsHTML}
         </div>
       </div>
     `;
@@ -237,9 +261,6 @@ const PayrollComponents = (function() {
       </button>
     ` : '';
 
-    // Only show payment breakdown if there's more than just paid
-    const showFullBreakdown = paymentBreakdown.pending > 0 || paymentBreakdown.unpaid > 0;
-
     return `
       <div class="payroll-card">
         <!-- Card Header -->
@@ -292,8 +313,7 @@ const PayrollComponents = (function() {
             ${PaymentProgressBar({
               paid: paymentBreakdown.paid,
               pending: paymentBreakdown.pending,
-              unpaid: paymentBreakdown.unpaid,
-              showLabels: showFullBreakdown
+              unpaid: paymentBreakdown.unpaid
             })}
           </div>
         </div>

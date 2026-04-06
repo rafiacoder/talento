@@ -316,47 +316,50 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      width: 100%;
     }
 
-    .payment-stats {
+    .payment-columns {
       display: flex;
-      align-items: center;
-      gap: 24px;
+      width: 100%;
+      gap: 0;
+    }
+
+    .payment-column {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 60px;
+      overflow: hidden;
     }
 
     .payment-stat {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      padding-right: 12px;
     }
 
     .payment-stat-value {
       font-size: 14px;
       font-weight: 500;
       color: #1e1033;
+      white-space: nowrap;
     }
 
     .payment-stat-label {
       font-size: 12px;
       color: #787085;
-    }
-
-    .payment-progress-bar {
-      display: flex;
-      height: 8px;
-      border-radius: 100px;
-      overflow: hidden;
-      background: #f0eef6;
-      width: 100%;
+      white-space: nowrap;
     }
 
     .progress-segment {
-      height: 100%;
+      height: 8px;
+      width: 100%;
     }
 
     .progress-paid {
       background: #16A34A;
-      border-radius: 100px 0 0 100px;
     }
 
     .progress-pending {
@@ -365,14 +368,6 @@
 
     .progress-unpaid {
       background: #DC2626;
-      border-radius: 0 100px 100px 0;
-    }
-
-    /* Single segment full border radius */
-    .progress-paid:only-child,
-    .progress-pending:only-child,
-    .progress-unpaid:only-child {
-      border-radius: 100px;
     }
 
     /* ─────────────────────────────────────────
@@ -497,9 +492,14 @@
         padding-right: 16px;
       }
 
-      .payment-stats {
+      .payment-columns {
         flex-wrap: wrap;
         gap: 16px;
+      }
+
+      .payment-column {
+        flex: none !important;
+        min-width: 80px;
       }
     }
   </style>
