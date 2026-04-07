@@ -15,7 +15,8 @@
     'business-missions-trip.html': { navItem: 'business-missions', submenu: 'missions-trip' },
     'air-tickets.html': { navItem: 'business-missions', submenu: 'air-tickets' },
     'air-ticket-request.html': { navItem: 'business-missions', submenu: 'air-tickets' },
-    'payroll.html': { navItem: 'finance', submenu: 'payroll' }
+    'payroll.html': { navItem: 'finance', submenu: 'payroll' },
+    'payroll-detail.html': { navItem: 'finance', submenu: 'payroll' }
   };
 
   const config = pageConfig[currentPage] || pageConfig['index.html'];

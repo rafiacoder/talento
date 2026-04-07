@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento – Payroll Detail</title>
+  <meta name="description" content="Talento HR Platform – Payroll Detail View" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Shared layout styles -->
+  <link rel="stylesheet" href="shared-styles.css" />
+  <!-- Design Tokens -->
+  <script src="design-tokens.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════════════
+       PAYROLL DETAIL PAGE-SPECIFIC STYLES
+       ═══════════════════════════════════════════════════════════════════════════ */
+
+    /* ─────────────────────────────────────────
+       BREADCRUMB
+    ───────────────────────────────────────── */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      color: #787085;
+      margin-bottom: 16px;
+    }
+
+    .breadcrumb a {
+      color: #787085;
+      text-decoration: none;
+      transition: color 150ms;
+    }
+
+    .breadcrumb a:hover {
+      color: #4b405c;
+    }
+
+    .breadcrumb-current {
+      color: #1e1033;
+    }
+
+    /* ─────────────────────────────────────────
+       PAGE HEADER
+    ───────────────────────────────────────── */
+    .detail-page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .detail-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .detail-page-title {
+      font-size: 24px;
+      font-weight: 400;
+      color: #1e1033;
+      letter-spacing: -0.24px;
+      line-height: 1.3;
+    }
+
+    .detail-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: #787085;
+    }
+
+    .detail-meta-separator {
+      color: #a09aab;
+    }
+
+    .detail-creator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-creator-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .detail-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #e8e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #1e1033;
+      background: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      transition: background 150ms;
+    }
+
+    .download-btn:hover {
+      background: #f5f3fb;
+    }
+
+    .primary-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      background: #1E1033;
+      cursor: pointer;
+      transition: all 150ms;
+      border: none;
+      white-space: nowrap;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+    }
+
+    .primary-action-btn svg {
+      stroke: #2CF7B3;
+    }
+
+    .primary-action-btn:hover {
+      background: #2a1745;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(30, 16, 51, 0.25);
+    }
+
+    .more-actions-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #e8e7eb;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      transition: background 150ms;
+    }
+
+    .more-actions-btn:hover {
+      background: #f5f3fb;
+    }
+
+    /* ─────────────────────────────────────────
+       STATS ROW (Reusable Stat Cards)
+    ───────────────────────────────────────── */
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px 20px;
+      background: #fff;
+      border: 1px solid #e8e7eb;
+      border-radius: 12px;
+      min-width: 160px;
+      flex: 1;
+    }
+
+    .stat-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-card-icon {
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #787085;
+    }
+
+    .stat-card-label {
+      font-size: 14px;
+      color: #787085;
+    }
+
+    .stat-card-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e1033;
+    }
+
+    .stat-card-value.positive {
+      color: #15803d;
+    }
+
+    .stat-card-value.negative {
+      color: #dc2626;
+    }
+
+    /* Employees stat card with avatars */
+    .stat-card-employees {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ─────────────────────────────────────────
+       TABLE TOOLBAR
+    ───────────────────────────────────────── */
+    .table-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .table-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .table-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .table-search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #e8e7eb;
+      border-radius: 100px;
+      padding: 0 16px;
+      height: 36px;
+      min-width: 200px;
+      max-width: 280px;
+    }
+
+    .table-search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 14px;
+      color: #4b405c;
+      width: 100%;
+    }
+
+    .table-search-box input::placeholder {
+      color: #a09aab;
+    }
+
+    .toolbar-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: #4b405c;
+      cursor: pointer;
+      transition: color 150ms;
+      white-space: nowrap;
+    }
+
+    .toolbar-link:hover {
+      color: #1e1033;
+    }
+
+    .toolbar-link svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ─────────────────────────────────────────
+       EMPLOYEE TABLE
+    ───────────────────────────────────────── */
+    .employee-name-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .employee-name {
+      font-size: 14px;
+      font-weight: 400;
+      color: #1e1033;
+    }
+
+    .employee-subtitle {
+      font-size: 12px;
+      color: #787085;
+    }
+
+    /* Status badge for payroll */
+    .badge-need-review {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      padding: 0 10px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 400;
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .badge-reviewed {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      padding: 0 10px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 400;
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .badge-active {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      padding: 0 10px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 400;
+      background: #D7FFE7;
+      color: #15803d;
+    }
+
+    /* ─────────────────────────────────────────
+       PAGINATION INFO
+    ───────────────────────────────────────── */
+    .pagination-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #787085;
+    }
+
+    .pagination-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pagination-nav a {
+      color: #4b405c;
+      text-decoration: none;
+      transition: color 150ms;
+    }
+
+    .pagination-nav a:hover {
+      color: #1e1033;
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE DESIGN
+    ───────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .stats-row {
+        flex-wrap: wrap;
+      }
+
+      .stat-card {
+        min-width: calc(50% - 8px);
+        flex: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .detail-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .detail-header-right {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .table-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .table-toolbar-left {
+        width: 100%;
+      }
+
+      .table-search-box {
+        max-width: none;
+        flex: 1;
+      }
+
+      .table-toolbar-right {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stat-card {
+        min-width: 100%;
+      }
+
+      .detail-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .detail-meta-separator {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- APP SHELL -->
+<div id="app">
+  <!-- Sidebar (injected by layout.js) -->
+  <aside id="sidebar"></aside>
+
+  <!-- Overlay for mobile menu -->
+  <div id="overlay"></div>
+
+  <!-- Main column (navbar + content) -->
+  <div id="main-col">
+
+    <!-- Top navbar (injected by layout.js) -->
+    <header id="navbar" style="display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 16px;border-bottom:1px solid #e8e7eb;flex-shrink:0;background:#fff;"></header>
+
+    <!-- Scrollable main content -->
+    <main id="main-scroll" style="padding:24px 20px 40px;">
+      
+      <!-- Page Content Container -->
+      <div id="payroll-detail-content">
+        <!-- Content will be rendered by JavaScript -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Layout JS (sidebar & navbar) -->
+<script src="layout.js"></script>
+
+<!-- Payroll Components -->
+<script src="payroll_components.js"></script>
+
+<!-- Page Initialization -->
+<script>
+(function() {
+  'use strict';
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ICONS
+  // ═══════════════════════════════════════════════════════════════════════════
+  const Icons = {
+    download: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
+    externalLink: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`,
+    search: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+    filter: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>`,
+    check: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+    lock: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+    moreVertical: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>`,
+    wallet: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>`,
+    warning: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    gift: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>`,
+    minus: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`,
+    users: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    sort: `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"/><path d="M7 9l5-5 5 5"/></svg>`
+  };
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SAMPLE DATA
+  // ═══════════════════════════════════════════════════════════════════════════
+  const payrollDetailData = {
+    name: 'Payroll name',
+    status: 'draft',
+    dateRange: { start: '01 June 2025', end: '25 June 2025' },
+    creator: {
+      name: 'Mishari AlSubaie',
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
+    },
+    stats: {
+      totalGross: 'SAR 124,226.00',
+      cutoffDate: '27 June 2025',
+      totalBonuses: 'SAR +12,000.00',
+      totalDeductions: 'SAR -37,389.00',
+      employeesPaid: { current: 54, total: 60 }
+    },
+    employeeAvatars: [
+      'https://randomuser.me/api/portraits/men/32.jpg',
+      'https://randomuser.me/api/portraits/women/44.jpg',
+      'https://randomuser.me/api/portraits/men/45.jpg'
+    ]
+  };
+
+  const employeesData = [
+    { id: '#001', name: 'Fahad AlShahrani', subtitle: null, payrollStatus: 'need-review', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: '#002', name: 'Khalid AlAnazi', subtitle: null, payrollStatus: 'need-review', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: '#003', name: 'Fahad AlShahrani', subtitle: null, payrollStatus: 'need-review', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: '#004', name: 'Khalid AlAnazi', subtitle: null, payrollStatus: 'reviewed', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: '#005', name: 'Fahad AlShahrani', subtitle: null, payrollStatus: 'reviewed', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: '#006', name: 'Khalid AlAnazi', subtitle: null, payrollStatus: 'reviewed', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: null, name: 'Fahad AlShahrani', subtitle: 'Marketing lead', payrollStatus: 'reviewed', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: null, name: 'Fahad AlShahrani', subtitle: 'Marketing lead', payrollStatus: 'reviewed', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: null, name: 'Fahad AlShahrani', subtitle: 'Marketing lead', payrollStatus: 'reviewed', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: null, name: 'Fahad AlShahrani', subtitle: 'Marketing lead', payrollStatus: 'reviewed', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' },
+    { id: null, name: 'Fahad AlShahrani', subtitle: 'Marketing lead', payrollStatus: 'reviewed', amountPaid: '5,993.00', remainingAmount: '5,993.00', contractType: 'Active', basicSalary: '5,600.00', houseHold: '1,400.00', transportation: '500.00', phone: '0.00' }
+  ];
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // REUSABLE COMPONENTS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Breadcrumb Component
+   */
+  function Breadcrumb(config) {
+    const { items = [] } = config;
+    
+    return `
+      <nav class="breadcrumb">
+        ${items.map((item, idx) => {
+          const isLast = idx === items.length - 1;
+          if (isLast) {
+            return `<span class="breadcrumb-current">${item.label}</span>`;
+          }
+          return `<a href="${item.href}">${item.label}</a><span>/</span>`;
+        }).join('')}
+      </nav>
+    `;
+  }
+
+  /**
+   * Status Badge Component
+   */
+  function StatusBadge(config) {
+    const { status = 'draft' } = config;
+    const statusConfig = {
+      draft: { bg: '#F6F5F7', text: '#6B7280', label: 'Draft' },
+      done: { bg: '#EDF8F3', text: '#15803D', label: 'Done' },
+      unpaid: { bg: '#F9F1F3', text: '#DC2626', label: 'Unpaid' },
+      pending: { bg: '#FEF3C7', text: '#B45309', label: 'Pending' }
+    };
+    const conf = statusConfig[status] || statusConfig.draft;
+    
+    return `<span style="display:inline-flex;align-items:center;height:22px;padding:0 10px;border-radius:100px;font-size:12px;font-weight:500;background:${conf.bg};color:${conf.text};">${conf.label}</span>`;
+  }
+
+  /**
+   * Stat Card Component - Reusable for displaying statistics
+   * @param {Object} config - { icon, label, value, valueClass }
+   */
+  function StatCard(config) {
+    const { icon, label, value, valueClass = '' } = config;
+    
+    return `
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-icon">${icon}</span>
+          <span class="stat-card-label">${label}</span>
+        </div>
+        <span class="stat-card-value ${valueClass}">${value}</span>
+      </div>
+    `;
+  }
+
+  /**
+   * Stat Card with Employees (includes avatars)
+   */
+  function StatCardEmployees(config) {
+    const { icon, label, current, total, avatars = [] } = config;
+    
+    const avatarsHTML = avatars.slice(0, 3).map((avatar, idx) => {
+      const offset = idx * 18;
+      return `<img src="${avatar}" alt="Employee" style="width:28px;height:28px;border-radius:50%;border:2px solid #fff;object-fit:cover;position:absolute;left:${offset}px;z-index:${3 - idx};" />`;
+    }).join('');
+    
+    const avatarWidth = avatars.length > 0 ? (avatars.length - 1) * 18 + 28 : 0;
+    
+    return `
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <span class="stat-card-icon">${icon}</span>
+          <span class="stat-card-label">${label}</span>
+        </div>
+        <div class="stat-card-employees">
+          <span class="stat-card-value"><span style="font-weight:500;">${current}</span>/<span style="color:#787085;">${total}</span></span>
+          <div style="position:relative;height:28px;width:${avatarWidth}px;">
+            ${avatarsHTML}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  /**
+   * Avatar Group Component
+   */
+  function AvatarGroup(config) {
+    const { avatars = [], maxShow = 3, size = 28 } = config;
+    const visibleAvatars = avatars.slice(0, maxShow);
+    
+    const avatarsHTML = visibleAvatars.map((avatar, idx) => {
+      const offset = idx * (size * 0.65);
+      return `<img src="${avatar}" alt="Employee" style="width:${size}px;height:${size}px;border-radius:50%;border:2px solid #fff;object-fit:cover;position:absolute;left:${offset}px;z-index:${maxShow - idx};" />`;
+    }).join('');
+    
+    const totalWidth = visibleAvatars.length > 0 ? (visibleAvatars.length - 1) * (size * 0.65) + size : 0;
+    
+    return `
+      <div style="position:relative;height:${size}px;width:${totalWidth}px;">
+        ${avatarsHTML}
+      </div>
+    `;
+  }
+
+  /**
+   * Employee Table Row Component
+   */
+  function EmployeeTableRow(config) {
+    const { employee, avatarUrl } = config;
+    
+    const payrollStatusBadge = employee.payrollStatus === 'need-review' 
+      ? `<span class="badge-need-review">Need to review</span>`
+      : `<span class="badge-reviewed">Reviewed</span>`;
+    
+    const subtitleHTML = employee.subtitle 
+      ? `<span class="employee-subtitle">${employee.subtitle}</span>` 
+      : (employee.id ? `<span class="employee-subtitle">${employee.id}</span>` : '');
+    
+    return `
+      <tr>
+        <td><input type="checkbox" class="table-checkbox" /></td>
+        <td>
+          <div class="employee-cell">
+            <img src="${avatarUrl}" alt="${employee.name}" class="employee-avatar" />
+            <div class="employee-name-cell">
+              <span class="employee-name">${employee.name}</span>
+              ${subtitleHTML}
+            </div>
+          </div>
+        </td>
+        <td>${payrollStatusBadge}</td>
+        <td>${employee.amountPaid}</td>
+        <td>${employee.remainingAmount}</td>
+        <td><span class="badge-active">${employee.contractType}</span></td>
+        <td>${employee.basicSalary}</td>
+        <td>${employee.houseHold}</td>
+        <td>${employee.transportation}</td>
+        <td>${employee.phone}</td>
+      </tr>
+    `;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PAGE RENDER
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function renderPayrollDetailPage() {
+    const container = document.getElementById('payroll-detail-content');
+    if (!container) return;
+
+    const data = payrollDetailData;
+
+    // Breadcrumb
+    const breadcrumbHTML = Breadcrumb({
+      items: [
+        { label: 'Payroll list', href: 'payroll.html' },
+        { label: data.name, href: '#' }
+      ]
+    });
+
+    // Page Header
+    const pageHeaderHTML = `
+      <div class="detail-page-header">
+        <div class="detail-header-left">
+          <h1 class="detail-page-title">${data.name}</h1>
+          <div class="detail-meta-row">
+            <span>${data.dateRange.start} • ${data.dateRange.end}</span>
+            <span class="detail-meta-separator">•</span>
+            ${StatusBadge({ status: data.status })}
+            <span class="detail-meta-separator">•</span>
+            <span>Created by</span>
+            <div class="detail-creator">
+              <img src="${data.creator.avatar}" alt="${data.creator.name}" class="detail-creator-avatar" />
+              <span style="color:#1e1033;">${data.creator.name}</span>
+            </div>
+          </div>
+        </div>
+        <div class="detail-header-right">
+          <button class="download-btn">
+            Download
+            ${Icons.download}
+          </button>
+          <button class="primary-action-btn">
+            Approve & send to review
+            ${Icons.externalLink}
+          </button>
+          <button class="more-actions-btn">
+            ${Icons.moreVertical}
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Stats Row - Using reusable StatCard components
+    const statsRowHTML = `
+      <div class="stats-row">
+        ${StatCard({ 
+          icon: Icons.wallet, 
+          label: 'Total gross to pay', 
+          value: data.stats.totalGross 
+        })}
+        ${StatCard({ 
+          icon: Icons.warning, 
+          label: 'Cut off day to pay', 
+          value: data.stats.cutoffDate 
+        })}
+        ${StatCard({ 
+          icon: Icons.gift, 
+          label: 'Total bonuses (additions)', 
+          value: data.stats.totalBonuses,
+          valueClass: 'positive'
+        })}
+        ${StatCard({ 
+          icon: Icons.minus, 
+          label: 'Total deductions', 
+          value: data.stats.totalDeductions,
+          valueClass: 'negative'
+        })}
+        ${StatCardEmployees({ 
+          icon: Icons.users, 
+          label: 'Employees paid', 
+          current: data.stats.employeesPaid.current,
+          total: data.stats.employeesPaid.total,
+          avatars: data.employeeAvatars
+        })}
+      </div>
+    `;
+
+    // Table Toolbar
+    const tableToolbarHTML = `
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <div class="table-search-box">
+            ${Icons.search}
+            <input type="text" placeholder="Search" />
+          </div>
+        </div>
+        <div class="table-toolbar-right">
+          <span class="toolbar-link">
+            ${Icons.filter}
+            Filters
+            <span style="color:#787085;">2</span>
+          </span>
+          <span class="toolbar-link">
+            Mark all as reviewed
+            ${Icons.check}
+          </span>
+          <span class="toolbar-link">
+            View activities
+            ${Icons.lock}
+          </span>
+        </div>
+      </div>
+    `;
+
+    // Generate table rows
+    const avatarList = [
+      'https://randomuser.me/api/portraits/men/32.jpg',
+      'https://randomuser.me/api/portraits/women/44.jpg',
+      'https://randomuser.me/api/portraits/men/45.jpg',
+      'https://randomuser.me/api/portraits/women/32.jpg',
+      'https://randomuser.me/api/portraits/men/22.jpg',
+      'https://randomuser.me/api/portraits/women/28.jpg',
+      'https://randomuser.me/api/portraits/men/52.jpg',
+      'https://randomuser.me/api/portraits/women/54.jpg',
+      'https://randomuser.me/api/portraits/men/36.jpg',
+      'https://randomuser.me/api/portraits/women/62.jpg',
+      'https://randomuser.me/api/portraits/men/42.jpg'
+    ];
+
+    const tableRowsHTML = employeesData.map((emp, idx) => 
+      EmployeeTableRow({ employee: emp, avatarUrl: avatarList[idx % avatarList.length] })
+    ).join('');
+
+    // Employee Table
+    const employeeTableHTML = `
+      <div class="table-container">
+        <div class="table-scroll-wrap">
+          <table class="data-table" style="min-width:1200px;">
+            <thead>
+              <tr>
+                <th style="width:40px;"><input type="checkbox" class="table-checkbox" /></th>
+                <th>
+                  <span style="display:inline-flex;align-items:center;gap:4px;">
+                    123 people
+                    <span style="font-weight:300;color:#a09aab;">out of 1402 in your org</span>
+                  </span>
+                </th>
+                <th>Payroll status ${Icons.sort}</th>
+                <th>Amount paid ${Icons.sort}</th>
+                <th>Remaining amount ${Icons.sort}</th>
+                <th>Contract type ${Icons.sort}</th>
+                <th>Basic salary ${Icons.sort}</th>
+                <th>House hold ${Icons.sort}</th>
+                <th>Transportation al... ${Icons.sort}</th>
+                <th>Phone... ${Icons.sort}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tableRowsHTML}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    // Pagination Info (in header area)
+    const paginationHTML = `
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+        <div class="pagination-info">
+          <span>‹ Back</span>
+          <span style="color:#1e1033;">1 of 12</span>
+          <span>Next ›</span>
+        </div>
+      </div>
+    `;
+
+    // Assemble page
+    container.innerHTML = `
+      ${breadcrumbHTML}
+      ${paginationHTML}
+      ${pageHeaderHTML}
+      ${statsRowHTML}
+      ${tableToolbarHTML}
+      ${employeeTableHTML}
+    `;
+  }
+
+  // Initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', renderPayrollDetailPage);
+})();
+</script>
+
+</body>
+</html>
