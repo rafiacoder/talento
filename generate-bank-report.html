@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento – Generate Bank Report</title>
+  <meta name="description" content="Talento HR Platform – Generate Bank Report" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Shared layout styles -->
+  <link rel="stylesheet" href="shared-styles.css" />
+  <!-- Design Tokens -->
+  <script src="design-tokens.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════════════
+       GENERATE BANK REPORT MODAL STYLES
+       ═══════════════════════════════════════════════════════════════════════════ */
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 16px;
+    }
+
+    /* Modal Container */
+    .modal-container {
+      background: #fff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-container::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .modal-container::-webkit-scrollbar-thumb {
+      background: #d2cfd6;
+      border-radius: 4px;
+    }
+
+    /* Modal Header */
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid #f0eef6;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #1e1033;
+      letter-spacing: -0.18px;
+    }
+
+    .modal-close-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      color: #787085;
+      cursor: pointer;
+      transition: all 150ms;
+      border: none;
+      background: transparent;
+    }
+
+    .modal-close-btn:hover {
+      background: #f6f5f7;
+      color: #1e1033;
+    }
+
+    /* Modal Body */
+    .modal-body {
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Form Row (2 columns) */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Form Group */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    /* Form Label */
+    .form-label {
+      font-size: 13px;
+      font-weight: 400;
+      color: #4b405c;
+    }
+
+    /* Form Input */
+    .form-input {
+      height: 44px;
+      padding: 0 14px;
+      border: 1px solid #e8e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #1e1033;
+      background: #fff;
+      outline: none;
+      transition: border-color 150ms;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+    }
+
+    .form-input::placeholder {
+      color: #a09aab;
+    }
+
+    .form-input:focus {
+      border-color: #1e1033;
+    }
+
+    /* Date Input with Icon */
+    .date-input-wrap {
+      position: relative;
+    }
+
+    .date-input-wrap .form-input {
+      padding-left: 40px;
+      width: 100%;
+    }
+
+    .date-input-wrap .date-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #787085;
+      pointer-events: none;
+    }
+
+    /* Select Input */
+    .form-select {
+      height: 44px;
+      padding: 0 14px;
+      padding-right: 40px;
+      border: 1px solid #e8e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #1e1033;
+      background: #fff;
+      outline: none;
+      transition: border-color 150ms;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23787085' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+
+    .form-select:focus {
+      border-color: #1e1033;
+    }
+
+    .form-select option[value=""][disabled] {
+      color: #a09aab;
+    }
+
+    /* Textarea */
+    .form-textarea {
+      min-height: 100px;
+      padding: 12px 14px;
+      border: 1px solid #e8e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #1e1033;
+      background: #fff;
+      outline: none;
+      transition: border-color 150ms;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .form-textarea::placeholder {
+      color: #a09aab;
+    }
+
+    .form-textarea:focus {
+      border-color: #1e1033;
+    }
+
+    /* Modal Footer */
+    .modal-footer {
+      padding: 16px 24px 24px;
+    }
+
+    /* Download Button */
+    .download-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 48px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      background: #1E1033;
+      cursor: pointer;
+      transition: all 150ms;
+      border: none;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+    }
+
+    .download-btn svg {
+      stroke: #2CF7B3;
+    }
+
+    .download-btn:hover {
+      background: #2a1745;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(30, 16, 51, 0.25);
+    }
+
+    .download-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE DESIGN
+    ───────────────────────────────────────── */
+    @media (max-width: 576px) {
+      .modal-container {
+        max-width: 100%;
+        border-radius: 16px 16px 0 0;
+        max-height: 95vh;
+      }
+
+      .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+
+      .modal-header {
+        padding: 16px 20px 12px;
+      }
+
+      .modal-body {
+        padding: 16px 20px;
+      }
+
+      .modal-footer {
+        padding: 12px 20px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- APP SHELL -->
+<div id="app">
+  <!-- Sidebar (injected by layout.js) -->
+  <aside id="sidebar"></aside>
+
+  <!-- Overlay for mobile menu -->
+  <div id="overlay"></div>
+
+  <!-- Main column (navbar + content) -->
+  <div id="main-col">
+
+    <!-- Top navbar (injected by layout.js) -->
+    <header id="navbar" style="display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 16px;border-bottom:1px solid #e8e7eb;flex-shrink:0;background:#fff;"></header>
+
+    <!-- Scrollable main content -->
+    <main id="main-scroll" style="padding:24px 20px 40px;">
+      
+      <!-- Page Content Container -->
+      <div id="page-content">
+        <!-- Content will be rendered by JavaScript -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Modal Container (rendered outside app for proper overlay) -->
+<div id="modal-root"></div>
+
+<!-- Layout JS (sidebar & navbar) -->
+<script src="layout.js"></script>
+
+<!-- Payroll Components -->
+<script src="payroll_components.js"></script>
+
+<!-- Generate Bank Report Components -->
+<script>
+/**
+ * Generate Bank Report Components
+ * Reusable UI components for the Bank Report generation modal
+ */
+const BankReportComponents = (function() {
+  'use strict';
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ICONS
+  // ═══════════════════════════════════════════════════════════════════════════
+  const Icons = {
+    close: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+    calendar: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+    download: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`
+  };
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // FORM FIELD COMPONENTS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Date Input Field
+   */
+  function DateInput(config) {
+    const { id, label, placeholder = 'Select date', value = '' } = config;
+    
+    return `
+      <div class="form-group">
+        <label class="form-label" for="${id}">${label}</label>
+        <div class="date-input-wrap">
+          <span class="date-icon">${Icons.calendar}</span>
+          <input type="date" 
+                 id="${id}" 
+                 class="form-input" 
+                 placeholder="${placeholder}"
+                 value="${value}" />
+        </div>
+      </div>
+    `;
+  }
+
+  /**
+   * Select Dropdown Field
+   */
+  function SelectInput(config) {
+    const { id, label, placeholder = 'Select option', options = [], value = '' } = config;
+    
+    const optionsHTML = options.map(opt => {
+      const isSelected = opt.value === value ? 'selected' : '';
+      return `<option value="${opt.value}" ${isSelected}>${opt.label}</option>`;
+    }).join('');
+    
+    return `
+      <div class="form-group">
+        <label class="form-label" for="${id}">${label}</label>
+        <select id="${id}" class="form-select">
+          <option value="" disabled ${!value ? 'selected' : ''}>${placeholder}</option>
+          ${optionsHTML}
+        </select>
+      </div>
+    `;
+  }
+
+  /**
+   * Textarea Field
+   */
+  function TextareaInput(config) {
+    const { id, label, placeholder = '', value = '', rows = 4 } = config;
+    
+    return `
+      <div class="form-group full-width">
+        <label class="form-label" for="${id}">${label}</label>
+        <textarea id="${id}" 
+                  class="form-textarea" 
+                  placeholder="${placeholder}"
+                  rows="${rows}">${value}</textarea>
+      </div>
+    `;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MODAL COMPONENT
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Generate Bank Report Modal
+   */
+  function Modal(config) {
+    const {
+      title = 'Generate bank report',
+      companies = [],
+      banks = [],
+      payrolls = [],
+      salaryTransfers = [],
+      onClose = 'closeBankReportModal',
+      onSubmit = 'submitBankReport'
+    } = config;
+
+    return `
+      <div class="modal-overlay" id="bank-report-modal" onclick="if(event.target === this) ${onClose}()">
+        <div class="modal-container" onclick="event.stopPropagation()">
+          
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h2 class="modal-title">${title}</h2>
+            <button class="modal-close-btn" onclick="${onClose}()" aria-label="Close modal">
+              ${Icons.close}
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <!-- Date Range Row -->
+            <div class="form-row">
+              ${DateInput({
+                id: 'from-date',
+                label: 'From date',
+                placeholder: 'Select date'
+              })}
+              ${DateInput({
+                id: 'to-date',
+                label: 'To date',
+                placeholder: 'Select date'
+              })}
+            </div>
+
+            <!-- Company & Bank Row -->
+            <div class="form-row">
+              ${SelectInput({
+                id: 'company-name',
+                label: 'Company name',
+                placeholder: 'Select company',
+                options: companies
+              })}
+              ${SelectInput({
+                id: 'bank-name',
+                label: 'Bank name',
+                placeholder: 'Select bank',
+                options: banks
+              })}
+            </div>
+
+            <!-- Payroll & Salary Transfer Row -->
+            <div class="form-row">
+              ${SelectInput({
+                id: 'payroll-name',
+                label: 'Payroll name',
+                placeholder: 'Select payroll name',
+                options: payrolls
+              })}
+              ${SelectInput({
+                id: 'target-salary-transfer',
+                label: 'Target salary transfer',
+                placeholder: 'Select target salary transfer',
+                options: salaryTransfers
+              })}
+            </div>
+
+            <!-- Message Textarea -->
+            ${TextareaInput({
+              id: 'message',
+              label: 'Message',
+              placeholder: 'Add description why we need a message here pls'
+            })}
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button class="download-btn" onclick="${onSubmit}()">
+              Download
+              ${Icons.download}
+            </button>
+          </div>
+
+        </div>
+      </div>
+    `;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PUBLIC API
+  // ═══════════════════════════════════════════════════════════════════════════
+  return {
+    Icons,
+    DateInput,
+    SelectInput,
+    TextareaInput,
+    Modal
+  };
+
+})();
+
+// Export for use in other modules
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = BankReportComponents;
+}
+</script>
+
+<!-- Page Initialization -->
+<script>
+(function() {
+  'use strict';
+
+  // Sample data for dropdowns
+  const sampleData = {
+    companies: [
+      { value: 'talento-hr', label: 'Talento HR' },
+      { value: 'acme-corp', label: 'Acme Corporation' },
+      { value: 'tech-solutions', label: 'Tech Solutions' }
+    ],
+    banks: [
+      { value: 'al-rajhi', label: 'Al Rajhi Bank' },
+      { value: 'ncb', label: 'NCB' },
+      { value: 'samba', label: 'Samba Financial Group' },
+      { value: 'riyad-bank', label: 'Riyad Bank' }
+    ],
+    payrolls: [
+      { value: 'june-2025', label: 'June 2025 Payroll' },
+      { value: 'may-2025', label: 'May 2025 Payroll' },
+      { value: 'april-2025', label: 'April 2025 Payroll' }
+    ],
+    salaryTransfers: [
+      { value: 'standard', label: 'Standard Transfer' },
+      { value: 'express', label: 'Express Transfer' },
+      { value: 'batch', label: 'Batch Transfer' }
+    ]
+  };
+
+  // Show the modal
+  function showBankReportModal() {
+    const modalRoot = document.getElementById('modal-root');
+    if (!modalRoot) return;
+
+    modalRoot.innerHTML = BankReportComponents.Modal({
+      title: 'Generate bank report',
+      companies: sampleData.companies,
+      banks: sampleData.banks,
+      payrolls: sampleData.payrolls,
+      salaryTransfers: sampleData.salaryTransfers,
+      onClose: 'closeBankReportModal',
+      onSubmit: 'submitBankReport'
+    });
+
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Close the modal
+  window.closeBankReportModal = function() {
+    const modalRoot = document.getElementById('modal-root');
+    if (modalRoot) {
+      modalRoot.innerHTML = '';
+    }
+    document.body.style.overflow = '';
+  };
+
+  // Handle form submission
+  window.submitBankReport = function() {
+    const formData = {
+      fromDate: document.getElementById('from-date')?.value,
+      toDate: document.getElementById('to-date')?.value,
+      companyName: document.getElementById('company-name')?.value,
+      bankName: document.getElementById('bank-name')?.value,
+      payrollName: document.getElementById('payroll-name')?.value,
+      targetSalaryTransfer: document.getElementById('target-salary-transfer')?.value,
+      message: document.getElementById('message')?.value
+    };
+
+    console.log('Bank Report Form Data:', formData);
+    
+    // Here you would typically send the data to a server
+    // For now, we'll just show an alert
+    alert('Bank report download initiated!');
+    closeBankReportModal();
+  };
+
+  // Render page content with a button to open modal
+  function renderPageContent() {
+    const container = document.getElementById('page-content');
+    if (!container) return;
+
+    // Build page header using PayrollComponents
+    const pageHeader = PayrollComponents.PageHeader({
+      title: 'Payroll',
+      showGenerateReport: true,
+      showExport: true,
+      showCreateNew: true,
+      createNewText: 'Create new payroll'
+    });
+
+    container.innerHTML = `
+      ${pageHeader}
+      <div style="margin-top: 24px;">
+        <p style="color: #787085; font-size: 14px; margin-bottom: 16px;">
+          Click "Generate bank report" button above to open the modal form.
+        </p>
+      </div>
+    `;
+
+    // Add click handler to "Generate bank report" button
+    const generateBtn = container.querySelector('.payroll-toolbar-btn');
+    if (generateBtn) {
+      generateBtn.addEventListener('click', showBankReportModal);
+    }
+  }
+
+  // Initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', function() {
+    renderPageContent();
+    // Optionally auto-open modal for demo purposes
+    // showBankReportModal();
+  });
+
+  // Expose showBankReportModal globally for external use
+  window.showBankReportModal = showBankReportModal;
+
+})();
+</script>
+
+</body>
+</html>
