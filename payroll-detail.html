@@ -185,12 +185,13 @@
     .stat-card {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      justify-content: space-between;
       padding: 16px 20px;
       background: #fff;
       border: 1px solid #e8e7eb;
       border-radius: 12px;
       min-width: 160px;
+      min-height: 80px;
       flex: 1;
     }
 
@@ -198,6 +199,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
 
     .stat-card-icon {
@@ -207,17 +209,20 @@
       align-items: center;
       justify-content: center;
       color: #787085;
+      flex-shrink: 0;
     }
 
     .stat-card-label {
       font-size: 14px;
       color: #787085;
+      white-space: nowrap;
     }
 
     .stat-card-value {
       font-size: 14px;
       font-weight: 500;
       color: #1e1033;
+      margin-top: auto;
     }
 
     .stat-card-value.positive {
@@ -233,6 +238,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-top: auto;
     }
 
     /* ─────────────────────────────────────────
@@ -292,15 +298,20 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      height: 36px;
+      padding: 0 14px;
       font-size: 14px;
       color: #4b405c;
       cursor: pointer;
-      transition: color 150ms;
+      transition: all 150ms;
       white-space: nowrap;
+      border: 1px solid #e8e7eb;
+      border-radius: 100px;
+      background: #fff;
     }
 
     .toolbar-link:hover {
-      color: #1e1033;
+      background: #f5f3fb;
     }
 
     .toolbar-link svg {
@@ -371,9 +382,14 @@
     .pagination-info {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
       font-size: 14px;
       color: #787085;
+    }
+
+    .pagination-info span {
+      display: inline-flex;
+      align-items: center;
     }
 
     .pagination-nav {
@@ -390,6 +406,25 @@
 
     .pagination-nav a:hover {
       color: #1e1033;
+    }
+
+    /* Table header with two-line layout */
+    .table-header-people {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .table-header-people-count {
+      font-weight: 500;
+      color: #1e1033;
+      font-size: 12px;
+    }
+
+    .table-header-people-subtitle {
+      font-weight: 300;
+      color: #a09aab;
+      font-size: 11px;
     }
 
     /* ─────────────────────────────────────────
@@ -837,19 +872,19 @@
               <tr>
                 <th style="width:40px;"><input type="checkbox" class="table-checkbox" /></th>
                 <th>
-                  <span style="display:inline-flex;align-items:center;gap:4px;">
-                    123 people
-                    <span style="font-weight:300;color:#a09aab;">out of 1402 in your org</span>
-                  </span>
+                  <div class="table-header-people">
+                    <span class="table-header-people-count">123 people</span>
+                    <span class="table-header-people-subtitle">out of 1402 in your org</span>
+                  </div>
                 </th>
-                <th>Payroll status ${Icons.sort}</th>
-                <th>Amount paid ${Icons.sort}</th>
-                <th>Remaining amount ${Icons.sort}</th>
-                <th>Contract type ${Icons.sort}</th>
-                <th>Basic salary ${Icons.sort}</th>
-                <th>House hold ${Icons.sort}</th>
-                <th>Transportation al... ${Icons.sort}</th>
-                <th>Phone... ${Icons.sort}</th>
+                <th><span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">Payroll status ${Icons.sort}</span></th>
+                <th><span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">Amount paid ${Icons.sort}</span></th>
+                <th><span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">Remaining amount ${Icons.sort}</span></th>
+                <th><span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">Contract type ${Icons.sort}</span></th>
+                <th><span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">Basic salary ${Icons.sort}</span></th>
+                <th><span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">House hold ${Icons.sort}</span></th>
+                <th><span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">Transportation all... ${Icons.sort}</span></th>
+                <th><span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">Phone ${Icons.sort}</span></th>
               </tr>
             </thead>
             <tbody>
@@ -864,9 +899,9 @@
     const paginationHTML = `
       <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
         <div class="pagination-info">
-          <span>‹ Back</span>
-          <span style="color:#1e1033;">1 of 12</span>
-          <span>Next ›</span>
+          <span style="cursor:pointer;">‹ Back</span>
+          <span style="color:#1e1033;font-weight:500;">1 of 12</span>
+          <span style="cursor:pointer;">Next ›</span>
         </div>
       </div>
     `;
