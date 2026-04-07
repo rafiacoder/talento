@@ -491,6 +491,340 @@
         display: none;
       }
     }
+
+    /* ─────────────────────────────────────────
+       ACTIVITIES PANEL STYLES
+    ───────────────────────────────────────── */
+    .activities-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 50;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 300ms ease;
+    }
+
+    .activities-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .activities-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 420px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+      z-index: 51;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 300ms ease;
+    }
+
+    .activities-panel.open {
+      transform: translateX(0);
+    }
+
+    .activities-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid #f0eef6;
+      flex-shrink: 0;
+    }
+
+    .activities-panel-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #1e1033;
+    }
+
+    .activities-close-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      color: #787085;
+      cursor: pointer;
+      transition: all 150ms;
+      border: none;
+      background: transparent;
+    }
+
+    .activities-close-btn:hover {
+      background: #f6f5f7;
+      color: #1e1033;
+    }
+
+    .activities-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 24px;
+      border-bottom: 1px solid #f0eef6;
+      flex-shrink: 0;
+    }
+
+    .activities-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: #787085;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      border-bottom: 2px solid transparent;
+      transition: all 150ms;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+    }
+
+    .activities-tab:hover {
+      color: #4b405c;
+    }
+
+    .activities-tab.active {
+      color: #1e1033;
+      border-bottom-color: #1e1033;
+    }
+
+    .activities-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+
+    .activities-content::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .activities-content::-webkit-scrollbar-thumb {
+      background: #d2cfd6;
+      border-radius: 4px;
+    }
+
+    /* Activity Item */
+    .activity-item {
+      display: flex;
+      gap: 12px;
+      padding-bottom: 20px;
+    }
+
+    .activity-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .activity-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .activity-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .activity-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e1033;
+    }
+
+    .activity-date {
+      font-size: 12px;
+      color: #a09aab;
+    }
+
+    .activity-badge-rejected {
+      display: inline-flex;
+      align-items: center;
+      height: 20px;
+      padding: 0 8px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 500;
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .activity-badge-approved {
+      display: inline-flex;
+      align-items: center;
+      height: 20px;
+      padding: 0 8px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 500;
+      background: #D7FFE7;
+      color: #15803d;
+    }
+
+    .activity-text {
+      font-size: 13px;
+      color: #4b405c;
+      line-height: 1.5;
+    }
+
+    .activity-change {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: #4b405c;
+      background: #f6f5f7;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    .activity-change-label {
+      color: #787085;
+    }
+
+    .activity-signature {
+      margin-top: 12px;
+      padding: 16px;
+      background: #faf9fc;
+      border-radius: 8px;
+      border: 1px solid #f0eef6;
+    }
+
+    .activity-signature img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Today Divider */
+    .activity-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
+    }
+
+    .activity-divider-line {
+      flex: 1;
+      height: 1px;
+      background: #e8e7eb;
+    }
+
+    .activity-divider-text {
+      font-size: 12px;
+      color: #787085;
+      background: #fff;
+      padding: 0 8px;
+    }
+
+    /* Other Section */
+    .activities-other {
+      border-top: 1px solid #f0eef6;
+      padding: 16px 24px;
+      flex-shrink: 0;
+    }
+
+    .activities-other-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #1e1033;
+      margin-bottom: 12px;
+    }
+
+    .activities-other-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #f0eef6;
+    }
+
+    .activities-other-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #787085;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      border-bottom: 2px solid transparent;
+      transition: all 150ms;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+    }
+
+    .activities-other-tab:hover {
+      color: #4b405c;
+    }
+
+    .activities-other-tab.active {
+      color: #1e1033;
+      border-bottom-color: #1e1033;
+    }
+
+    .file-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 24px;
+    }
+
+    .file-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .file-info-label {
+      font-size: 12px;
+      color: #787085;
+    }
+
+    .file-info-value {
+      font-size: 13px;
+      color: #1e1033;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .file-info-avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 480px) {
+      .activities-panel {
+        max-width: 100%;
+      }
+
+      .activities-panel-header,
+      .activities-tabs,
+      .activities-content,
+      .activities-other {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .file-info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -521,6 +855,14 @@
   </div>
 </div>
 
+<!-- Activities Panel Overlay -->
+<div id="activities-overlay" class="activities-overlay" onclick="closeActivitiesPanel()"></div>
+
+<!-- Activities Panel -->
+<div id="activities-panel" class="activities-panel">
+  <!-- Panel will be rendered by JavaScript -->
+</div>
+
 <!-- Layout JS (sidebar & navbar) -->
 <script src="layout.js"></script>
 
@@ -548,7 +890,256 @@
     gift: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>`,
     minus: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`,
     users: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
-    sort: `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"/><path d="M7 9l5-5 5 5"/></svg>`
+    sort: `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"/><path d="M7 9l5-5 5 5"/></svg>`,
+    close: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+    activity: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+    attachment: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>`,
+    file: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+    notes: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`
+  };
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ACTIVITIES PANEL DATA
+  // ═══════════════════════════════════════════════════════════════════════════
+  const activitiesData = [
+    {
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+      name: 'Muhammad Arafah',
+      date: '12/03/2025',
+      badge: 'rejected',
+      badgeText: 'Rejected',
+      text: 'your request'
+    },
+    {
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+      name: 'Muhammad Arafah',
+      date: '12/03/2025',
+      text: 'Unfortunately, we are extremely busy on these dates. I understand that you have an urgent matter, so I can offer you a week off. Let me know if the dates a week later from the 4th work for you.'
+    },
+    {
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+      name: 'You',
+      date: '12/03/2025',
+      text: 'Okay, 4th to 10th is good for me.'
+    },
+    {
+      type: 'divider',
+      text: 'Today'
+    },
+    {
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+      name: 'Muhammad Arafah',
+      date: '13/03/2025',
+      change: {
+        label: 'Muhammad change:',
+        fields: [
+          { label: 'Start date', value: 'Sep 04, 2025' },
+          { label: 'End date', value: 'Sep 04, 2025' }
+        ]
+      }
+    },
+    {
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+      name: 'Muhammad Arafah',
+      date: '13/03/2025',
+      badge: 'approved',
+      badgeText: 'Approved',
+      text: 'your request'
+    },
+    {
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+      name: 'You',
+      date: '13/03/2025',
+      text: 'You approved and agreed with the decision',
+      hasSignature: true
+    }
+  ];
+
+  const fileInfoData = {
+    createdOn: '12 Dec 2025',
+    createdBy: {
+      name: 'Mishari AlSubaie',
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
+    },
+    reviewedOn: '12 Dec 2025',
+    reviewedBy: {
+      name: 'Mishari AlSubaie',
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
+    },
+    confirmedOn: '12 Dec 2025'
+  };
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ACTIVITIES PANEL FUNCTIONS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  function renderActivitiesPanel() {
+    const panel = document.getElementById('activities-panel');
+    if (!panel) return;
+
+    // Generate activities HTML
+    const activitiesHTML = activitiesData.map(activity => {
+      if (activity.type === 'divider') {
+        return `
+          <div class="activity-divider">
+            <div class="activity-divider-line"></div>
+            <span class="activity-divider-text">${activity.text}</span>
+            <div class="activity-divider-line"></div>
+          </div>
+        `;
+      }
+
+      let badgeHTML = '';
+      if (activity.badge === 'rejected') {
+        badgeHTML = `<span class="activity-badge-rejected">${activity.badgeText}</span>`;
+      } else if (activity.badge === 'approved') {
+        badgeHTML = `<span class="activity-badge-approved">${activity.badgeText}</span>`;
+      }
+
+      let contentHTML = '';
+      if (activity.text) {
+        contentHTML = `<p class="activity-text">${badgeHTML} ${activity.text}</p>`;
+      }
+
+      if (activity.change) {
+        const fieldsHTML = activity.change.fields.map(f => 
+          `<span><strong>${f.label}</strong> ${f.value}</span>`
+        ).join(' ');
+        contentHTML = `
+          <div class="activity-change">
+            <span class="activity-change-label">${activity.change.label}</span>
+            ${fieldsHTML}
+          </div>
+        `;
+      }
+
+      let signatureHTML = '';
+      if (activity.hasSignature) {
+        signatureHTML = `
+          <div class="activity-signature">
+            <svg width="120" height="60" viewBox="0 0 120 60">
+              <path d="M10 45 Q20 20, 35 35 T55 30 T75 40 T95 25 T110 35" stroke="#1e1033" stroke-width="2" fill="none"/>
+              <path d="M25 50 Q35 45, 45 50" stroke="#1e1033" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="activity-item">
+          <img src="${activity.avatar}" alt="${activity.name}" class="activity-avatar" />
+          <div class="activity-content">
+            <div class="activity-header">
+              <span class="activity-name">${activity.name}</span>
+              <span class="activity-date">${activity.date}</span>
+            </div>
+            ${contentHTML}
+            ${signatureHTML}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // File info HTML
+    const fileInfoHTML = `
+      <div class="file-info-grid">
+        <div class="file-info-item">
+          <span class="file-info-label">Created on</span>
+          <span class="file-info-value">${fileInfoData.createdOn}</span>
+        </div>
+        <div class="file-info-item">
+          <span class="file-info-label">Created by</span>
+          <span class="file-info-value">
+            <img src="${fileInfoData.createdBy.avatar}" alt="${fileInfoData.createdBy.name}" class="file-info-avatar" />
+            ${fileInfoData.createdBy.name}
+          </span>
+        </div>
+        <div class="file-info-item">
+          <span class="file-info-label">Reviewed On</span>
+          <span class="file-info-value">${fileInfoData.reviewedOn}</span>
+        </div>
+        <div class="file-info-item">
+          <span class="file-info-label">Reviewed by</span>
+          <span class="file-info-value">
+            <img src="${fileInfoData.reviewedBy.avatar}" alt="${fileInfoData.reviewedBy.name}" class="file-info-avatar" />
+            ${fileInfoData.reviewedBy.name}
+          </span>
+        </div>
+        <div class="file-info-item">
+          <span class="file-info-label">Confirmed On</span>
+          <span class="file-info-value">${fileInfoData.confirmedOn}</span>
+        </div>
+      </div>
+    `;
+
+    panel.innerHTML = `
+      <div class="activities-panel-header">
+        <h2 class="activities-panel-title">Activities</h2>
+        <button class="activities-close-btn" onclick="closeActivitiesPanel()" aria-label="Close">
+          ${Icons.close}
+        </button>
+      </div>
+
+      <div class="activities-tabs">
+        <button class="activities-tab active" data-tab="activities">
+          ${Icons.activity}
+          Activities
+        </button>
+        <button class="activities-tab" data-tab="attachments">
+          ${Icons.attachment}
+          Attachments
+        </button>
+      </div>
+
+      <div class="activities-content">
+        ${activitiesHTML}
+      </div>
+
+      <div class="activities-other">
+        <h3 class="activities-other-title">Other</h3>
+        <div class="activities-other-tabs">
+          <button class="activities-other-tab active" data-tab="file-info">
+            ${Icons.file}
+            File info
+          </button>
+          <button class="activities-other-tab" data-tab="notes">
+            ${Icons.notes}
+            Notes
+          </button>
+        </div>
+        <div id="other-content">
+          ${fileInfoHTML}
+        </div>
+      </div>
+    `;
+
+    // Add tab click handlers
+    panel.querySelectorAll('.activities-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        panel.querySelectorAll('.activities-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    panel.querySelectorAll('.activities-other-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        panel.querySelectorAll('.activities-other-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  }
+
+  window.openActivitiesPanel = function() {
+    renderActivitiesPanel();
+    document.getElementById('activities-overlay').classList.add('open');
+    document.getElementById('activities-panel').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeActivitiesPanel = function() {
+    document.getElementById('activities-overlay').classList.remove('open');
+    document.getElementById('activities-panel').classList.remove('open');
+    document.body.style.overflow = '';
   };
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -821,7 +1412,7 @@
       </div>
     `;
 
-    // Table Toolbar
+    // Table Toolbar - Updated with onclick for View activities
     const tableToolbarHTML = `
       <div class="table-toolbar">
         <div class="table-toolbar-left">
@@ -840,7 +1431,7 @@
             Mark all as reviewed
             ${Icons.check}
           </span>
-          <span class="toolbar-link">
+          <span class="toolbar-link" onclick="openActivitiesPanel()" style="cursor:pointer;">
             View activities
             ${Icons.lock}
           </span>
