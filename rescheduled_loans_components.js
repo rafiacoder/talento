@@ -25,7 +25,7 @@ const RescheduledLoansComponents = (function() {
   // STATUS BADGE CONFIG
   // ═══════════════════════════════════════════════════════════════════════════
   const StatusConfig = {
-    'in-review': { bg: '#fef3c7', text: '#b45309', label: 'In review' },
+    'in-review': { bg: '#f3f4f6', text: '#6b7280', label: 'In review' },
     'approved': { bg: '#D7FFE7', text: '#15803d', label: 'Approved' },
     'rejected': { bg: '#fee2e2', text: '#dc2626', label: 'Rejected' },
     'pending': { bg: '#f3f4f6', text: '#6b7280', label: 'Pending' }
@@ -83,9 +83,9 @@ const RescheduledLoansComponents = (function() {
 
     return `
       <div class="date-range-cell">
-        <span>from ${from}</span>
+        <span style="color: #787085;">from ${from}</span>
         <span class="arrow">→</span>
-        <span>to ${to}</span>
+        <span style="color: #787085;">to ${to}</span>
       </div>
     `;
   }
