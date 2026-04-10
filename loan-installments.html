@@ -54,6 +54,7 @@
       background: transparent;
       transition: background 150ms;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .loans-action-btn:hover {
@@ -217,6 +218,8 @@
     .loans-search-input-wrap input {
       font-size: 14px;
       color: #4b405c;
+      flex: 1;
+      min-width: 0;
     }
 
     .loans-search-input-wrap svg {
@@ -391,9 +394,22 @@
       }
     }
 
+    @media (max-width: 1024px) {
+      .loans-page-header {
+        align-items: flex-start;
+      }
+
+      .loans-header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+    }
+
     @media (max-width: 800px) {
       .overview-main {
         flex-wrap: wrap;
+        align-items: flex-start;
       }
 
       .overview-main-left {
@@ -402,7 +418,56 @@
       }
 
       .overview-breakdown {
+        width: 100%;
+      }
+
+      .loans-search-filter-bar {
         flex-direction: column;
+        align-items: stretch;
+      }
+
+      .loans-search-filter-bar > .loans-search-input-wrap {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+      }
+
+      .loans-search-filter-bar > div:last-child {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .loans-filter-btn,
+      .loans-toolbar-btn {
+        height: 32px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .overview-card {
+        padding: 12px;
+      }
+
+      .loans-header-actions {
+        gap: 6px;
+      }
+
+      .overview-breakdown {
+        flex-direction: column;
+      }
+
+      .overview-small-value {
+        font-size: 26px;
+      }
+
+      .overview-small-label {
+        font-size: 24px;
+      }
+
+      .loans-action-btn {
+        font-size: 13px;
+        padding: 0 10px;
       }
 
       .loans-search-input-wrap {
@@ -582,7 +647,7 @@
       <div class="overview-grid">
         <article class="overview-card">
           <div class="overview-main">
-            <div>
+            <div class="overview-main-left">
               <p class="overview-title">Expected total amount</p>
               <p class="overview-amount">${installmentsSummary.expectedTotal}</p>
             </div>
