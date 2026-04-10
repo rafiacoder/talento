@@ -18,8 +18,7 @@
     'payroll.html': { navItem: 'finance', submenu: 'payroll' },
     'payroll-detail.html': { navItem: 'finance', submenu: 'payroll' },
     'loans.html': { navItem: 'finance', submenu: 'loans' },
-    'loan-installments.html': { navItem: 'finance', submenu: 'loans' },
-    'rescheduled-loans.html': { navItem: 'finance', submenu: 'loans' }
+    'loan-installments.html': { navItem: 'finance', submenu: 'loans' }
   };
 
   const config = pageConfig[currentPage] || pageConfig['index.html'];
