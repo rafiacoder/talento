@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
@@ -8,11 +9,11 @@
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared-styles.css" />
 
-  <style>
+  <style type="text/css">
     #main-scroll { background: #f6f5f7; }
 
     .sv-page-wrap {
@@ -238,6 +239,8 @@
       gap: 10px;
       margin-top: 4px;
     }
+    .sv-rating-wrap > .sv-select-btn { justify-self: start; align-self: center; }
+    .sv-rating-wrap > .sv-select-btn:last-child { justify-self: end; }
     .sv-rating-items {
       display: grid;
       grid-auto-flow: column;
@@ -352,13 +355,18 @@
       .sv-question-actions { margin-left: 0; }
       .sv-select-btn { font-size: 12px; padding: 0 8px; }
       .sv-rating-wrap {
-        grid-template-columns: 1fr;
-        align-items: start;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: end;
         gap: 8px;
       }
       .sv-rating-items {
-        grid-auto-flow: row;
-        grid-template-columns: repeat(5, minmax(18px, auto));
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(16px, auto);
+        gap: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        padding-bottom: 2px;
       }
     }
   </style>
@@ -378,9 +386,10 @@
   </div>
 </div>
 
-<script src="layout.js"></script>
-<script src="survey_components.js"></script>
-<script>
+<script type="text/javascript" src="layout.js"></script>
+<script type="text/javascript" src="survey_components.js"></script>
+<script type="text/javascript">
+//<![CDATA[
 (function() {
   'use strict';
 
@@ -440,6 +449,7 @@
     SurveyComponents.render('#create-survey-root', surveyPageData);
   });
 })();
+//]]>
 </script>
 
 </body>
