@@ -1,6 +1,5 @@
 /**
  * Talento Candidate Profile Components
- * Reusable UI components for the Candidate Profile screen.
  */
 const CandidateProfileComponents = (function() {
   'use strict';
@@ -8,20 +7,20 @@ const CandidateProfileComponents = (function() {
   const Icons = {
     chevronLeft: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`,
     chevronRight: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`,
-    check: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+    check: `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
     close: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
     edit: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
     more: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>`,
     activity: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
     download: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
-    mail: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>`,
-    phone: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.7 13 19.8 19.8 0 0 1 1.62 4.4 2 2 0 0 1 3.6 2.2h3a2 2 0 0 1 2 1.72c.12.97.39 1.9.79 2.77a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.13 6.13l1.27-1.27a2 2 0 0 1 2.11-.45c.87.4 1.8.67 2.77.79a2 2 0 0 1 1.72 2z"/></svg>`,
+    mail: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>`,
+    phone: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.7 13 19.8 19.8 0 0 1 1.62 4.4 2 2 0 0 1 3.6 2.2h3a2 2 0 0 1 2 1.72c.12.97.39 1.9.79 2.77a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.13 6.13l1.27-1.27a2 2 0 0 1 2.11-.45c.87.4 1.8.67 2.77.79a2 2 0 0 1 1.72 2z"/></svg>`,
     briefcase: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`,
     calendar: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
     mapPin: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
     graduationCap: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
     user: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
-    list: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>`
+    copy: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`
   };
 
   function PipelineHeader({ items = [], currentIndex = 1, total = 1 }) {
@@ -53,11 +52,11 @@ const CandidateProfileComponents = (function() {
             <span class="cp-status-badge">${badge}</span>
           </div>
           <div class="cp-meta-row">
-            <span>Applied Job <strong>${jobTitle}</strong></span>
+            <span>Applied Job <span class="cp-meta-emphasis">${jobTitle}</span></span>
             <span>•</span>
-            <span>Applied <strong>${appliedDate}</strong></span>
+            <span>Applied <span class="cp-meta-emphasis">${appliedDate}</span></span>
             <span>•</span>
-            <span class="cp-recruiter-inline">Recruiter <img src="${recruiterAvatar}" alt="${recruiterName}" /> <strong>${recruiterName}</strong></span>
+            <span class="cp-recruiter-inline">Recruiter <img src="${recruiterAvatar}" alt="${recruiterName}" /> <span class="cp-meta-emphasis">${recruiterName}</span></span>
           </div>
         </div>
         <div class="cp-heading-actions">
@@ -80,22 +79,31 @@ const CandidateProfileComponents = (function() {
     `;
   }
 
-  function StageProgress({ stages = [], activeStage = 0 }) {
+  function StageStrip({ stages = [], activeStage = 1 }) {
     const stageHTML = stages.map((label, idx) => {
-      const status = idx < activeStage ? 'done' : idx === activeStage ? 'active' : 'pending';
+      let status = 'pending';
+      if (idx === 0) status = 'done';
+      else if (idx === activeStage) status = 'active';
+
+      const bullet = status === 'done' ? Icons.check : `${idx + 1}`;
       return `
         <div class="cp-stage-item ${status}">
-          <div class="cp-stage-bullet">${idx < activeStage ? Icons.check : idx + 1}</div>
+          <div class="cp-stage-bullet">${bullet}</div>
           <span class="cp-stage-label">${label}</span>
         </div>
       `;
     }).join(`<div class="cp-stage-line"></div>`);
 
-    return `<div class="cp-stage-row">${stageHTML}</div>`;
+    return `<div class="cp-stage-strip">${stageHTML}</div>`;
   }
 
   function TagGroup(tags = []) {
-    return tags.map(tag => `<span class="cp-tag">${tag}</span>`).join('');
+    return tags.map(tag => `
+      <span class="cp-tag">
+        <span class="cp-tag-check">${Icons.check}</span>
+        ${tag}
+      </span>
+    `).join('');
   }
 
   function RightCard({ title, subtitle = '', bodyHTML }) {
@@ -123,10 +131,10 @@ const CandidateProfileComponents = (function() {
           <div class="cp-donut-wrap" aria-label="Predicted match ${percent}%">
             <svg width="118" height="118" viewBox="0 0 118 118">
               <circle cx="59" cy="59" r="${radius}" stroke="#ece9f3" stroke-width="14" fill="none"></circle>
-              <circle cx="59" cy="59" r="${radius}" stroke="#b58bff" stroke-width="14" fill="none"
+              <circle cx="59" cy="59" r="${radius}" stroke="#BA8AFF" stroke-width="14" fill="none"
                 stroke-linecap="round" stroke-dasharray="${circumference}" stroke-dashoffset="${progress}" transform="rotate(-90 59 59)"></circle>
             </svg>
-            <div class="cp-donut-label">Match <strong>${percent}%</strong></div>
+            <div class="cp-donut-label">Match <span>${percent}%</span></div>
           </div>
         </div>
       `
@@ -137,7 +145,7 @@ const CandidateProfileComponents = (function() {
     return `
       <div class="cp-contact-row">
         <span class="cp-contact-value">${icon}${value}</span>
-        <button class="cp-copy-btn">Copy ${Icons.list}</button>
+        <button class="cp-copy-btn">Copy ${Icons.copy}</button>
       </div>
     `;
   }
@@ -150,8 +158,8 @@ const CandidateProfileComponents = (function() {
   function AdditionalInfoCard({ items }) {
     const rows = items.map(item => `
       <div class="cp-info-row">
-        <span class="cp-info-label">${item.icon || ''}${item.label}</span>
-        <strong>${item.value}</strong>
+        <span class="cp-info-label"><span class="cp-info-icon">${item.icon || ''}</span><span>${item.label}</span></span>
+        <span class="cp-info-value">${item.value}</span>
       </div>
     `).join('');
 
@@ -159,10 +167,15 @@ const CandidateProfileComponents = (function() {
   }
 
   function KVRow({ label, value }) {
+    const lowerLabel = (label || '').toLowerCase();
+    const lowerValue = (value || '').toLowerCase();
+    const isTrialLabel = lowerLabel.includes('trial period') || lowerLabel.includes('after trial period');
+    const isNotProvided = lowerValue.includes('not provided');
+
     return `
       <div class="cp-kv-row">
-        <span>${label}</span>
-        <strong>${value}</strong>
+        <span class="${isTrialLabel ? 'cp-kv-label-trial' : 'cp-kv-label-default'}">${label}</span>
+        <span class="cp-kv-value ${isNotProvided ? 'cp-kv-value-muted' : 'cp-kv-value-strong'}">${value}</span>
       </div>
     `;
   }
@@ -179,32 +192,18 @@ const CandidateProfileComponents = (function() {
     `;
   }
 
-  function CVPreviewCard({ candidateName, role, email, phone, avatar, summary, experience = [] }) {
-    const expHTML = experience.map(item => `
-      <div class="cp-exp-item">
-        <strong>${item.title}</strong>
-        <p>${item.company}</p>
-        <span>${item.period}</span>
-      </div>
-    `).join('');
-
+  function CVPreviewCard({ cvImageSrc, cvDownloadName, stageConfig }) {
     return `
       <section class="cp-card">
+        ${StageStrip(stageConfig)}
         <div class="cp-section-top">
           <h3>CV preview</h3>
-          <button class="cp-secondary-btn">Download ${Icons.download}</button>
+          <a class="cp-secondary-btn" href="${cvImageSrc}" download="${cvDownloadName}">
+            Download ${Icons.download}
+          </a>
         </div>
         <div class="cp-cv-preview">
-          <div class="cp-cv-header">
-            <div>
-              <h2>${candidateName}</h2>
-              <p>${role}</p>
-            </div>
-            <img src="${avatar}" alt="${candidateName}">
-          </div>
-          <div class="cp-cv-meta">${email} • ${phone}</div>
-          <p class="cp-cv-summary">${summary}</p>
-          <div class="cp-exp-list">${expHTML}</div>
+          <img src="${cvImageSrc}" alt="Candidate CV preview">
         </div>
       </section>
     `;
@@ -215,7 +214,6 @@ const CandidateProfileComponents = (function() {
       ${PipelineHeader(data.pipelineHeader)}
       ${CandidateHeading(data.candidate)}
       ${ActionStrip()}
-      ${StageProgress(data.stageConfig)}
       <div class="cp-main-grid">
         <div class="cp-left-col">
           ${CVPreviewCard(data.cv)}
