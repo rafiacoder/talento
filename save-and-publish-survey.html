@@ -97,9 +97,7 @@
       position: fixed;
       inset: 0;
       z-index: 55;
-      background: rgba(30, 16, 51, 0.04);
-      backdrop-filter: blur(0.5px);
-      -webkit-backdrop-filter: blur(0.5px);
+      background: rgba(136, 128, 150, 0.32);
     }
 
     .sv-publish-modal {
@@ -110,6 +108,9 @@
       overflow: hidden;
       box-shadow: 0 24px 46px rgba(30, 16, 51, 0.14);
       pointer-events: auto;
+      max-height: calc(100vh - 124px);
+      display: flex;
+      flex-direction: column;
     }
 
     .sv-publish-modal-header {
@@ -141,7 +142,11 @@
       cursor: pointer;
     }
 
-    .sv-publish-modal-body { min-height: 380px; }
+    .sv-publish-modal-body {
+      min-height: 300px;
+      flex: 1;
+      overflow-y: auto;
+    }
 
     .sv-publish-section {
       padding: 20px 30px;
@@ -337,28 +342,63 @@
       padding: 0 16px;
     }
 
-    @media (max-width: 920px) {
-      .sv-save-overlay-wrap { padding: 76px 10px 16px; }
+    @media (max-width: 1024px) {
+      .sv-save-overlay-wrap { padding: 84px 14px 14px; }
       .sv-publish-modal-header,
       .sv-publish-section,
       .sv-publish-modal-footer {
-        padding-left: 16px;
-        padding-right: 16px;
+        padding-left: 18px;
+        padding-right: 18px;
       }
       .sv-publish-audience-grid { grid-template-columns: 1fr; }
-      .sv-publish-modal-body { min-height: 300px; }
+      .sv-publish-modal {
+        border-radius: 20px;
+        max-height: calc(100vh - 104px);
+      }
+      .sv-publish-modal-body { min-height: 240px; }
+    }
+
+    @media (max-width: 768px) {
+      .sv-save-overlay-wrap { padding: 74px 10px 10px; }
+      .sv-publish-modal-header,
+      .sv-publish-section,
+      .sv-publish-modal-footer {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+      .sv-publish-modal {
+        border-radius: 16px;
+        max-height: calc(100vh - 86px);
+      }
+      .sv-publish-section-row {
+        align-items: flex-start;
+      }
+      .sv-publish-modal-title { font-size: 20px; }
     }
 
     @media (max-width: 640px) {
       #main-scroll { padding: 12px 10px 20px !important; }
       .sv-page-wrap { padding: 10px 0 12px; }
-      .sv-save-overlay-wrap { padding: 62px 4px 10px; }
+      .sv-save-overlay-wrap { padding: 66px 6px 8px; }
       .sv-top-actions { width: 100%; justify-content: flex-end; }
-      .sv-publish-modal-title { font-size: 20px; }
+      .sv-publish-toggle {
+        width: 100%;
+        justify-content: flex-end;
+      }
       .sv-publish-modal-footer { justify-content: flex-start; }
+      .sv-publish-link-btn {
+        width: 100%;
+        justify-content: center;
+      }
       .sv-publish-footer-actions {
         width: 100%;
         margin-left: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .sv-publish-footer-actions .sv-secondary-btn,
+      .sv-publish-footer-actions .sv-primary-btn {
+        width: 100%;
       }
     }
   </style>
@@ -437,6 +477,27 @@
         ${SurveyComponents.SavePublishModal(savePublishData.modal)}
       </div>
     `;
+
+    function closePopup() {
+      window.location.href = 'create-new-survey.html';
+    }
+
+    modalRoot.addEventListener('click', function(event) {
+      if (event.target.closest('[data-sv-action="close"]') || event.target.closest('[data-sv-action="cancel"]')) {
+        closePopup();
+      }
+    });
+
+    const popupLayer = modalRoot.querySelector('.sv-popup-layer');
+    if (popupLayer) {
+      popupLayer.addEventListener('click', closePopup);
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closePopup();
+      }
+    });
   });
 })();
 </script>

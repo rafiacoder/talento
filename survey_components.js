@@ -344,7 +344,7 @@ const SurveyComponents = (function() {
       <section class="sv-publish-modal" role="dialog" aria-modal="true" aria-label="${title}">
         <header class="sv-publish-modal-header">
           <h2 class="sv-publish-modal-title">${title}</h2>
-          <button class="sv-publish-close-btn" type="button" aria-label="Close">${Icons.close}</button>
+          <button class="sv-publish-close-btn" type="button" aria-label="Close" data-sv-action="close">${Icons.close}</button>
         </header>
 
         <div class="sv-publish-modal-body">
@@ -377,7 +377,7 @@ const SurveyComponents = (function() {
         <footer class="sv-publish-modal-footer">
           <button class="sv-publish-link-btn" type="button">${footer.copyLinkText || 'Copy responder link'} ${Icons.link}</button>
           <div class="sv-publish-footer-actions">
-            <button class="sv-secondary-btn" type="button">${footer.cancelText || 'Cancel'} ${Icons.xSmall}</button>
+            <button class="sv-secondary-btn" type="button" data-sv-action="cancel">${footer.cancelText || 'Cancel'} ${Icons.xSmall}</button>
             <button class="sv-primary-btn" type="button">${footer.saveText || 'Save & publish'} ${Icons.checkAccent}</button>
           </div>
         </footer>
