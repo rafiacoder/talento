@@ -6,12 +6,12 @@ const PerformanceEvaluationComponents = (function() {
   'use strict';
 
   const Icons = {
-    list: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>`,
-    checkCircle: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="8 12.5 10.8 15.3 16.5 9.7"/></svg>`,
+    allAppraisals: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="10" y2="7"/><line x1="14" y1="7" x2="20" y2="7"/><polyline points="8 4 11 7 8 10"/><line x1="20" y1="17" x2="14" y2="17"/><line x1="10" y1="17" x2="4" y2="17"/><polyline points="16 14 13 17 16 20"/></svg>`,
+    activeStatus: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.2v5.1l3.2 1.9"/></svg>`,
     pencil: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>`,
-    folder: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`,
+    completedStatus: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><polyline points="8 12 11 15 16 9"/></svg>`,
     search: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A09AAB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
-    filter: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="14" y2="6"/><line x1="4" y1="12" x2="11" y2="12"/><line x1="4" y1="18" x2="9" y2="18"/><line x1="16" y1="6" x2="20" y2="10"/><line x1="16" y1="6" x2="20" y2="2"/><line x1="13" y1="12" x2="20" y2="12"/><line x1="11" y1="18" x2="20" y2="18"/></svg>`,
+    filter: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="6" x2="13" y2="6"/><line x1="5" y1="12" x2="10" y2="12"/><line x1="5" y1="18" x2="15" y2="18"/><circle cx="16.5" cy="6" r="1.6"/><circle cx="13.5" cy="12" r="1.6"/><circle cx="18.5" cy="18" r="1.6"/></svg>`,
     arrowUpRight: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>`,
     download: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
     plus: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
@@ -151,7 +151,7 @@ const PerformanceEvaluationComponents = (function() {
     return `
       <tr>
         <td class="pe-checkbox-cell">
-          <input type="checkbox" class="table-checkbox" aria-label="Select evaluation ${row.name}" />
+          <input type="checkbox" class="table-checkbox" data-evaluation-row-check aria-label="Select evaluation ${row.name}" />
         </td>
         <td><span class="pe-name">${row.name}</span></td>
         <td>${StatusBadge(row.status)}</td>
@@ -195,6 +195,13 @@ const PerformanceEvaluationComponents = (function() {
               <tr>
                 ${columns.map(function(column) {
                   const width = column.width ? ` style="width:${column.width};"` : '';
+                  if (column.type === 'checkbox') {
+                    return `
+                      <th${width} class="pe-checkbox-head">
+                        <input type="checkbox" class="table-checkbox" data-evaluation-select-all aria-label="Select all evaluations" />
+                      </th>
+                    `;
+                  }
                   return `<th${width}>${column.label}</th>`;
                 }).join('')}
               </tr>

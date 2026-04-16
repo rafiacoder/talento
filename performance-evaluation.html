@@ -134,12 +134,12 @@
 
     .pe-filter-btn {
       height: 38px;
-      padding: 0 14px;
+      padding: 0 18px 0 16px;
       border-radius: 999px;
       background: #fff;
       font-size: 14px;
       color: #1e1033;
-      gap: 8px;
+      gap: 10px;
       flex-shrink: 0;
     }
 
@@ -167,7 +167,7 @@
 
     .pe-data-table th:first-child,
     .pe-data-table td:first-child {
-      padding-left: 16px;
+      padding-left: 12px;
     }
 
     .pe-data-table td {
@@ -176,8 +176,63 @@
       white-space: nowrap;
     }
 
+    .pe-checkbox-head,
     .pe-checkbox-cell {
-      width: 40px;
+      width: 42px;
+      text-align: center;
+      padding-right: 8px;
+    }
+
+    .pe-data-table .table-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #ddd8e5;
+      border-radius: 4px;
+      background: #fff;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      margin: 0;
+      vertical-align: middle;
+    }
+
+    .pe-data-table .table-checkbox:hover {
+      border-color: #c9c0d8;
+    }
+
+    .pe-data-table .table-checkbox:checked {
+      border-color: #1e1033;
+      background: #1e1033;
+    }
+
+    .pe-data-table .table-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 4px;
+      height: 8px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .pe-data-table .table-checkbox:indeterminate {
+      border-color: #1e1033;
+      background: #1e1033;
+    }
+
+    .pe-data-table .table-checkbox:indeterminate::after {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 6px;
+      width: 8px;
+      height: 2px;
+      border-radius: 999px;
+      background: #fff;
     }
 
     .pe-name {
@@ -362,6 +417,8 @@
 
       .pe-filter-btn {
         align-self: flex-start;
+        min-height: 40px;
+        padding: 0 18px;
       }
 
       .pe-tabs-bar {
@@ -375,9 +432,16 @@
 
     @media (max-width: 480px) {
       .pe-toolbar-btn,
-      .pe-filter-btn,
       .pe-row-action-btn {
         font-size: 13px;
+        min-height: 38px;
+        padding: 0 14px;
+      }
+
+      .pe-filter-btn {
+        font-size: 14px;
+        min-height: 40px;
+        padding: 0 18px;
       }
 
       .pe-data-table td {
@@ -419,14 +483,14 @@
       { text: 'Create new evaluation', icon: 'plus', action: 'create', className: 'pe-toolbar-btn--strong' }
     ],
     tabs: [
-      { id: 'all', label: 'All appraisals', icon: 'list' },
-      { id: 'active', label: 'Active', icon: 'checkCircle' },
+      { id: 'all', label: 'All appraisals', icon: 'allAppraisals' },
+      { id: 'active', label: 'Active', icon: 'activeStatus' },
       { id: 'draft', label: 'Drafts', icon: 'pencil' },
-      { id: 'completed', label: 'Completed', icon: 'folder' }
+      { id: 'completed', label: 'Completed', icon: 'completedStatus' }
     ],
     filtersCount: 2,
     columns: [
-      { label: '', width: '40px' },
+      { label: '', width: '42px', type: 'checkbox' },
       { label: 'Evaluation name', width: '250px' },
       { label: 'Status', width: '120px' },
       { label: 'Participants', width: '170px' },
@@ -517,6 +581,8 @@
       columns: screenData.columns,
       rows: getFilteredEvaluations()
     });
+
+    syncHeaderCheckbox();
   }
 
   function bindEvents() {
@@ -537,7 +603,41 @@
       renderTable();
     });
 
+    root.addEventListener('change', function(event) {
+      if (event.target.matches('[data-evaluation-select-all]')) {
+        const rowChecks = root.querySelectorAll('[data-evaluation-row-check]');
+        rowChecks.forEach(function(checkbox) {
+          checkbox.checked = event.target.checked;
+        });
+        syncHeaderCheckbox();
+        return;
+      }
+
+      if (event.target.matches('[data-evaluation-row-check]')) {
+        syncHeaderCheckbox();
+      }
+    });
+
     root.__performanceEvaluationBound = true;
+  }
+
+  function syncHeaderCheckbox() {
+    const selectAll = root.querySelector('[data-evaluation-select-all]');
+    const rowChecks = Array.from(root.querySelectorAll('[data-evaluation-row-check]'));
+
+    if (!selectAll) return;
+    if (!rowChecks.length) {
+      selectAll.checked = false;
+      selectAll.indeterminate = false;
+      return;
+    }
+
+    const checkedCount = rowChecks.filter(function(checkbox) {
+      return checkbox.checked;
+    }).length;
+
+    selectAll.checked = checkedCount === rowChecks.length;
+    selectAll.indeterminate = checkedCount > 0 && checkedCount < rowChecks.length;
   }
 
   function renderScreen() {
