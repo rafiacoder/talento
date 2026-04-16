@@ -196,19 +196,24 @@
     .es-item-copy {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 12px;
       min-width: 0;
     }
 
     .es-item-icon {
-      width: 16px;
-      height: 16px;
+      width: 24px;
+      height: 24px;
       color: #4d3f65;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      margin-top: 2px;
+      margin-top: 0;
+    }
+
+    .es-item-icon svg {
+      width: 24px;
+      height: 24px;
     }
 
     .es-item-text {
@@ -237,8 +242,8 @@
       width: 22px;
       height: 22px;
       border-radius: 6px;
-      border: 1px solid #d9d4e2;
-      background: #ffffff;
+      border: 1px solid #d2cfd6;
+      background: #d2cfd6;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -299,12 +304,20 @@
     .es-counter-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 12px;
       background: #ffffff;
       border: 1px solid #ece9ef;
       border-radius: 12px;
       padding: 10px 12px;
+    }
+
+    .es-inline-row {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    .es-counter-row {
+      justify-content: space-between;
     }
 
     .es-inline-copy {
@@ -339,6 +352,7 @@
       padding: 0;
       cursor: pointer;
       flex-shrink: 0;
+      margin-top: 2px;
     }
 
     .es-toggle-thumb {
