@@ -31,7 +31,8 @@ const SurveyComponents = (function() {
     search: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A09AAB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
     filter: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E1033" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="14" y2="6"/><line x1="4" y1="12" x2="11" y2="12"/><line x1="4" y1="18" x2="9" y2="18"/><line x1="16" y1="6" x2="20" y2="10"/><line x1="16" y1="6" x2="20" y2="2"/><line x1="13" y1="12" x2="20" y2="12"/><line x1="11" y1="18" x2="20" y2="18"/></svg>`,
     sort: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#787085" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 10 12 6 16 10"/><polyline points="8 14 12 18 16 14"/></svg>`,
-    checkWhite: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+    checkWhite: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+    refresh: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A59FAD" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.5 9a9 9 0 0 1 14.3-3.36L23 10"/><path d="M20.5 15a9 9 0 0 1-14.3 3.36L1 14"/></svg>`
   };
 
   function getTypeIcon(typeLabel) {
@@ -542,6 +543,204 @@ const SurveyComponents = (function() {
     `;
   }
 
+  function PreviewMetaChip(text) {
+    return `<span class="sv-preview-meta-chip">${text}</span>`;
+  }
+
+  function PreviewSurveyHeader(config) {
+    const {
+      title = '',
+      description = '',
+      requiredNote = '* Indicates required question',
+      respondentName = '',
+      respondentEmail = '',
+      respondentAvatar = ''
+    } = config;
+
+    return `
+      <section class="sv-preview-card sv-preview-intro">
+        <h2 class="sv-preview-main-title">${title}</h2>
+        <p class="sv-preview-body-text sv-preview-description">${description}</p>
+        <div class="sv-preview-intro-footer">
+          <span class="sv-preview-body-text sv-preview-required-note">${requiredNote}</span>
+          <div class="sv-preview-respondent">
+            <img class="sv-preview-respondent-avatar" src="${respondentAvatar}" alt="${respondentName}" />
+            <div class="sv-preview-respondent-meta">
+              <span class="sv-preview-body-text sv-preview-respondent-name">${respondentName}</span>
+              <span class="sv-preview-body-text sv-preview-respondent-email">${respondentEmail}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function PreviewChoiceRow(config) {
+    const {
+      type = 'radio',
+      label = '',
+      selected = false,
+      showInput = false,
+      inputPlaceholder = 'Enter your answer'
+    } = config;
+    const iconClass = type === 'checkbox' ? 'sv-preview-checkbox' : 'sv-preview-radio';
+
+    const isCheckbox = type === 'checkbox';
+    const tick = isCheckbox && selected ? `<span class="sv-preview-choice-tick">${Icons.checkWhite}</span>` : '';
+    const rowHTML = `
+      <div class="sv-preview-choice-row${selected ? ' selected' : ''}">
+        <span class="sv-preview-choice-icon ${iconClass}">${tick}</span>
+        <span class="sv-preview-body-text sv-preview-choice-label">${label}</span>
+      </div>
+    `;
+    if (showInput) {
+      return `
+        <div class="sv-preview-choice-with-input${selected ? ' selected' : ''}">
+          ${rowHTML}
+          <input class="sv-preview-answer-input sv-preview-other-input" type="text" placeholder="${inputPlaceholder}" />
+        </div>
+      `;
+    }
+    return rowHTML;
+  }
+
+  function PreviewRatingScale(config) {
+    const {
+      min = 1,
+      max = 10,
+      selected = 0
+    } = config;
+    const stars = [];
+    for (let i = min; i <= max; i += 1) {
+      const active = i <= selected;
+      stars.push(`
+        <div class="sv-preview-rating-item">
+          <span class="sv-preview-rating-number">${i}</span>
+          <span class="sv-preview-rating-star${active ? ' active' : ''}">${active ? Icons.starFilled : Icons.starSmall}</span>
+        </div>
+      `);
+    }
+    return `<div class="sv-preview-rating-wrap">${stars.join('')}</div>`;
+  }
+
+  function PreviewQuestionBody(question) {
+    const kind = String(question.kind || '').toLowerCase();
+
+    if (kind === 'paragraph') {
+      return `<textarea class="sv-preview-answer-input sv-preview-answer-paragraph" placeholder="${question.placeholder || 'Enter your question'}"></textarea>`;
+    }
+
+    if (kind === 'multiple-choice') {
+      return `
+        <div class="sv-preview-choice-list">
+          ${(question.options || []).map(function(option) {
+            return PreviewChoiceRow({
+              type: 'radio',
+              label: option.label,
+              selected: !!option.selected,
+              showInput: !!option.showInput,
+              inputPlaceholder: option.inputPlaceholder || 'Enter your answer'
+            });
+          }).join('')}
+        </div>
+      `;
+    }
+
+    if (kind === 'checkboxes') {
+      return `
+        <div class="sv-preview-choice-list">
+          ${(question.options || []).map(function(option) {
+            return PreviewChoiceRow({
+              type: 'checkbox',
+              label: option.label,
+              selected: !!option.selected
+            });
+          }).join('')}
+        </div>
+      `;
+    }
+
+    if (kind === 'yes-no') {
+      return `
+        <div class="sv-preview-yes-no-wrap">
+          ${(question.options || []).map(function(option) {
+            return PreviewChoiceRow({
+              type: 'radio',
+              label: option.label,
+              selected: !!option.selected
+            });
+          }).join('')}
+        </div>
+      `;
+    }
+
+    if (kind === 'rating-scale') {
+      return PreviewRatingScale({
+        min: question.min || 1,
+        max: question.max || 10,
+        selected: question.selected || 0
+      });
+    }
+
+    return `<input class="sv-preview-answer-input" type="text" placeholder="${question.placeholder || 'Enter your answer'}" />`;
+  }
+
+  function PreviewQuestionCard(config) {
+    const {
+      index = 1,
+      typeLabel = 'Short answer',
+      required = false,
+      title = ''
+    } = config;
+
+    return `
+      <section class="sv-preview-card${String(config.kind || '').toLowerCase() === 'rating-scale' ? ' sv-preview-card-rating' : ''}">
+        <div class="sv-preview-question-meta">
+          ${PreviewMetaChip(`Question ${index}`)}
+          ${PreviewMetaChip(typeLabel)}
+          ${required ? PreviewMetaChip('* Required question') : ''}
+        </div>
+        <h3 class="sv-preview-question-title">${title}${required ? ' *' : ''}</h3>
+        ${PreviewQuestionBody(config)}
+      </section>
+    `;
+  }
+
+  function PreviewActions(config) {
+    const {
+      clearText = 'Clear form',
+      submitText = 'Submit form'
+    } = config;
+
+    return `
+      <div class="sv-preview-actions">
+        <button class="sv-preview-clear-btn" type="button">${clearText} ${Icons.refresh}</button>
+        <button class="sv-preview-submit-btn" type="button">${submitText} ${Icons.checkAccent}</button>
+      </div>
+    `;
+  }
+
+  function PreviewPage(data) {
+    const questions = (data.questions || []).map(function(question, idx) {
+      return PreviewQuestionCard({
+        ...question,
+        index: idx + 1
+      });
+    }).join('');
+
+    return `
+      <div class="sv-preview-topbar">
+        <h1 class="sv-preview-top-title"><span class="sv-preview-back-icon">${Icons.back}</span><span>${data.headerTitle || 'Preview mode'}</span></h1>
+        <p class="sv-preview-status">${data.statusText || ''}</p>
+      </div>
+      <div class="sv-preview-stack">
+        ${PreviewSurveyHeader(data.intro || {})}
+        ${questions}
+        ${PreviewActions(data.actions || {})}
+      </div>
+    `;
+  }
+
   function render(containerSelector, data) {
     const container = typeof containerSelector === 'string'
       ? document.querySelector(containerSelector)
@@ -569,6 +768,15 @@ const SurveyComponents = (function() {
     container.innerHTML = SavePublishPage(data);
   }
 
+  function renderPreview(containerSelector, data) {
+    const container = typeof containerSelector === 'string'
+      ? document.querySelector(containerSelector)
+      : containerSelector;
+
+    if (!container) return;
+    container.innerHTML = PreviewPage(data);
+  }
+
   return {
     Icons,
     Field,
@@ -584,10 +792,15 @@ const SurveyComponents = (function() {
     SavePublishTag,
     SavePublishSectionTitle,
     SavePublishToggle,
+    PreviewSurveyHeader,
+    PreviewChoiceRow,
+    PreviewQuestionCard,
+    PreviewPage,
     TopBar,
     render,
     renderChooseType,
-    renderSavePublish
+    renderSavePublish,
+    renderPreview
   };
 })();
 
