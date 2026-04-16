@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento - Create new evaluation</title>
+  <meta name="description" content="Talento HR Platform - Create new evaluation evaluators setup" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared-styles.css" />
+  <script src="design-tokens.js"></script>
+
+  <style>
+    #main-scroll {
+      background: #f6f5f7;
+    }
+
+    .ce-page-wrap {
+      padding: 18px 18px 0;
+      min-height: calc(100vh - 56px);
+    }
+
+    .ce-screen {
+      min-height: calc(100vh - 92px);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .pe-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .pe-title {
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 500;
+      color: #1e1033;
+      letter-spacing: -0.2px;
+    }
+
+    .pe-header-actions:empty {
+      display: none;
+    }
+
+    .ce-flow-stack {
+      width: min(100%, 700px);
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    .ce-stepper-card {
+      background: #ffffff;
+      border: 1px solid #ece9ef;
+      border-radius: 24px;
+      box-shadow: 0 10px 24px rgba(30, 16, 51, 0.04);
+      padding: 18px 18px 14px;
+    }
+
+    .ce-stepper-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .ce-step-item {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+      text-align: center;
+      min-height: 76px;
+    }
+
+    .ce-step-item::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: calc(50% + 26px);
+      right: calc(-50% + 26px);
+      height: 1px;
+      background: #e6e1ea;
+      z-index: 0;
+    }
+
+    .ce-step-item--last::after {
+      display: none;
+    }
+
+    .ce-step-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #b7b1c0;
+      background: #f2eef4;
+      box-shadow: inset 0 0 0 1px #ece7f1;
+      z-index: 1;
+    }
+
+    .ce-step-label {
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 400;
+      color: #8b8499;
+    }
+
+    .ce-step-item--completed .ce-step-icon {
+      color: #7a48de;
+      background: #f0e7ff;
+      box-shadow: inset 0 0 0 1px #e5d7ff;
+    }
+
+    .ce-step-item--completed .ce-step-label {
+      color: #5e5770;
+    }
+
+    .ce-step-item--active .ce-step-icon {
+      color: #ffffff;
+      background: #ab73ff;
+      box-shadow: 0 0 0 4px rgba(171, 115, 255, 0.14);
+    }
+
+    .ce-step-item--active .ce-step-label {
+      color: #1e1033;
+      font-weight: 500;
+    }
+
+    .es-panel-card {
+      background: #ffffff;
+      border: 1px solid #ece9ef;
+      border-radius: 24px;
+      box-shadow: 0 10px 24px rgba(30, 16, 51, 0.04);
+      padding: 20px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .es-panel-head {
+      display: grid;
+      gap: 6px;
+    }
+
+    .es-panel-title {
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 500;
+      color: #1e1033;
+      margin: 0;
+    }
+
+    .es-panel-description {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #787085;
+      font-weight: 400;
+    }
+
+    .es-panel-body {
+      display: grid;
+      gap: 12px;
+    }
+
+    .es-item {
+      border: 1px solid #ece9ef;
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .es-item.is-active {
+      border-color: #dbc7ff;
+      background: #f7f1ff;
+    }
+
+    .es-item-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .es-item-copy {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .es-item-icon {
+      width: 24px;
+      height: 24px;
+      color: #4d3f65;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0;
+    }
+
+    .es-item-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .es-item-text {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .es-item-title {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 500;
+      color: #1e1033;
+    }
+
+    .es-item-description {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 400;
+      color: #6f687d;
+    }
+
+    .es-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 1px solid #d2cfd6;
+      background: #d2cfd6;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .es-check.is-on {
+      border-color: #1e1033;
+      background: #1e1033;
+    }
+
+    .es-template-card {
+      background: #ffffff;
+      border: 1px solid #ece9ef;
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: grid;
+      gap: 8px;
+      position: relative;
+    }
+
+    .es-template-label {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #1e1033;
+      font-weight: 500;
+    }
+
+    .es-template-select {
+      min-height: 40px;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #e5e0ea;
+      background: #ffffff;
+      padding: 0 12px;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #a59fad;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 150ms ease;
+    }
+
+    .es-template-tail {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 150ms ease;
+    }
+
+    .es-template-dropdown {
+      display: none;
+      margin-top: -2px;
+      border: 1px solid #e5e0ea;
+      border-top: 0;
+      border-radius: 0 0 14px 14px;
+      background: #ffffff;
+      box-shadow: 0 12px 24px rgba(30, 16, 51, 0.12);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+
+    .es-template-card.is-open .es-template-select {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-color: #d8d1e1;
+    }
+
+    .es-template-card.is-open .es-template-tail {
+      transform: rotate(180deg);
+    }
+
+    .es-template-card.is-open .es-template-dropdown {
+      display: block;
+    }
+
+    .es-template-options {
+      display: grid;
+    }
+
+    .es-template-option {
+      width: 100%;
+      border: 0;
+      border-top: 1px solid #efebf3;
+      background: #ffffff;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      color: #1e1033;
+    }
+
+    .es-template-option-label {
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 500;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .es-template-radio {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 2px solid #a59fad;
+      flex-shrink: 0;
+      display: inline-block;
+      position: relative;
+    }
+
+    .es-template-option.is-selected .es-template-radio::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #1e1033;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+    }
+
+    .es-template-preview {
+      border: 1px solid #e5e0ea;
+      border-radius: 10px;
+      background: #f8f7fa;
+      min-height: 38px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 500;
+      color: #1e1033;
+      flex-shrink: 0;
+    }
+
+    .es-template-preview svg {
+      width: 24px;
+      height: 24px;
+      color: #746d82;
+      flex-shrink: 0;
+    }
+
+    .es-template-create {
+      width: 100%;
+      border: 0;
+      border-top: 1px solid #efebf3;
+      background: #ffffff;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 500;
+      color: #8f64f7;
+      position: relative;
+    }
+
+    .es-template-create-label {
+      text-align: center;
+      padding-right: 28px;
+    }
+
+    .es-template-create-plus {
+      width: 24px;
+      height: 24px;
+      border: 1px solid #d8c9f6;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #8f64f7;
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      flex-shrink: 0;
+    }
+
+    .es-inline-row,
+    .es-counter-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #ffffff;
+      border: 1px solid #ece9ef;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    .es-inline-row {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    .es-counter-row {
+      justify-content: space-between;
+    }
+
+    .es-inline-copy {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .es-inline-title {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 500;
+      color: #1e1033;
+    }
+
+    .es-inline-text {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 400;
+      color: #787085;
+    }
+
+    .es-toggle {
+      width: 38px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid #ddd7e6;
+      background: #ece8f2;
+      position: relative;
+      padding: 0;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .es-toggle-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #ffffff;
+      transition: transform 150ms ease;
+      box-shadow: 0 1px 3px rgba(30, 16, 51, 0.2);
+    }
+
+    .es-toggle.is-on {
+      border-color: #1e1033;
+      background: #1e1033;
+    }
+
+    .es-toggle.is-on .es-toggle-thumb {
+      transform: translateX(0);
+    }
+
+    .es-counter-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .es-counter-btn {
+      width: 30px;
+      height: 24px;
+      border-radius: 10px;
+      border: 1px solid #ddd7e6;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .es-counter-value {
+      min-width: 56px;
+      height: 24px;
+      border: 1px solid #ddd7e6;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 500;
+      color: #1e1033;
+    }
+
+    .ce-footer-shell {
+      margin-top: auto;
+      position: sticky;
+      bottom: 0;
+      z-index: 2;
+    }
+
+    .ce-footer-bar {
+      margin: 0 -18px;
+      padding: 12px 18px 16px;
+      border-top: 1px solid #ece9ef;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+    }
+
+    .ce-footer-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .ce-footer-btn {
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid #e8e7eb;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+      white-space: nowrap;
+    }
+
+    .ce-footer-btn--ghost {
+      background: #ffffff;
+      color: #c0bacb;
+      border-color: #ece9ef;
+    }
+
+    .ce-footer-btn--primary {
+      background: #1e1033;
+      color: #ffffff;
+      border-color: #1e1033;
+    }
+
+    @media (max-width: 900px) {
+      .ce-page-wrap {
+        padding: 16px 14px 0;
+      }
+
+      .ce-stepper-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .ce-step-item::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .ce-screen {
+        gap: 24px;
+      }
+
+      .ce-flow-stack {
+        width: 100%;
+      }
+
+      .ce-stepper-card,
+      .es-panel-card {
+        border-radius: 20px;
+      }
+
+      .ce-stepper-card {
+        padding: 14px 12px;
+      }
+
+      .es-panel-card {
+        padding: 16px 14px;
+      }
+
+      .ce-footer-bar {
+        margin: 0 -14px;
+        padding: 12px 14px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .ce-page-wrap {
+        padding: 14px 10px 0;
+      }
+
+      .ce-stepper-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ce-step-item {
+        justify-items: start;
+        text-align: left;
+        grid-template-columns: 40px 1fr;
+        align-items: center;
+        min-height: unset;
+      }
+
+      .ce-step-label {
+        align-self: center;
+      }
+
+      .es-item-head {
+        align-items: center;
+      }
+
+      .es-inline-row,
+      .es-counter-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .es-template-option {
+        display: grid;
+        grid-template-columns: 22px minmax(0, 1fr);
+        column-gap: 10px;
+        row-gap: 8px;
+        align-items: center;
+      }
+
+      .es-template-option-label {
+        grid-column: 2;
+        grid-row: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .es-template-radio {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .es-template-preview {
+        grid-column: 2;
+        grid-row: 2;
+        margin-left: 0;
+      }
+
+      .es-counter-controls {
+        justify-content: flex-end;
+      }
+
+      .ce-footer-bar {
+        margin: 0 -10px;
+        padding: 12px 10px 16px;
+      }
+
+      .ce-footer-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .ce-footer-btn {
+        flex: 1;
+        min-width: 0;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div id="app">
+  <div id="overlay" aria-hidden="true"></div>
+  <aside id="sidebar" aria-label="Main navigation"></aside>
+
+  <div id="main-col">
+    <header id="navbar" style="display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 16px;background:#fff;border-bottom:1px solid #e8e7eb;flex-shrink:0;min-width:0;"></header>
+
+    <div id="main-scroll">
+      <div class="ce-page-wrap">
+        <div id="create-new-evaluation-evaluators-setup-root" class="ce-screen"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="layout.js"></script>
+<script src="performance_evaluation_components.js"></script>
+<script src="create_new_evaluation_components.js"></script>
+<script src="create_new_evaluation_evaluators_setup_components.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  const templateOptions = [
+    { label: 'Managers team evaluation' },
+    { label: 'Annual performance review' }
+  ];
+
+  const screenData = {
+    title: 'Create new evaluation',
+    steps: [
+      { label: 'Basic information', icon: 'basicInformation', status: 'completed' },
+      { label: 'Add employees', icon: 'addEmployees', status: 'completed' },
+      { label: 'Evaluators & setup', icon: 'evaluatorsSetup', status: 'active' },
+      { label: 'Review & launch', icon: 'reviewLaunch', status: 'upcoming' }
+    ],
+    panel: {
+      title: 'Select evaluators',
+      description: 'Select a template to create a copy. You can edit all sections and settings before launching.',
+      items: [
+        {
+          icon: 'directManager',
+          title: 'Direct manager',
+          description: 'The employee\'s direct manager will complete the evaluation',
+          checked: true,
+          template: {
+            label: 'Select template for this evaluators*',
+            placeholder: 'Select template',
+            options: templateOptions,
+            createLabel: 'Create new evaluation from scratch'
+          }
+        },
+        {
+          icon: 'departmentManager',
+          title: 'Department Manager',
+          description: 'The manager responsible for the employee\'s department, but not their direct manager.',
+          checked: false
+        },
+        {
+          icon: 'upwardFeedback',
+          title: 'Upward feedback',
+          description: 'Employees provide feedback about their manager, focusing on leadership and support.',
+          checked: true,
+          template: {
+            label: 'Select template for this evaluators*',
+            placeholder: 'Select template',
+            options: templateOptions,
+            createLabel: 'Create new evaluation from scratch'
+          },
+          toggle: {
+            enabled: true,
+            title: 'Anonymous peer feedback',
+            description: 'Managers won\'t see which team member gave feedback'
+          }
+        },
+        {
+          icon: 'hrCollaborators',
+          title: 'HR/Collaborators',
+          description: 'HR team members or other designated collaborators involved in the employee\'s evaluation.',
+          checked: false
+        },
+        {
+          icon: 'peers',
+          title: 'Peers',
+          description: 'The system will randomly select peers from the employee\'s team.',
+          checked: true,
+          template: {
+            label: 'Select template for this evaluators*',
+            placeholder: 'Select template',
+            options: templateOptions,
+            createLabel: 'Create new evaluation from scratch'
+          },
+          counter: {
+            title: 'Number of peers per employee*',
+            description: 'Choose between 1 and 10 peers',
+            value: '03'
+          },
+          toggle: {
+            enabled: true,
+            title: 'Anonymous peer feedback',
+            description: 'Peer evaluators\' names will be hidden from the employee'
+          }
+        },
+        {
+          icon: 'selfEvaluation',
+          title: 'Self-evaluation',
+          description: 'Employees will evaluate themselves using the same form.',
+          checked: false
+        }
+      ]
+    },
+    footer: {
+      backLabel: 'Back',
+      nextLabel: 'Next step'
+    }
+  };
+
+  const root = document.getElementById('create-new-evaluation-evaluators-setup-root');
+
+  function closeTemplateDropdowns(exceptCard) {
+    if (!root) return;
+    root.querySelectorAll('[data-template-card].is-open').forEach(function(card) {
+      if (card !== exceptCard) {
+        card.classList.remove('is-open');
+        const trigger = card.querySelector('[data-template-trigger]');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function bindEvents() {
+    if (!root || root.__templateDropdownBound) return;
+
+    root.addEventListener('click', function(event) {
+      const preview = event.target.closest('[data-template-preview]');
+      if (preview) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      const option = event.target.closest('[data-template-option]');
+      if (option) {
+        const card = option.closest('[data-template-card]');
+        if (!card) return;
+
+        const value = option.getAttribute('data-template-option') || '';
+        const valueNode = card.querySelector('[data-template-value]');
+        if (valueNode) valueNode.textContent = value;
+
+        card.querySelectorAll('[data-template-option]').forEach(function(node) {
+          node.classList.toggle('is-selected', node === option);
+        });
+
+        card.classList.remove('is-open');
+        const trigger = card.querySelector('[data-template-trigger]');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        return;
+      }
+
+      const trigger = event.target.closest('[data-template-trigger]');
+      if (trigger) {
+        const card = trigger.closest('[data-template-card]');
+        if (!card) return;
+        const isOpen = card.classList.contains('is-open');
+        closeTemplateDropdowns(card);
+        card.classList.toggle('is-open', !isOpen);
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+        return;
+      }
+
+      if (!event.target.closest('[data-template-card]')) {
+        closeTemplateDropdowns();
+      }
+    });
+
+    document.addEventListener('click', function(event) {
+      if (!root.contains(event.target)) {
+        closeTemplateDropdowns();
+      }
+    });
+
+    root.__templateDropdownBound = true;
+  }
+
+  function renderScreen() {
+    if (!root) return;
+
+    root.innerHTML = `
+      ${CreateNewEvaluationComponents.PageHeader({ title: screenData.title })}
+      <div class="ce-flow-stack">
+        ${CreateNewEvaluationComponents.Stepper({ steps: screenData.steps })}
+        ${CreateNewEvaluationEvaluatorsSetupComponents.EvaluatorsPanel(screenData.panel)}
+      </div>
+      <div class="ce-footer-shell">
+        ${CreateNewEvaluationComponents.FooterActions(screenData.footer)}
+      </div>
+    `;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    renderScreen();
+    bindEvents();
+  });
+})();
+</script>
+</body>
+</html>

@@ -23,8 +23,13 @@
     'candidate-profile.html': { navItem: 'hiring', submenu: 'job-positions' },
     'create-new-survey.html': { navItem: 'team-engagement', submenu: 'surveys' },
     'create-new-survey.xml': { navItem: 'team-engagement', submenu: 'surveys' },
+    'survey-preview.html': { navItem: 'team-engagement', submenu: 'surveys' },
+    'survey-preview.xml': { navItem: 'team-engagement', submenu: 'surveys' },
+    'survey-published.html': { navItem: 'team-engagement', submenu: 'surveys' },
+    'survey-published.xml': { navItem: 'team-engagement', submenu: 'surveys' },
     'save-and-publish-survey.html': { navItem: 'team-engagement', submenu: 'surveys' },
     'save-and-publish-survey.xml': { navItem: 'team-engagement', submenu: 'surveys' },
+    'create-new-survey-choose-question-type.html': { navItem: 'team-engagement', submenu: 'surveys' },
     'create-new-survey-choose-question-type.xml': { navItem: 'team-engagement', submenu: 'surveys' },
     'performance-evaluation.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'performance-evaluation.xml': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
@@ -39,6 +44,8 @@
     'Appraisal-Employee-profile-evaluators.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'Appraisal Employee profile.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'Appraisal%20Employee%20profile.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' }
+    'create-new-evaluation-evaluators-setup.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
+    'create-new-evaluation-from-scratch.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' }
   };
 
   const config = pageConfig[currentPage] || pageConfig['index.html'];
