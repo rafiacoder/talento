@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <title>Talento - Create new evaluation add employees</title>
   <meta name="description" content="Talento HR Platform - Create new evaluation add employees" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared-styles.css" />
-  <script src="design-tokens.js"></script>
+  <script type="text/javascript" src="design-tokens.js"></script>
 
-  <style>
+  <style type="text/css">
     #main-scroll {
       background: #f6f5f7;
     }
@@ -653,11 +654,12 @@
   </div>
 </div>
 
-<script src="layout.js"></script>
-<script src="performance_evaluation_components.js"></script>
-<script src="create_new_evaluation_components.js"></script>
-<script src="create_new_evaluation_add_employees_components.js"></script>
-<script>
+<script type="text/javascript" src="layout.js"></script>
+<script type="text/javascript" src="performance_evaluation_components.js"></script>
+<script type="text/javascript" src="create_new_evaluation_components.js"></script>
+<script type="text/javascript" src="create_new_evaluation_add_employees_components.js"></script>
+<script type="text/javascript">
+//<![CDATA[
 (function() {
   'use strict';
 
@@ -886,6 +888,7 @@
 
   document.addEventListener('DOMContentLoaded', renderScreen);
 })();
+//]]>
 </script>
 </body>
 </html>
