@@ -113,8 +113,8 @@
 
     .sv-preview-intro-footer {
       display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
+      align-items: center;
+      justify-content: space-between;
       gap: 10px;
       border-top: 1px dashed #ece9f2;
       padding-top: 10px;
@@ -125,7 +125,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-left: 0;
+      margin-left: auto;
       max-width: 100%;
     }
 
@@ -437,7 +437,12 @@
       .sv-preview-status {
         width: 100%;
       }
+      .sv-preview-intro-footer {
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
       .sv-preview-respondent {
+        margin-left: 0;
         width: 100%;
       }
     }
