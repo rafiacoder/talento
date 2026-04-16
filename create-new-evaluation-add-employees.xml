@@ -1,0 +1,894 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Talento - Create new evaluation add employees</title>
+  <meta name="description" content="Talento HR Platform - Create new evaluation add employees" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared-styles.css" />
+  <script type="text/javascript" src="design-tokens.js"></script>
+
+  <style type="text/css">
+    #main-scroll {
+      background: #f6f5f7;
+    }
+
+    .ce-page-wrap {
+      padding: 18px 18px 0;
+      min-height: calc(100vh - 56px);
+    }
+
+    .ce-screen {
+      min-height: calc(100vh - 92px);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .pe-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .pe-title {
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 500;
+      color: #1e1033;
+      letter-spacing: -0.2px;
+    }
+
+    .pe-header-actions:empty {
+      display: none;
+    }
+
+    .ae-flow-stack {
+      width: min(100%, 720px);
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .ce-stepper-card,
+    .ae-panel-card {
+      background: #ffffff;
+      border: 1px solid #ece9ef;
+      border-radius: 24px;
+      box-shadow: 0 10px 24px rgba(30, 16, 51, 0.04);
+    }
+
+    .ce-stepper-card {
+      padding: 20px 22px 16px;
+      box-shadow: 0 12px 26px rgba(30, 16, 51, 0.05);
+    }
+
+    .ce-stepper-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .ce-step-item {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+      text-align: center;
+      min-height: 76px;
+    }
+
+    .ce-step-item::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: calc(50% + 28px);
+      right: calc(-50% + 28px);
+      height: 1px;
+      background: #ebe7ef;
+      z-index: 0;
+    }
+
+    .ce-step-item--last::after {
+      display: none;
+    }
+
+    .ce-step-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb4c6;
+      background: #f5f3f7;
+      box-shadow: inset 0 0 0 1px #efebf3;
+      z-index: 1;
+    }
+
+    .ce-step-label {
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 400;
+      color: #8b8499;
+    }
+
+    .ce-step-item--completed .ce-step-icon {
+      color: #9c72f8;
+      background: #f3ecff;
+      box-shadow: inset 0 0 0 1px #e8dcff;
+    }
+
+    .ce-step-item--completed::after {
+      background: #d7bdff;
+    }
+
+    .ce-step-item--completed .ce-step-label {
+      color: #6e6481;
+    }
+
+    .ce-step-item--active .ce-step-icon {
+      color: #ffffff;
+      background: #ab73ff;
+      box-shadow: 0 0 0 4px rgba(171, 115, 255, 0.14);
+    }
+
+    .ce-step-item--active .ce-step-label {
+      color: #1e1033;
+      font-weight: 500;
+    }
+
+    .ae-panel-card {
+      padding: 20px 24px 20px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .ae-panel-head {
+      display: grid;
+      gap: 8px;
+    }
+
+    .ae-panel-title {
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 500;
+      color: #1e1033;
+      letter-spacing: -0.2px;
+    }
+
+    .ae-panel-text {
+      font-size: 14px;
+      line-height: 1.55;
+      color: #787085;
+      max-width: 620px;
+    }
+
+    .ae-panel-body {
+      display: grid;
+      gap: 12px;
+    }
+
+    .ae-toolbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .ae-search-box {
+      width: 100%;
+      max-width: 360px;
+      min-height: 42px;
+      padding: 0 16px;
+      gap: 10px;
+      border-color: #ebe7ef;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+    }
+
+    .ae-search-box input,
+    .ae-filter-btn,
+    .ae-filter-count,
+    .ae-chip-name,
+    .ae-sort-label,
+    .ae-manager-name,
+    .ae-employee-name,
+    .ae-employee-role,
+    .ae-empty-state p,
+    .ae-empty-state h3 {
+      font-size: 14px;
+    }
+
+    .ae-filter-btn {
+      min-height: 38px;
+      padding: 0 16px;
+      gap: 8px;
+      border-radius: 999px;
+      border-color: #ebe7ef;
+      color: #1e1033;
+    }
+
+    .ae-filter-count {
+      color: #a09aab;
+      font-weight: 400;
+    }
+
+    .ae-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ae-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 4px 10px 4px 6px;
+      border-radius: 10px;
+      border: 1px solid #e7e2eb;
+      background: #f2eff5;
+      color: #4b405c;
+      transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+    }
+
+    .ae-chip:hover {
+      background: #ebe6f1;
+      border-color: #d8d1e2;
+    }
+
+    .ae-chip-avatar {
+      width: 20px;
+      height: 20px;
+    }
+
+    .ae-chip-name {
+      line-height: 1.2;
+      color: #4b405c;
+      white-space: nowrap;
+    }
+
+    .ae-chip-remove {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #8f879e;
+      flex-shrink: 0;
+    }
+
+    .ae-table-shell {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .ae-data-table {
+      min-width: 640px;
+    }
+
+    .ae-data-table thead tr {
+      background: transparent;
+      border-bottom: 1px solid #ece9ef;
+    }
+
+    .ae-data-table th {
+      padding: 12px 0;
+      font-size: 14px;
+      font-weight: 400;
+      color: #8b8499;
+      background: transparent;
+    }
+
+    .ae-data-table th:first-child,
+    .ae-data-table td:first-child {
+      padding-left: 0;
+    }
+
+    .ae-data-table td {
+      padding: 10px 0;
+      font-size: 14px;
+      color: #1e1033;
+      vertical-align: middle;
+    }
+
+    .ae-data-table tbody tr {
+      border-bottom: 1px solid #f0eef6;
+    }
+
+    .ae-data-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .ae-data-table tbody tr:hover {
+      background: #fcfbfd;
+    }
+
+    .ae-col-name {
+      width: 44%;
+    }
+
+    .ae-col-manager {
+      width: 36%;
+    }
+
+    .ae-col-select {
+      width: 20%;
+      text-align: right;
+    }
+
+    .ae-sort-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #8b8499;
+      white-space: nowrap;
+    }
+
+    .ae-select-all {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      width: 100%;
+      color: #8b8499;
+    }
+
+    .ae-employee-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .ae-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #d7d0e2 0%, #f3eef9 100%);
+      box-shadow: inset 0 0 0 1px #ede7f5;
+    }
+
+    .ae-avatar--fallback {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #5d5072;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .ae-employee-copy {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .ae-employee-name {
+      font-weight: 500;
+      color: #1e1033;
+      line-height: 1.3;
+    }
+
+    .ae-employee-role {
+      color: #8b8499;
+      line-height: 1.35;
+    }
+
+    .ae-manager-name {
+      display: inline-flex;
+      align-items: center;
+      color: #2d2440;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .ae-check-cell {
+      text-align: right;
+    }
+
+    .ae-table-check {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 26px;
+      height: 26px;
+      border: 1px solid #e5e0ea;
+      border-radius: 6px;
+      background: #f1eff4;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      margin: 0;
+      vertical-align: middle;
+      transition: background 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .ae-table-check:hover {
+      border-color: #d4cbe0;
+      background: #eeebf3;
+    }
+
+    .ae-table-check:checked,
+    .ae-table-check:indeterminate {
+      background: #1e1033;
+      border-color: #1e1033;
+      box-shadow: 0 6px 12px rgba(30, 16, 51, 0.12);
+    }
+
+    .ae-table-check:checked::after {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 5px;
+      width: 5px;
+      height: 10px;
+      border: solid #ffffff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .ae-table-check:indeterminate::after {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 11px;
+      width: 12px;
+      height: 2px;
+      border-radius: 999px;
+      background: #ffffff;
+    }
+
+    .ae-empty-state {
+      display: grid;
+      gap: 8px;
+      justify-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      border: 1px dashed #e8e1ef;
+      border-radius: 18px;
+      background: #fbfafc;
+    }
+
+    .ae-empty-state h3 {
+      font-weight: 500;
+      color: #1e1033;
+      line-height: 1.3;
+    }
+
+    .ae-empty-state p {
+      color: #787085;
+      line-height: 1.5;
+      max-width: 360px;
+    }
+
+    .ce-footer-shell {
+      margin-top: auto;
+      position: sticky;
+      bottom: 0;
+      z-index: 2;
+    }
+
+    .ce-footer-bar {
+      margin: 0 -18px;
+      padding: 12px 18px 16px;
+      border-top: 1px solid #ece9ef;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(8px);
+    }
+
+    .ce-footer-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .ce-footer-btn {
+      height: 40px;
+      border-radius: 12px;
+      border: 1px solid #e8e7eb;
+      padding: 0 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Alexandria', Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+      white-space: nowrap;
+    }
+
+    .ce-footer-btn--ghost {
+      background: #ffffff;
+      color: #6a607c;
+      border-color: #ece9ef;
+    }
+
+    .ce-footer-btn--ghost:hover {
+      background: #f8f7fa;
+    }
+
+    .ce-footer-btn--primary {
+      background: #1e1033;
+      color: #ffffff;
+      border-color: #1e1033;
+      min-width: 128px;
+    }
+
+    .ce-footer-btn--primary:hover {
+      background: #2b1848;
+    }
+
+    @media (max-width: 900px) {
+      .ce-page-wrap {
+        padding: 16px 14px 0;
+      }
+
+      .ce-stepper-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .ce-step-item::after {
+        display: none;
+      }
+
+      .ae-panel-card {
+        padding: 20px 18px 16px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .ce-screen {
+        gap: 24px;
+      }
+
+      .ae-flow-stack {
+        width: 100%;
+      }
+
+      .ce-stepper-card,
+      .ae-panel-card {
+        border-radius: 20px;
+      }
+
+      .ce-stepper-card {
+        padding: 14px 12px;
+      }
+
+      .ae-panel-card {
+        padding: 18px 14px 16px;
+      }
+
+      .ae-toolbar-row {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .ae-search-box {
+        max-width: none;
+      }
+
+      .ae-filter-btn {
+        align-self: flex-start;
+      }
+
+      .ce-footer-bar {
+        margin: 0 -14px;
+        padding: 12px 14px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .ce-page-wrap {
+        padding: 14px 10px 0;
+      }
+
+      .ce-stepper-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ce-step-item {
+        justify-items: start;
+        text-align: left;
+        grid-template-columns: 40px 1fr;
+        align-items: center;
+        min-height: unset;
+      }
+
+      .ce-step-label {
+        align-self: center;
+      }
+
+      .ae-chip {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .ce-footer-bar {
+        margin: 0 -10px;
+        padding: 12px 10px 16px;
+      }
+
+      .ce-footer-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .ce-footer-btn {
+        flex: 1;
+        min-width: 0;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div id="app">
+  <div id="overlay" aria-hidden="true"></div>
+  <aside id="sidebar" aria-label="Main navigation"></aside>
+
+  <div id="main-col">
+    <header id="navbar" style="display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 16px;background:#fff;border-bottom:1px solid #e8e7eb;flex-shrink:0;min-width:0;"></header>
+
+    <div id="main-scroll">
+      <div class="ce-page-wrap">
+        <div id="create-new-evaluation-add-employees-root" class="ce-screen"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="layout.js"></script>
+<script type="text/javascript" src="performance_evaluation_components.js"></script>
+<script type="text/javascript" src="create_new_evaluation_components.js"></script>
+<script type="text/javascript" src="create_new_evaluation_add_employees_components.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+  'use strict';
+
+  const screenData = {
+    title: 'Create new evaluation',
+    steps: [
+      { label: 'Basic information', icon: 'basicInformation', status: 'completed' },
+      { label: 'Add employees', icon: 'addEmployees', status: 'active' },
+      { label: 'Evaluators & setup', icon: 'evaluatorsSetup', status: 'upcoming' },
+      { label: 'Review & launch', icon: 'reviewLaunch', status: 'upcoming' }
+    ],
+    panel: {
+      title: 'Add employees to be evaluated',
+      description: 'You are selecting the employees whose performance will be evaluated. Evaluators (managers, HR, peers) will be assigned in the next steps.',
+      searchPlaceholder: 'Search',
+      filtersCount: 2
+    },
+    employees: [
+      {
+        id: 'emp-01',
+        name: 'Omar AlJuhani',
+        role: 'Marketing manager',
+        manager: 'Samira AlSubaie',
+        avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+        checked: false
+      },
+      {
+        id: 'emp-02',
+        name: 'Fahad AlShahrani',
+        role: 'SMM manager',
+        manager: 'Samira AlSubaie',
+        avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+        checked: true
+      },
+      {
+        id: 'emp-03',
+        name: 'Turki AlSubaie',
+        role: 'Junior product designer',
+        manager: 'Samira AlSubaie',
+        avatar: 'https://randomuser.me/api/portraits/men/67.jpg',
+        checked: true
+      },
+      {
+        id: 'emp-04',
+        name: 'Razan AlQahtani',
+        role: 'Marketing manager',
+        manager: 'Samira AlSubaie',
+        avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+        checked: false
+      },
+      {
+        id: 'emp-05',
+        name: 'Maha AlQahtani',
+        role: 'Junior product designer',
+        manager: 'Samira AlSubaie',
+        avatar: 'https://randomuser.me/api/portraits/women/32.jpg',
+        checked: false
+      },
+      {
+        id: 'emp-06',
+        name: 'Saad AlMutairi',
+        role: 'Senior product designer',
+        manager: 'Samira AlSubaie',
+        avatar: 'https://randomuser.me/api/portraits/men/69.jpg',
+        checked: false
+      },
+      {
+        id: 'emp-07',
+        name: 'Lina AlHarbi',
+        role: 'HR specialist',
+        manager: 'Samira AlSubaie',
+        avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
+        checked: false
+      }
+    ],
+    footer: {
+      backLabel: 'Back',
+      nextLabel: 'Next step'
+    }
+  };
+
+  let searchValue = '';
+  let employees = screenData.employees.map(function(employee) {
+    return Object.assign({}, employee);
+  });
+
+  const root = document.getElementById('create-new-evaluation-add-employees-root');
+
+  function getVisibleEmployees() {
+    if (!searchValue) {
+      return employees;
+    }
+
+    const needle = searchValue.toLowerCase();
+
+    return employees.filter(function(employee) {
+      const haystack = [
+        employee.name,
+        employee.role,
+        employee.manager
+      ].join(' ').toLowerCase();
+
+      return haystack.indexOf(needle) !== -1;
+    });
+  }
+
+  function getSelectedEmployees() {
+    return employees.filter(function(employee) {
+      return employee.checked;
+    });
+  }
+
+  function getSelectAllState(rows) {
+    const total = rows.length;
+    const selected = rows.filter(function(row) {
+      return row.checked;
+    }).length;
+
+    return {
+      checked: total > 0 && selected === total,
+      indeterminate: selected > 0 && selected < total
+    };
+  }
+
+  function renderPanel() {
+    const panelRegion = document.getElementById('ae-panel-region');
+    if (!panelRegion) return;
+
+    const visibleEmployees = getVisibleEmployees();
+
+    panelRegion.innerHTML = CreateNewEvaluationAddEmployeesComponents.SelectionCard({
+      title: screenData.panel.title,
+      description: screenData.panel.description,
+      searchPlaceholder: screenData.panel.searchPlaceholder,
+      searchValue: searchValue,
+      filtersCount: screenData.panel.filtersCount,
+      selectedEmployees: getSelectedEmployees(),
+      rows: visibleEmployees,
+      selectAll: getSelectAllState(visibleEmployees)
+    });
+
+    syncSelectAllToggle();
+  }
+
+  function updateEmployeeChecked(id, checked) {
+    employees = employees.map(function(employee) {
+      if (String(employee.id) === String(id)) {
+        return Object.assign({}, employee, { checked: checked });
+      }
+      return employee;
+    });
+  }
+
+  function syncSelectAllToggle() {
+    const toggle = root.querySelector('[data-employee-select-all]');
+    if (!toggle) return;
+
+    const visibleEmployees = getVisibleEmployees();
+    const state = getSelectAllState(visibleEmployees);
+    toggle.indeterminate = state.indeterminate;
+  }
+
+  function bindEvents() {
+    if (!root || root.__addEmployeesBound) return;
+
+    root.addEventListener('input', function(event) {
+      if (!event.target.matches('[data-employee-search]')) return;
+      searchValue = event.target.value.trim();
+      renderPanel();
+    });
+
+    root.addEventListener('change', function(event) {
+      if (event.target.matches('[data-employee-check]')) {
+        updateEmployeeChecked(event.target.getAttribute('data-employee-check'), event.target.checked);
+        renderPanel();
+        return;
+      }
+
+      if (event.target.matches('[data-employee-select-all]')) {
+        const checked = event.target.checked;
+        const visibleIds = {};
+
+        getVisibleEmployees().forEach(function(employee) {
+          visibleIds[String(employee.id)] = true;
+        });
+
+        employees = employees.map(function(employee) {
+          if (visibleIds[String(employee.id)]) {
+            return Object.assign({}, employee, { checked: checked });
+          }
+          return employee;
+        });
+
+        renderPanel();
+      }
+    });
+
+    root.addEventListener('click', function(event) {
+      const removeButton = event.target.closest('[data-remove-selected]');
+      if (!removeButton) return;
+
+      updateEmployeeChecked(removeButton.getAttribute('data-remove-selected'), false);
+      renderPanel();
+    });
+
+    root.__addEmployeesBound = true;
+  }
+
+  function renderScreen() {
+    if (!root) return;
+
+    root.innerHTML = `
+      ${CreateNewEvaluationComponents.PageHeader({ title: screenData.title })}
+      <div class="ae-flow-stack">
+        ${CreateNewEvaluationComponents.Stepper({ steps: screenData.steps })}
+        <div id="ae-panel-region"></div>
+      </div>
+      <div class="ce-footer-shell">
+        ${CreateNewEvaluationComponents.FooterActions(screenData.footer)}
+      </div>
+    `;
+
+    renderPanel();
+    bindEvents();
+  }
+
+  document.addEventListener('DOMContentLoaded', renderScreen);
+})();
+//]]>
+</script>
+</body>
+</html>
