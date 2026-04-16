@@ -27,6 +27,7 @@
     'create-new-survey-choose-question-type.xml': { navItem: 'team-engagement', submenu: 'surveys' },
     'performance-evaluation.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'performance-evaluation.xml': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
+    'performance-evaluation-detail.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'create-new-evaluation.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'create-new-evaluation.xml': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'create-new-evaluation-add-employees.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
