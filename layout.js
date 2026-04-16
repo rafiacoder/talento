@@ -28,7 +28,13 @@
     'survey-published.xml': { navItem: 'team-engagement', submenu: 'surveys' },
     'save-and-publish-survey.html': { navItem: 'team-engagement', submenu: 'surveys' },
     'save-and-publish-survey.xml': { navItem: 'team-engagement', submenu: 'surveys' },
-    'create-new-survey-choose-question-type.xml': { navItem: 'team-engagement', submenu: 'surveys' }
+    'create-new-survey-choose-question-type.xml': { navItem: 'team-engagement', submenu: 'surveys' },
+    'performance-evaluation.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
+    'performance-evaluation.xml': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
+    'create-new-evaluation.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
+    'create-new-evaluation.xml': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
+    'create-new-evaluation-add-employees.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
+    'create-new-evaluation-add-employees.xml': { navItem: 'team-engagement', submenu: 'performance-evaluation' }
   };
 
   const config = pageConfig[currentPage] || pageConfig['index.html'];
@@ -276,11 +282,13 @@
               <span class="s-label" style="color:${isSurveysActive ? '#1e1033' : '#787085'};font-size:13px;${isSurveysActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Surveys</span>
             </button>
           </a>
-          <button class="nav-sub-item${isPerformanceEvaluationActive ? ' active' : ''}"
-            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
-            <i class="fa-solid fa-chart-line" style="width:16px;font-size:13px;color:${isPerformanceEvaluationActive ? '#1e1033' : '#787085'};flex-shrink:0;"></i>
-            <span class="s-label" style="color:${isPerformanceEvaluationActive ? '#1e1033' : '#787085'};font-size:13px;${isPerformanceEvaluationActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Performance evaluation</span>
-          </button>
+          <a href="performance-evaluation.html" style="text-decoration:none;">
+            <button class="nav-sub-item${isPerformanceEvaluationActive ? ' active' : ''}"${isPerformanceEvaluationActive ? ' aria-current="page"' : ''}
+              style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+              <i class="fa-solid fa-chart-line" style="width:16px;font-size:13px;color:${isPerformanceEvaluationActive ? '#1e1033' : '#787085'};flex-shrink:0;"></i>
+              <span class="s-label" style="color:${isPerformanceEvaluationActive ? '#1e1033' : '#787085'};font-size:13px;${isPerformanceEvaluationActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Performance evaluation</span>
+            </button>
+          </a>
         </div>
 
         <!-- Mobile app -->
