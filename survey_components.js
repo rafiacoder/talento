@@ -731,7 +731,7 @@ const SurveyComponents = (function() {
     return `
       <div class="sv-preview-topbar">
         <h1 class="sv-preview-top-title"><span class="sv-preview-back-icon">${Icons.back}</span><span>${data.headerTitle || 'Preview mode'}</span></h1>
-        <p class="sv-preview-status">${data.statusText || ''}</p>
+        <p class="sv-preview-status">${data.statusText || ''} <span class="sv-preview-status-close">${Icons.xSmall}</span></p>
       </div>
       <div class="sv-preview-stack">
         ${PreviewSurveyHeader(data.intro || {})}
