@@ -42,10 +42,8 @@
     root.innerHTML = `
       <div class="ss2-flow-stack">
         ${SalaryScale2Components.PageHeading(screenData.heading)}
-        <div class="ss2-wizard-shell">
-          ${SalaryScale2Components.Stepper({ steps: screenData.steps })}
-          ${SalaryScale2Components.MainPanel(screenData.mainPanel)}
-        </div>
+        ${SalaryScale2Components.Stepper({ steps: screenData.steps })}
+        ${SalaryScale2Components.MainPanel(screenData.mainPanel)}
       </div>
       ${SalaryScale2Components.FooterBar(screenData.footer)}
     `;
