@@ -23,6 +23,7 @@
     'candidate-profile.html': { navItem: 'hiring', submenu: 'job-positions' },
     'all-documents.html': { navItem: 'documents', submenu: 'all-documents' },
     'contracts.html': { navItem: 'documents', submenu: 'contracts' },
+    'renewal.html': { navItem: 'documents', submenu: 'renewal' },
     'create-new-survey.html': { navItem: 'team-engagement', submenu: 'surveys' },
     'create-new-survey-start.html': { navItem: 'team-engagement', submenu: 'surveys' },
     'create-new-survey.xml': { navItem: 'team-engagement', submenu: 'surveys' },
@@ -302,11 +303,13 @@
               <span class="s-label" style="color:${isContractsActive ? '#1e1033' : '#787085'};font-size:13px;${isContractsActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Contracts</span>
             </button>
           </a>
-          <button class="nav-sub-item${isRenewalActive ? ' active' : ''}"
-            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
-            <i class="fa-solid fa-repeat" style="width:16px;font-size:13px;color:${isRenewalActive ? '#1e1033' : '#787085'};flex-shrink:0;"></i>
-            <span class="s-label" style="color:${isRenewalActive ? '#1e1033' : '#787085'};font-size:13px;${isRenewalActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Renewal</span>
-          </button>
+          <a href="renewal.html" style="text-decoration:none;">
+            <button class="nav-sub-item${isRenewalActive ? ' active' : ''}"${isRenewalActive ? ' aria-current="page"' : ''}
+              style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+              <i class="fa-solid fa-repeat" style="width:16px;font-size:13px;color:${isRenewalActive ? '#1e1033' : '#787085'};flex-shrink:0;"></i>
+              <span class="s-label" style="color:${isRenewalActive ? '#1e1033' : '#787085'};font-size:13px;${isRenewalActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Renewal</span>
+            </button>
+          </a>
         </div>
 
         <!-- Team engagement -->
