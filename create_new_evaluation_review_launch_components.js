@@ -6,12 +6,16 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
   'use strict';
 
   const Icons = {
-    edit: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>`,
-    user: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>`,
-    users: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="3"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a3 3 0 0 1 0 5.74"/></svg>`,
-    chevronDown: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
-    checkAccent: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2CF7B3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
-    file: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`
+    edit: `<i class="fa-solid fa-pen" aria-hidden="true"></i>`,
+    status: `<i class="fa-solid fa-circle-check" aria-hidden="true"></i>`,
+    duration: `<i class="fa-solid fa-clock" aria-hidden="true"></i>`,
+    manager: `<i class="fa-solid fa-user-tie" aria-hidden="true"></i>`,
+    upward: `<i class="fa-solid fa-user-check" aria-hidden="true"></i>`,
+    users: `<i class="fa-solid fa-users" aria-hidden="true"></i>`,
+    chevronDown: `<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>`,
+    chevronUp: `<i class="fa-solid fa-chevron-up" aria-hidden="true"></i>`,
+    checkAccent: `<i class="fa-solid fa-check" aria-hidden="true"></i>`,
+    file: `<i class="fa-solid fa-file-lines" aria-hidden="true"></i>`
   };
 
   function escapeHtml(value) {
@@ -23,8 +27,8 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
       .replace(/'/g, '&#39;');
   }
 
-  function chip(text, className) {
-    return `<span class="${className}">${escapeHtml(text)}</span>`;
+  function chip(text, className, icon) {
+    return `<span class="${className}">${icon ? `<span class="rl-chip-icon">${icon}</span>` : ''}${escapeHtml(text)}</span>`;
   }
 
   function SummaryHero(config) {
@@ -33,8 +37,8 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
       <section class="rl-summary-hero">
         <div class="rl-summary-top">
           <div class="rl-summary-badges">
-            ${chip(config.status || 'Ready to launch', 'rl-badge rl-badge--status')}
-            ${chip(config.duration || '12 days', 'rl-badge rl-badge--duration')}
+            ${chip(config.status || 'Ready to launch', 'rl-badge rl-badge--status', Icons.status)}
+            ${chip(config.duration || '12 days', 'rl-badge rl-badge--duration', Icons.duration)}
           </div>
           <button type="button" class="rl-icon-edit" aria-label="Edit summary">${Icons.edit}</button>
         </div>
@@ -63,6 +67,15 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
     `;
   }
 
+  function SectionBlock(config) {
+    return `
+      <div class="rl-panel-section">
+        ${SectionHeader(config.header || {})}
+        ${config.body || ''}
+      </div>
+    `;
+  }
+
   function KeyValueRows(rows) {
     const list = Array.isArray(rows) ? rows : [];
     return `
@@ -88,19 +101,6 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
           <span>${escapeHtml(employee.role || '')}</span>
         </div>
       </div>
-    `;
-  }
-
-  function EmployeesSection(config) {
-    const employees = Array.isArray(config.employees) ? config.employees : [];
-    return `
-      <section class="rl-card">
-        ${SectionHeader({ title: config.title || 'Employees to be evaluated', editable: true })}
-        <div class="rl-employee-list">
-          ${employees.map(EmployeeRow).join('')}
-        </div>
-        <button type="button" class="rl-view-all-btn">View all employees ${Icons.chevronDown}</button>
-      </section>
     `;
   }
 
@@ -136,15 +136,18 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
   function EvaluatorBlock(evaluator) {
     const questions = Array.isArray(evaluator.questions) ? evaluator.questions : [];
     const open = !!evaluator.open;
+    const evaluatorIcon = evaluator.type === 'peers'
+      ? Icons.users
+      : (evaluator.type === 'upward' ? Icons.upward : Icons.manager);
     return `
       <article class="rl-evaluator-block${open ? ' is-open' : ''}">
         <button type="button" class="rl-evaluator-head" aria-expanded="${open}">
           <span class="rl-evaluator-title-wrap">
-            <span class="rl-evaluator-icon">${evaluator.type === 'peers' ? Icons.users : Icons.user}</span>
+            <span class="rl-evaluator-icon">${evaluatorIcon}</span>
             <span class="rl-evaluator-title">${escapeHtml(evaluator.title || '')}</span>
             ${evaluator.anonymous ? chip('Anonymous', 'rl-mini-badge rl-mini-badge--muted') : ''}
           </span>
-          <span class="rl-evaluator-arrow">${Icons.chevronDown}</span>
+          <span class="rl-evaluator-arrow-btn">${open ? Icons.chevronUp : Icons.chevronDown}</span>
         </button>
         ${open ? `
           <div class="rl-evaluator-body">
@@ -154,18 +157,6 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
           </div>
         ` : ''}
       </article>
-    `;
-  }
-
-  function EvaluatorsSection(config) {
-    const evaluators = Array.isArray(config.evaluators) ? config.evaluators : [];
-    return `
-      <section class="rl-card">
-        ${SectionHeader({ title: config.title || 'Evaluators', editable: true })}
-        <div class="rl-evaluator-list">
-          ${evaluators.map(EvaluatorBlock).join('')}
-        </div>
-      </section>
     `;
   }
 
@@ -179,11 +170,36 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
     `;
   }
 
-  function AdditionalInfoCard(config) {
+  function ReviewDetailsPanel(config) {
+    const additional = config.additional || {};
+    const employeesConfig = config.employees || {};
+    const evaluatorsConfig = config.evaluators || {};
+    const employees = Array.isArray(employeesConfig.employees) ? employeesConfig.employees : [];
+    const evaluators = Array.isArray(evaluatorsConfig.evaluators) ? evaluatorsConfig.evaluators : [];
+
     return `
-      <section class="rl-card">
-        ${SectionHeader({ title: config.title || 'Additional information', editable: true })}
-        ${KeyValueRows(config.rows || [])}
+      <section class="rl-card rl-card--stack">
+        ${SectionBlock({
+          header: { title: additional.title || 'Additional information', editable: true },
+          body: KeyValueRows(additional.rows || [])
+        })}
+        ${SectionBlock({
+          header: { title: employeesConfig.title || 'Employees to be evaluated', editable: true },
+          body: `
+            <div class="rl-employee-list">
+              ${employees.map(EmployeeRow).join('')}
+            </div>
+            <button type="button" class="rl-view-all-btn">View all employees ${Icons.chevronDown}</button>
+          `
+        })}
+        ${SectionBlock({
+          header: { title: evaluatorsConfig.title || 'Evaluators', editable: true },
+          body: `
+            <div class="rl-evaluator-list">
+              ${evaluators.map(EvaluatorBlock).join('')}
+            </div>
+          `
+        })}
       </section>
     `;
   }
@@ -197,6 +213,7 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
           <button type="button" class="rl-btn rl-btn--ghost">${escapeHtml(config.draftLabel || 'Save as draft')} ${Icons.file}</button>
           <button type="button" class="rl-btn rl-btn--primary">${escapeHtml(config.launchLabel || 'Launch evaluation')} ${Icons.checkAccent}</button>
         </div>
+        <div class="rl-launch-divider" role="presentation"></div>
         <span class="rl-launch-note">${escapeHtml(config.note || '')}</span>
       </section>
     `;
@@ -204,9 +221,7 @@ const CreateNewEvaluationReviewLaunchComponents = (function() {
 
   return {
     ReviewCard,
-    AdditionalInfoCard,
-    EmployeesSection,
-    EvaluatorsSection,
+    ReviewDetailsPanel,
     LaunchCard
   };
 })();
