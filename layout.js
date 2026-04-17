@@ -29,6 +29,7 @@
     'air-ticket-data-template.html': { navItem: 'requests', submenu: null },
     'payroll.html': { navItem: 'finance', submenu: 'payroll' },
     'payroll-detail.html': { navItem: 'finance', submenu: 'payroll' },
+    'salary-scale.html': { navItem: 'finance', submenu: 'salary-scale' },
     'loans.html': { navItem: 'finance', submenu: 'loans' },
     'loan-installments.html': { navItem: 'finance', submenu: 'loans' },
     'candidate-profile.html': { navItem: 'hiring', submenu: 'job-positions' },
@@ -76,6 +77,7 @@
     const isBusinessMissionsExpanded = config.navItem === 'business-missions';
     const isPayrollActive = config.submenu === 'payroll';
     const isLoansActive = config.submenu === 'loans';
+    const isSalaryScaleActive = config.submenu === 'salary-scale';
     const isFinanceExpanded = config.navItem === 'finance';
     const isJobPositionsActive = config.submenu === 'job-positions';
     const isAllCandidatesActive = config.submenu === 'all-candidates';
@@ -191,11 +193,13 @@
             </button>
           </a>
           <!-- Salary scale -->
-          <button class="nav-sub-item"
-            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
-            <i class="fa-solid fa-chart-line" style="width:16px;font-size:13px;color:#787085;flex-shrink:0;"></i>
-            <span class="s-label" style="color:#787085;font-size:13px;letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Salary scale</span>
-          </button>
+          <a href="salary-scale.html" style="text-decoration:none;">
+            <button class="nav-sub-item${isSalaryScaleActive ? ' active' : ''}"${isSalaryScaleActive ? ' aria-current="page"' : ''}
+              style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+              <i class="fa-solid fa-chart-line" style="width:16px;font-size:13px;color:${isSalaryScaleActive ? '#1e1033' : '#787085'};flex-shrink:0;"></i>
+              <span class="s-label" style="color:${isSalaryScaleActive ? '#1e1033' : '#787085'};font-size:13px;${isSalaryScaleActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Salary scale</span>
+            </button>
+          </a>
           <!-- Deductions & Violations -->
           <button class="nav-sub-item"
             style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
