@@ -43,6 +43,7 @@
     'Appraisal-Employee-profile.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'Appraisal-Employee-profile-answers.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'Appraisal-Employee-profile-evaluators.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
+    'Appraisal-Employee-profile-peer-feedback.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'Appraisal Employee profile.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'Appraisal%20Employee%20profile.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'create-new-evaluation-evaluators-setup.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
