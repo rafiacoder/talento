@@ -12,6 +12,7 @@
   const pageConfig = {
     'index.html': { navItem: 'dashboard', submenu: null },
     'requests.html': { navItem: 'requests', submenu: null },
+    'request2.html': { navItem: 'requests', submenu: null },
     'leave.html': { navItem: 'attendance-leave', submenu: 'leave' },
     'business-missions-trip.html': { navItem: 'business-missions', submenu: 'missions-trip' },
     'air-tickets.html': { navItem: 'business-missions', submenu: 'air-tickets' },
@@ -43,7 +44,7 @@
     'Appraisal-Employee-profile-answers.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'Appraisal-Employee-profile-evaluators.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'Appraisal Employee profile.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
-    'Appraisal%20Employee%20profile.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' }
+    'Appraisal%20Employee%20profile.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'create-new-evaluation-evaluators-setup.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' },
     'create-new-evaluation-from-scratch.html': { navItem: 'team-engagement', submenu: 'performance-evaluation' }
   };
