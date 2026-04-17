@@ -18,6 +18,7 @@
     'business-missions-trip.html': { navItem: 'business-missions', submenu: 'missions-trip' },
     'air-tickets.html': { navItem: 'business-missions', submenu: 'air-tickets' },
     'air-ticket-request.html': { navItem: 'business-missions', submenu: 'air-tickets' },
+    'air-ticket-data-template.html': { navItem: 'requests', submenu: null },
     'payroll.html': { navItem: 'finance', submenu: 'payroll' },
     'payroll-detail.html': { navItem: 'finance', submenu: 'payroll' },
     'loans.html': { navItem: 'finance', submenu: 'loans' },
