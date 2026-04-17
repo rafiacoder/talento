@@ -22,6 +22,7 @@
     'loan-installments.html': { navItem: 'finance', submenu: 'loans' },
     'candidate-profile.html': { navItem: 'hiring', submenu: 'job-positions' },
     'create-new-survey.html': { navItem: 'team-engagement', submenu: 'surveys' },
+    'create-new-survey-start.html': { navItem: 'team-engagement', submenu: 'surveys' },
     'create-new-survey.xml': { navItem: 'team-engagement', submenu: 'surveys' },
     'survey-preview.html': { navItem: 'team-engagement', submenu: 'surveys' },
     'survey-preview.xml': { navItem: 'team-engagement', submenu: 'surveys' },
