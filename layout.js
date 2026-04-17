@@ -20,6 +20,7 @@
     'payroll-detail.html': { navItem: 'finance', submenu: 'payroll' },
     'loans.html': { navItem: 'finance', submenu: 'loans' },
     'loan-installments.html': { navItem: 'finance', submenu: 'loans' },
+    'accounting.html': { navItem: 'finance', submenu: 'accounting' },
     'candidate-profile.html': { navItem: 'hiring', submenu: 'job-positions' },
     'all-documents.html': { navItem: 'documents', submenu: 'all-documents' },
     'contracts.html': { navItem: 'documents', submenu: 'contracts' },
@@ -69,6 +70,7 @@
     const isBusinessMissionsExpanded = config.navItem === 'business-missions';
     const isPayrollActive = config.submenu === 'payroll';
     const isLoansActive = config.submenu === 'loans';
+    const isAccountingActive = config.submenu === 'accounting';
     const isFinanceExpanded = config.navItem === 'finance';
     const isJobPositionsActive = config.submenu === 'job-positions';
     const isAllCandidatesActive = config.submenu === 'all-candidates';
@@ -204,12 +206,14 @@
             <i class="fa-solid fa-gift" style="width:16px;font-size:13px;color:#787085;flex-shrink:0;"></i>
             <span class="s-label" style="color:#787085;font-size:13px;letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Rewards</span>
           </button>
-          <!-- Expenses (Accounting) -->
-          <button class="nav-sub-item"
-            style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
-            <i class="fa-solid fa-receipt" style="width:16px;font-size:13px;color:#787085;flex-shrink:0;"></i>
-            <span class="s-label" style="color:#787085;font-size:13px;letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Expenses (Accounting)</span>
-          </button>
+          <!-- Accounting -->
+          <a href="accounting.html" style="text-decoration:none;">
+            <button class="nav-sub-item${isAccountingActive ? ' active' : ''}"${isAccountingActive ? ' aria-current="page"' : ''}
+              style="display:flex;align-items:center;gap:10px;width:calc(100% - 32px);height:36px;padding:0 8px;margin:1px 8px 1px 24px;text-align:left;outline:none;">
+              <i class="fa-solid fa-receipt" style="width:16px;font-size:13px;color:${isAccountingActive ? '#1e1033' : '#787085'};flex-shrink:0;"></i>
+              <span class="s-label" style="color:${isAccountingActive ? '#1e1033' : '#787085'};font-size:13px;${isAccountingActive ? 'font-weight:500;' : ''}letter-spacing:-0.13px;line-height:1;white-space:nowrap;">Accounting</span>
+            </button>
+          </a>
         </div>
 
         <!-- Business missions -->
