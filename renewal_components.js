@@ -6,15 +6,16 @@ const RenewalComponents = (function() {
   'use strict';
 
   const Icons = {
-    contracts: '<i class="fa-solid fa-file-signature" aria-hidden="true"></i>',
+    contracts: '<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>',
     iqama: '<i class="fa-solid fa-id-card" aria-hidden="true"></i>',
     plus: '<i class="fa-solid fa-plus" aria-hidden="true"></i>',
     filter: '<i class="fa-solid fa-sliders" aria-hidden="true"></i>',
     wrench: '<i class="fa-solid fa-wrench" aria-hidden="true"></i>',
     chevronDown: '<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>',
     sort: `
-      <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-        <path d="M2.2 6.2 5 3.8 7.8 6.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+        <path d="M2.2 4 5 1.8 7.8 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2.2 6 5 8.2 7.8 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     `,
     ok: '<i class="fa-solid fa-circle-check" aria-hidden="true"></i>',

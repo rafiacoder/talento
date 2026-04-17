@@ -73,6 +73,8 @@
       font-family: 'Alexandria', Helvetica, sans-serif;
       font-weight: 400;
       background: transparent;
+      padding: 0 0 6px;
+      border-bottom: 2px solid transparent;
     }
     .rn-tab-icon {
       width: 12px;
@@ -85,9 +87,7 @@
     .rn-tab.is-active {
       color: #1e1033;
       font-weight: 500;
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
+      border-bottom-color: #1e1033;
     }
 
     .rn-toolbar {
@@ -151,7 +151,7 @@
     }
     .rn-table th {
       color: #787085;
-      font-weight: 400;
+      font-weight: 500;
     }
     .rn-table tbody tr { border-bottom: 1px solid #efedf2; }
     .rn-table tbody tr:last-child { border-bottom: 0; }
@@ -247,36 +247,56 @@
 (function() {
   'use strict';
 
-  const rows = Array.from({ length: 12 }).map(function(_, index) {
-    const statusCycle = [
-      { key: 'approved', label: 'Approved' },
-      { key: 'review', label: 'In review' },
-      { key: 'cancelled', label: 'Cancelled' },
-      { key: 'review', label: 'In review' },
-      { key: 'approved', label: 'Approved' }
-    ];
-    const positionCycle = ['SMM manager', 'Backend developer', 'L2 product designer', 'HR manager', 'SMM manager'];
-    const departmentCycle = ['Marketing', 'Development', 'Design', 'Top management', 'Marketing'];
-    const confirmationCycle = [
-      { ok: true, label: '4/4 confirmed' },
-      { ok: false, label: '1/4 confirmed' },
-      { ok: true, label: '4/4 confirmed' },
-      { ok: false, label: '3/4 confirmed' },
-      { ok: true, label: '4/4 confirmed' }
-    ];
-    const costCycle = ['SAR 20,000', 'SAR 14,520', 'SAR 14,520', 'SAR 20,000', 'SAR 20,000'];
-    const status = statusCycle[index % statusCycle.length];
-
-    return {
+  const rows = [
+    {
       contractCode: '#LARO0358',
-      employee: { name: 'Mishari AlSubaie', avatar: `https://i.pravatar.cc/52?img=${(index % 4) + 10}` },
-      status: status,
-      jobPosition: positionCycle[index % positionCycle.length],
-      department: departmentCycle[index % departmentCycle.length],
-      confirmation: confirmationCycle[index % confirmationCycle.length],
-      newContractCost: costCycle[index % costCycle.length]
-    };
-  });
+      employee: { name: 'Mishari AlSubaie', avatar: 'https://i.pravatar.cc/52?img=10' },
+      status: { key: 'approved', label: 'Approved' },
+      jobPosition: 'SMM manager',
+      department: 'Marketing',
+      confirmation: { ok: true, label: '4/4 confirmed' },
+      newContractCost: 'SAR 20,000'
+    },
+    {
+      contractCode: '#LARO0358',
+      employee: { name: 'Mishari AlSubaie', avatar: 'https://i.pravatar.cc/52?img=11' },
+      status: { key: 'review', label: 'In review' },
+      jobPosition: 'Backend developer',
+      department: 'Development',
+      confirmation: { ok: false, label: '1/4 confirmed' },
+      newContractCost: 'SAR 14,520'
+    },
+    {
+      contractCode: '#LARO0358',
+      employee: { name: 'Mishari AlSubaie', avatar: 'https://i.pravatar.cc/52?img=12' },
+      status: { key: 'cancelled', label: 'Cancelled' },
+      jobPosition: 'L2 product designer',
+      department: 'Design',
+      confirmation: { ok: true, label: '4/4 confirmed' },
+      newContractCost: 'SAR 14,520'
+    },
+    {
+      contractCode: '#LARO0358',
+      employee: { name: 'Mishari AlSubaie', avatar: 'https://i.pravatar.cc/52?img=13' },
+      status: { key: 'review', label: 'In review' },
+      jobPosition: 'HR manager',
+      department: 'Top management',
+      confirmation: { ok: false, label: '3/4 confirmed' },
+      newContractCost: 'SAR 20,000'
+    }
+  ];
+
+  while (rows.length < 12) {
+    rows.push({
+      contractCode: '#LARO0358',
+      employee: { name: 'Mishari AlSubaie', avatar: `https://i.pravatar.cc/52?img=${10 + (rows.length % 4)}` },
+      status: { key: 'approved', label: 'Approved' },
+      jobPosition: 'SMM manager',
+      department: 'Marketing',
+      confirmation: { ok: true, label: '4/4 confirmed' },
+      newContractCost: 'SAR 20,000'
+    });
+  }
 
   const screenData = {
     header: { title: 'Renewal', actionLabel: 'Create new' },
