@@ -220,8 +220,19 @@
       .rn-wrap { padding: 12px 10px; }
       .rn-page { padding: 12px; }
       .rn-primary-btn { width: 100%; justify-content: center; }
-      .rn-toolbar-actions { width: 100%; }
-      .rn-pill-btn { flex: 1; justify-content: center; min-width: 0; }
+      .rn-toolbar-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .rn-pill-btn {
+        flex: 1 1 calc(50% - 4px);
+        justify-content: center;
+        min-width: 0;
+        white-space: nowrap;
+      }
+      .rn-pill-btn--icon-right { flex-basis: 100%; }
       .rn-tabs { flex-wrap: wrap; gap: 10px; }
     }
   </style>
